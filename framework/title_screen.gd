@@ -21,20 +21,21 @@ var blink_time := 0.0
 var print_time := 0.0
 var cursor := Vector2i(0, 0)
 var print_queue := []
+## true if currently waiting for input, false otherwise
+var waiting_for_input := false
+
+signal key_input(chr: String)
+
+@export var SCOREBOARD_SIZE := 5
+var scoreboard := []
 
 const GameManager: PackedScene = preload("res://framework/game_manager.tscn")
 
 func _ready() -> void:
-	label.text = ""
-	for row in range(TERM_H):
-		for _col in range(TERM_W):
-			label.text += " "
-		if row != TERM_H - 1:
-			label.text += "\n"
+	clear_terminal()
 	push_str("\n\n\n")
-	push_str("    +>+>+>+ Häckerspiele +<+<+<+\n")
-	push_str(">>>>>>>>>>>>============<<<<<<<<<<<<\n\n")
-	update_cursor_pos()
+	push_str("     +>+>+>+ Häckerspiele +<+<+<+\n")
+	push_str(" >>>>>>>>>>>>============<<<<<<<<<<<<\n\n")
 	update_poweroff_button_color(POWEROFF_COLOR_INACTIVE)
 
 func _process(delta: float) -> void:
@@ -50,6 +51,26 @@ func _process(delta: float) -> void:
 	else:
 		print_time = 0.0
 	update_screen_pos()
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if print_queue.is_empty() and waiting_for_input:
+		if event.is_pressed():
+			var key: Key = event.key_label
+			if key == KEY_ENTER:
+				key_input.emit("")
+			elif key >= KEY_A and key <= KEY_Z:
+				key_input.emit(OS.get_keycode_string(key))
+
+func clear_terminal() -> void:
+	label.text = ""
+	for row in range(TERM_H):
+		for _col in range(TERM_W):
+			label.text += " "
+		if row != TERM_H - 1:
+			label.text += "\n"
+	print_queue.clear()
+	cursor = Vector2i.ZERO
+	update_cursor_pos()
 
 func push_str(s: String):
 	for chr in s:
@@ -73,10 +94,10 @@ func putc(chr: String) -> void:
 		next_row()
 	else:
 		setc(cursor.y, cursor.x, chr)
-	if cursor.x == TERM_W - 1:
-		next_row()
-	else:
-		cursor.x += 1
+		if cursor.x == TERM_W - 1:
+			next_row()
+		else:
+			cursor.x += 1
 	update_cursor_pos()
 
 func update_cursor_pos() -> void:
@@ -111,5 +132,51 @@ func _on_poweroff_button_pressed() -> void:
 	get_tree().quit()
 
 
+func disable() -> void:
+	hide()
+	screen_layer.hide()
+
+func enable() -> void:
+	show()
+	screen_layer.show()
+
 func _on_start_button_pressed() -> void:
-	get_tree().change_scene_to_packed(GameManager)
+	disable()
+	var game_manager := GameManager.instantiate()
+	add_child(game_manager)
+	game_manager.tree_exited.connect(enable)
+
+func scoreboard_position(score: int) -> int:
+	var size := scoreboard.size()
+	for i in range(size):
+		var entry = scoreboard[i]
+		if score > entry[1]:
+			return i
+	return size
+
+func show_scoreboard(score: int) -> void:
+	clear_terminal()
+	var pos := scoreboard_position(score)
+	print()
+	if pos < SCOREBOARD_SIZE:
+		push_str("Enter your name:\n")
+		waiting_for_input = true
+		var scoreboard_name := ""
+		while true:
+			var chr = await key_input
+			if chr.is_empty():
+				push_str("\n")
+				break
+			scoreboard_name += chr
+			push_str(chr)
+		waiting_for_input = false
+		scoreboard.insert(pos, [scoreboard_name, score])
+		scoreboard.resize(min(scoreboard.size(), SCOREBOARD_SIZE))
+
+	# print scoreboard
+	clear_terminal()
+	push_str("Scoreboard\n")
+	push_str("==========\n")
+	for i in range(scoreboard.size()):
+		var entry = scoreboard[i]
+		push_str(str(i + 1) + ".  " + str(entry[1]) + "  " + entry[0] + "\n")

@@ -42,5 +42,8 @@ func game_loss() -> void:
 		print("rip")
 		print("Score: ", won_games)
 		current_game.queue_free()
+
+		get_parent().show_scoreboard(won_games)
+		queue_free()
 	else:
 		next_game()
