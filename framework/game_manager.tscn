@@ -10,25 +10,32 @@ wait_time = 5.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 28.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 23.0
 grow_horizontal = 2
 
-[node name="ScoreLabel" type="Label" parent="CanvasLayer/HBoxContainer"]
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/Panel/HBoxContainer"]
 layout_mode = 2
 
-[node name="Space1" type="Control" parent="CanvasLayer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="TimerLabel" type="Label" parent="CanvasLayer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Space2" type="Control" parent="CanvasLayer/HBoxContainer"]
+[node name="Space1" type="Control" parent="CanvasLayer/Panel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LifesLabel" type="Label" parent="CanvasLayer/HBoxContainer"]
+[node name="TimerLabel" type="Label" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+
+[node name="Space2" type="Control" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LifesLabel" type="Label" parent="CanvasLayer/Panel/HBoxContainer"]
 layout_mode = 2

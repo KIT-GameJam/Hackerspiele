@@ -5,9 +5,9 @@ var won_games := 0
 var lifes := 3
 @onready var timer: Timer = $Timer
 
-@onready var timer_label: Label = $CanvasLayer/HBoxContainer/TimerLabel
-@onready var score_label: Label = $CanvasLayer/HBoxContainer/ScoreLabel
-@onready var lifes_label: Label = $CanvasLayer/HBoxContainer/LifesLabel
+@onready var timer_label: Label = $CanvasLayer/Panel/HBoxContainer/TimerLabel
+@onready var score_label: Label = $CanvasLayer/Panel/HBoxContainer/ScoreLabel
+@onready var lifes_label: Label = $CanvasLayer/Panel/HBoxContainer/LifesLabel
 
 func _ready() -> void:
 	next_game()
