@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://ck0n3e7m71aoy"]
+[gd_scene load_steps=29 format=3 uid="uid://ck0n3e7m71aoy"]
 
 [ext_resource type="Script" uid="uid://btgg6ulu6in8t" path="res://framework/title_screen.gd" id="1_f6akd"]
 [ext_resource type="PackedScene" uid="uid://1ju8eyujir3q" path="res://framework/models/monitor.glb" id="1_m3mpr"]
@@ -6,6 +6,11 @@
 [ext_resource type="ArrayMesh" uid="uid://cr7acoty3n02c" path="res://framework/models/mate.obj" id="4_sndid"]
 [ext_resource type="Shader" uid="uid://7ojoo23teqvk" path="res://framework/shaders/glass.tres" id="5_vromf"]
 [ext_resource type="Shader" uid="uid://duxxqg2h0syth" path="res://framework/shaders/mate.tres" id="6_0qgvj"]
+
+[sub_resource type="Environment" id="Environment_0qgvj"]
+background_energy_multiplier = 10.0
+ambient_light_color = Color(0.944169, 0.797791, 0.702215, 1)
+ambient_light_energy = 14.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f6akd"]
 bg_color = Color(0, 0, 0, 1)
@@ -88,6 +93,9 @@ TERM_H = 14
 transform = Transform3D(-4.37114e-08, -0.173648, 0.984808, 0, 0.984808, 0.173648, -1, 7.59039e-09, -4.30473e-08, 7.32191, 2.65801, 0)
 projection = 1
 size = 2.26
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0qgvj")
 
 [node name="Monitor" parent="." instance=ExtResource("1_m3mpr")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2, 0, 0)
