@@ -8,9 +8,16 @@ script = ExtResource("2_gejsk")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Button" type="Button" parent="CanvasLayer"]
-offset_left = 24.0
-offset_top = 11.0
-offset_right = 614.0
-offset_bottom = 348.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -295.0
+offset_top = -168.5
+offset_right = 295.0
+offset_bottom = 168.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]

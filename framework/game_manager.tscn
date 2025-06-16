@@ -10,18 +10,25 @@ wait_time = 5.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="TimerLabel" type="Label" parent="CanvasLayer"]
-offset_left = 340.0
-offset_right = 511.0
-offset_bottom = 81.0
-
-[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
-offset_top = 1.0
-offset_right = 40.0
-offset_bottom = 24.0
-
-[node name="LifesLabel" type="Label" parent="CanvasLayer"]
-offset_left = 1077.0
-offset_top = -1.0
-offset_right = 1123.0
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 10
+anchor_right = 1.0
 offset_bottom = 23.0
+grow_horizontal = 2
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Space1" type="Control" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TimerLabel" type="Label" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Space2" type="Control" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LifesLabel" type="Label" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
