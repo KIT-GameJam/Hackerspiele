@@ -25,7 +25,9 @@ func _ready() -> void:
 			label.text += " "
 		if row != TERM_H - 1:
 			label.text += "\n"
-	push_str("Häckerspiele".repeat(80))
+	push_str("\n\n\n")
+	push_str("    +>+>+>+ Häckerspiele +<+<+<+\n")
+	push_str(">>>>>>>>>>>>============<<<<<<<<<<<<\n\n")
 	update_cursor_pos()
 
 func _process(delta: float) -> void:
@@ -52,14 +54,20 @@ func get_char_index(row: int, col: int) -> int:
 func setc(row: int, col: int, chr: String) -> void:
 	label.text[get_char_index(row, col)] = chr
 
+func next_row() -> void:
+	cursor.x = 0
+	if cursor.y == TERM_H - 1:
+		label.text = label.text.substr(TERM_W + 1) + "\n" + " ".repeat(TERM_W)
+	else:
+		cursor.y += 1
+
 func putc(chr: String) -> void:
-	setc(cursor.y, cursor.x, chr)
+	if chr == "\n":
+		next_row()
+	else:
+		setc(cursor.y, cursor.x, chr)
 	if cursor.x == TERM_W - 1:
-		cursor.x = 0
-		if cursor.y == TERM_H - 1:
-			label.text = label.text.substr(TERM_W + 1) + "\n" + " ".repeat(TERM_W)
-		else:
-			cursor.y += 1
+		next_row()
 	else:
 		cursor.x += 1
 	update_cursor_pos()
