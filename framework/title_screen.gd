@@ -20,7 +20,7 @@ const POWEROFF_COLOR_ACTIVE := Color("#ed7444")
 var blink_time := 0.0
 var print_time := 0.0
 var cursor := Vector2i(0, 0)
-var print_queue := []
+var print_queue: Array[PrintEvent] = []
 ## true if currently waiting for input, false otherwise
 var waiting_for_input := false
 
@@ -31,12 +31,28 @@ var scoreboard := []
 
 const GameManager: PackedScene = preload("res://framework/game_manager.tscn")
 
+enum PrintEventType { CHAR, BUTTON }
+
+class PrintEvent:
+	var ty: PrintEventType
+	var val
+	var onclick: Callable
+	func _init(ty: PrintEventType, val) -> void:
+		self.ty = ty
+		self.val = val
+
 func _ready() -> void:
 	clear_terminal()
 	push_str("\n\n\n")
 	push_str("     +>+>+>+ Häckerspiele +<+<+<+\n")
 	push_str(" >>>>>>>>>>>>============<<<<<<<<<<<<\n\n")
+	push_str("     ")
+	put_button(" Start ", _on_start_button_pressed)
+	update_cursor_pos()
 	update_poweroff_button_color(POWEROFF_COLOR_INACTIVE)
+
+func on_button() -> void:
+	print("hallo")
 
 func _process(delta: float) -> void:
 	while blink_time <= 0.0:
@@ -44,7 +60,7 @@ func _process(delta: float) -> void:
 		toggle_cursor_visible()
 	blink_time -= delta
 	while print_queue and print_time <= 0.0:
-		putc(print_queue.pop_front())
+		pop_print_queue()
 		print_time += PRINT_TIMEOUT
 	if print_queue:
 		print_time -= delta
@@ -72,9 +88,33 @@ func clear_terminal() -> void:
 	cursor = Vector2i.ZERO
 	update_cursor_pos()
 
+func put_button(s: String, onclick: Callable) -> void:
+	var event := PrintEvent.new(PrintEventType.BUTTON, s)
+	event.onclick = onclick
+	print_queue.append(event)
+
 func push_str(s: String):
 	for chr in s:
-		print_queue.append(chr)
+		print_queue.append(PrintEvent.new(PrintEventType.CHAR, chr))
+
+func pop_print_queue() -> void:
+	var event: PrintEvent = print_queue.pop_front()
+	match event.ty:
+		PrintEventType.CHAR:
+			putc(event.val)
+		PrintEventType.BUTTON:
+			var text: String = event.val
+			for chr in text.reverse():
+				print_queue.push_front(PrintEvent.new(PrintEventType.CHAR, chr))
+			label.add_child(create_terminal_button(text, event.onclick))
+
+func create_terminal_button(text: String, onclick: Callable) -> Button:
+	var button := Button.new()
+	var bounds := get_cursor_char_bounds()
+	button.position = bounds.position
+	button.size = bounds.size * Vector2(text.length(), 1.0)
+	button.connect("pressed", onclick)
+	return button
 
 func get_char_index(row: int, col: int) -> int:
 	return col + row * (TERM_W + 1)
@@ -100,8 +140,11 @@ func putc(chr: String) -> void:
 			cursor.x += 1
 	update_cursor_pos()
 
+func get_cursor_char_bounds() -> Rect2:
+	return label.get_character_bounds(get_char_index(cursor.y, cursor.x))
+
 func update_cursor_pos() -> void:
-	var bounds := label.get_character_bounds(get_char_index(cursor.y, cursor.x))
+	var bounds := get_cursor_char_bounds()
 	cursor_rect.position = label.position + bounds.position
 	cursor_rect.position.y += bounds.size.y - cursor_rect.size.y
 
