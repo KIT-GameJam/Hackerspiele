@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ck0n3e7m71aoy"]
+[gd_scene load_steps=20 format=3 uid="uid://ck0n3e7m71aoy"]
 
 [ext_resource type="Script" uid="uid://btgg6ulu6in8t" path="res://framework/title_screen.gd" id="1_f6akd"]
 [ext_resource type="PackedScene" uid="uid://1ju8eyujir3q" path="res://framework/models/monitor.glb" id="1_m3mpr"]
@@ -20,6 +20,38 @@ shadow_offset = Vector2(0, 0)
 bg_color = Color(0.258552, 0.668512, 0.157625, 1)
 shadow_color = Color(0.258552, 0.668512, 0.157625, 1)
 shadow_size = 2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_th5dg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sndid"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vromf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0qgvj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4toer"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4xr2k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yy6u4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7jn8m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ekofo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2bbnd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fmn24"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_sndid"]
+size = Vector2(0.12, 0.12)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_th5dg"]
+resource_local_to_scene = true
+albedo_color = Color(0.80207, 0.329843, 0.140212, 1)
+emission = Color(0.80207, 0.329843, 0.140212, 1)
+emission_energy_multiplier = 3.0
+emission_operator = 1
 
 [node name="TitleScreen" type="Node3D"]
 script = ExtResource("1_f6akd")
@@ -58,6 +90,26 @@ offset_right = 13.0
 offset_bottom = 5.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_th5dg")
 
+[node name="Button" type="Button" parent="Monitor/ScreenLayer/Screen"]
+layout_mode = 0
+offset_left = 416.0
+offset_top = 621.0
+offset_right = 466.0
+offset_bottom = 671.0
+tooltip_text = "Exit Game"
+mouse_default_cursor_shape = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_th5dg")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_sndid")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_vromf")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0qgvj")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_4toer")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_4xr2k")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_yy6u4")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_7jn8m")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ekofo")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_2bbnd")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fmn24")
+
 [node name="MarkerTopLeft" type="Marker3D" parent="Monitor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.732, 2.73, 0.93)
 
@@ -66,6 +118,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.731967, 2.73035, 0.93)
 
 [node name="MarkerBottomRight" type="Marker3D" parent="Monitor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.732, 1.508, 0.93)
+
+[node name="PoweroffButton" type="MeshInstance3D" parent="Monitor"]
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 0.529363, 1.20559, 0.998548)
+mesh = SubResource("QuadMesh_sndid")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_th5dg")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.28281, 3.92547, 1.97244)
@@ -76,3 +134,7 @@ omni_range = 10.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.353148, -6.17166, -8.26729)
 light_energy = 0.8
 omni_range = 10.0
+
+[connection signal="mouse_entered" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_mouse_entered"]
+[connection signal="mouse_exited" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_mouse_exited"]
+[connection signal="pressed" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_pressed"]

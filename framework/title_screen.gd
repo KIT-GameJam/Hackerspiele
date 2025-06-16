@@ -5,6 +5,9 @@ extends Node3D
 @export var TERM_W: int
 @export var TERM_H: int
 
+const POWEROFF_COLOR_INACTIVE := Color("#cd5424")
+const POWEROFF_COLOR_ACTIVE := Color("#ed7444")
+
 @onready var camera: Camera3D = $Camera
 @onready var marker_top_left: Marker3D = $Monitor/MarkerTopLeft
 @onready var marker_top_right: Marker3D = $Monitor/MarkerTopRight
@@ -13,6 +16,7 @@ extends Node3D
 @onready var screen: Panel = $Monitor/ScreenLayer/Screen
 @onready var label: Label = $Monitor/ScreenLayer/Screen/Label
 @onready var cursor_rect: Panel = $Monitor/ScreenLayer/Screen/CursorRect
+@onready var poweroff_button: MeshInstance3D = $Monitor/PoweroffButton
 var blink_time := 0.0
 var print_time := 0.0
 var cursor := Vector2i(0, 0)
@@ -29,6 +33,7 @@ func _ready() -> void:
 	push_str("    +>+>+>+ Häckerspiele +<+<+<+\n")
 	push_str(">>>>>>>>>>>>============<<<<<<<<<<<<\n\n")
 	update_cursor_pos()
+	update_poweroff_button_color(POWEROFF_COLOR_INACTIVE)
 
 func _process(delta: float) -> void:
 	while blink_time <= 0.0:
@@ -89,3 +94,16 @@ func update_screen_pos() -> void:
 	var scale_x := 1.0 / screen.size.x
 	var scale_y := 1.0 / screen.size.y
 	screen_layer.transform = Transform2D(x_axis * scale_x, y_axis * scale_y, top_left)
+
+func update_poweroff_button_color(color: Color) -> void:
+	var material : StandardMaterial3D = poweroff_button.get_active_material(0)
+	material.albedo_color = color
+
+func _on_poweroff_button_mouse_entered() -> void:
+	update_poweroff_button_color(POWEROFF_COLOR_ACTIVE)
+
+func _on_poweroff_button_mouse_exited() -> void:
+	update_poweroff_button_color(POWEROFF_COLOR_INACTIVE)
+
+func _on_poweroff_button_pressed() -> void:
+	get_tree().quit()
