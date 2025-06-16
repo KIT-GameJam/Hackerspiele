@@ -87,6 +87,10 @@ func clear_terminal() -> void:
 	print_queue.clear()
 	cursor = Vector2i.ZERO
 	update_cursor_pos()
+	while label.get_child_count() > 0:
+		var child = label.get_child(0)
+		label.remove_child(child)
+		child.queue_free()
 
 func put_button(s: String, onclick: Callable) -> void:
 	var event := PrintEvent.new(PrintEventType.BUTTON, s)
