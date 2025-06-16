@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdgy134fdvdkn"]
+
+[ext_resource type="Script" uid="uid://wbi3h78qfjef" path="res://framework/game_manager.gd" id="1_68sdn"]
+
+[node name="GameManager" type="Node2D"]
+script = ExtResource("1_68sdn")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TimerLabel" type="Label" parent="CanvasLayer"]
+offset_left = 340.0
+offset_right = 511.0
+offset_bottom = 81.0
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
+offset_top = 1.0
+offset_right = 40.0
+offset_bottom = 24.0
+
+[node name="LifesLabel" type="Label" parent="CanvasLayer"]
+offset_left = 1077.0
+offset_top = -1.0
+offset_right = 1123.0
+offset_bottom = 23.0
