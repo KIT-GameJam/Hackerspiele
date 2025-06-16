@@ -1,6 +1,9 @@
 extends Node3D
 
 @export var BLINK_SPEED: float
+@export var PRINT_TIMEOUT: float
+@export var TERM_W: int
+@export var TERM_H: int
 
 @onready var camera: Camera3D = $Camera
 @onready var marker_top_left: Marker3D = $Monitor/MarkerTopLeft
@@ -8,15 +11,54 @@ extends Node3D
 @onready var marker_bottom_right: Marker3D = $Monitor/MarkerBottomRight
 @onready var screen_layer: CanvasLayer = $Monitor/ScreenLayer
 @onready var screen: Panel = $Monitor/ScreenLayer/Screen
-@onready var cursor: Panel = $Monitor/ScreenLayer/Screen/Cursor
+@onready var label: Label = $Monitor/ScreenLayer/Screen/Label
 var blink_time := 0.0
+var print_time := 0.0
+var cursor := Vector2i(0, 0)
+var print_queue := []
+
+func _ready() -> void:
+	label.text = ""
+	for row in range(TERM_H):
+		for _col in range(TERM_W):
+			label.text += " "
+		if row != TERM_H - 1:
+			label.text += "\n"
+	push_str("Häckerspiele".repeat(80))
 
 func _process(delta: float) -> void:
 	while blink_time <= 0.0:
 		blink_time += BLINK_SPEED
-		cursor.visible = not cursor.visible
-	blink_time -= delta
+		toggle_cursor_visible()
+	while print_queue and print_time <= 0.0:
+		putc(print_queue.pop_front())
+		print_time += PRINT_TIMEOUT
+	if print_queue:
+		print_time -= delta
+	else:
+		print_time = 0.0
 	update_screen_pos()
+
+func push_str(s: String):
+	for chr in s:
+		print_queue.append(chr)
+
+func setc(row: int, col: int, chr: String) -> void:
+	label.text[col + row * (TERM_W + 1)] = chr
+
+func putc(chr: String) -> void:
+	setc(cursor.y, cursor.x, chr)
+	if cursor.x == TERM_W - 1:
+		cursor.x = 0
+		if cursor.y == TERM_H - 1:
+			label.text = label.text.substr(TERM_W + 1) + "\n" + " ".repeat(TERM_W)
+		else:
+			cursor.y += 1
+	else:
+		cursor.x += 1
+
+func toggle_cursor_visible() -> void:
+	pass
 
 func update_screen_pos() -> void:
 	var top_left = camera.unproject_position(marker_top_left.global_position)

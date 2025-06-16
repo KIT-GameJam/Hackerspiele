@@ -1,26 +1,27 @@
-[gd_scene load_steps=7 format=3 uid="uid://ck0n3e7m71aoy"]
+[gd_scene load_steps=6 format=3 uid="uid://ck0n3e7m71aoy"]
 
 [ext_resource type="Script" uid="uid://btgg6ulu6in8t" path="res://framework/title_screen.gd" id="1_f6akd"]
 [ext_resource type="PackedScene" uid="uid://1ju8eyujir3q" path="res://framework/models/monitor.glb" id="1_m3mpr"]
+[ext_resource type="FontFile" uid="uid://cuoy0amwy2mxc" path="res://fonts/VT323/VT323-Regular.ttf" id="3_th5dg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f6akd"]
 bg_color = Color(0, 0, 0, 1)
 
-[sub_resource type="SystemFont" id="SystemFont_f6akd"]
-font_names = PackedStringArray("Monospace")
-font_weight = 800
-
 [sub_resource type="LabelSettings" id="LabelSettings_th5dg"]
-font = SubResource("SystemFont_f6akd")
-font_size = 46
+line_spacing = 2.0
+font = ExtResource("3_th5dg")
+font_size = 32
 font_color = Color(0.258552, 0.668512, 0.157625, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_th5dg"]
-bg_color = Color(0.258552, 0.668512, 0.157625, 1)
+shadow_size = 2
+shadow_color = Color(0.258552, 0.668512, 0.157625, 1)
+shadow_offset = Vector2(0, 0)
 
 [node name="TitleScreen" type="Node3D"]
 script = ExtResource("1_f6akd")
 BLINK_SPEED = 0.5
+PRINT_TIMEOUT = 0.004
+TERM_W = 38
+TERM_H = 14
 
 [node name="Camera" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.173648, 0.984808, 0, 0.984808, 0.173648, -1, 7.59039e-09, -4.30473e-08, 7.32191, 2.65801, 0)
@@ -48,21 +49,12 @@ text = "Start
 
 [node name="Label" type="Label" parent="Monitor/ScreenLayer/Screen"]
 layout_mode = 0
-offset_left = 1.0
-offset_top = 126.0
-offset_right = 511.0
-offset_bottom = 253.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 504.0
+offset_bottom = 504.0
 text = "Häckerspiele"
 label_settings = SubResource("LabelSettings_th5dg")
-horizontal_alignment = 1
-
-[node name="Cursor" type="Panel" parent="Monitor/ScreenLayer/Screen"]
-layout_mode = 0
-offset_left = 432.0
-offset_top = 167.0
-offset_right = 461.0
-offset_bottom = 178.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_th5dg")
 
 [node name="MarkerTopLeft" type="Marker3D" parent="Monitor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.732, 2.73, 0.93)
