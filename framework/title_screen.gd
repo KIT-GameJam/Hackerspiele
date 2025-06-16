@@ -80,6 +80,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			var key: Key = event.key_label
 			if key == KEY_ENTER:
 				key_input.emit("")
+			elif key == KEY_BACKSPACE:
+				key_input.emit("\b")
 			elif (key >= KEY_A and key <= KEY_Z) or (key >= KEY_0 and key <= KEY_9):
 				key_input.emit(OS.get_keycode_string(key))
 
@@ -149,6 +151,15 @@ func putc(chr: String) -> void:
 			next_row()
 		else:
 			cursor.x += 1
+	update_cursor_pos()
+
+func backspace() -> void:
+	if cursor.x != 0:
+		cursor.x -= 1
+	elif cursor.y > 0:
+		cursor.x = TERM_W - 1
+		cursor.y -= 1
+	setc(cursor.y, cursor.x, " ")
 	update_cursor_pos()
 
 func get_cursor_char_bounds() -> Rect2:
@@ -221,6 +232,11 @@ func show_scoreboard(score: int) -> void:
 			if chr.is_empty():
 				push_str("\n")
 				break
+			if chr == "\b":
+				if scoreboard_name:
+					scoreboard_name = scoreboard_name.left(-1)
+					backspace()
+				continue
 			scoreboard_name += chr
 			push_str(chr)
 		waiting_for_input = false
