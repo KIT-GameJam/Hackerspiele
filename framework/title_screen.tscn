@@ -85,7 +85,7 @@ height = 1.8
 [node name="TitleScreen" type="Node3D"]
 script = ExtResource("1_f6akd")
 BLINK_SPEED = 0.3
-PRINT_TIMEOUT = 0.06
+PRINT_TIMEOUT = 0.03
 TERM_W = 38
 TERM_H = 14
 
