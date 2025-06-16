@@ -64,7 +64,10 @@ func _process(delta: float) -> void:
 	blink_time -= delta
 	while print_queue and print_time <= 0.0:
 		pop_print_queue()
-		print_time += PRINT_TIMEOUT
+		var timeout := PRINT_TIMEOUT
+		if Input.is_mouse_button_pressed(MouseButton.MOUSE_BUTTON_LEFT):
+			timeout *= 0.15
+		print_time += timeout
 	if print_queue:
 		print_time -= delta
 	else:
