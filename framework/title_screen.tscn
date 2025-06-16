@@ -122,7 +122,7 @@ offset_right = 13.0
 offset_bottom = 5.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_th5dg")
 
-[node name="Button" type="Button" parent="Monitor/ScreenLayer/Screen"]
+[node name="PoweroffButton" type="Button" parent="Monitor/ScreenLayer/Screen"]
 layout_mode = 0
 offset_left = 416.0
 offset_top = 621.0
@@ -141,14 +141,6 @@ theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_7jn8m")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_ekofo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_2bbnd")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_fmn24")
-
-[node name="StartButton" type="Button" parent="Monitor/ScreenLayer/Screen"]
-layout_mode = 0
-offset_left = 216.0
-offset_top = 383.0
-offset_right = 324.0
-offset_bottom = 432.0
-text = "Start"
 
 [node name="MarkerTopLeft" type="Marker3D" parent="Monitor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.732, 2.73, 0.93)
@@ -192,8 +184,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_0qgvj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.363, 0)
 mesh = SubResource("CylinderMesh_vromf")
 
-[connection signal="mouse_entered" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_mouse_entered"]
-[connection signal="mouse_exited" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_mouse_exited"]
-[connection signal="pressed" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_pressed"]
-[connection signal="pressed" from="Monitor/ScreenLayer/Screen/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="mouse_entered" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_poweroff_button_mouse_entered"]
+[connection signal="mouse_exited" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_poweroff_button_mouse_exited"]
+[connection signal="pressed" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_poweroff_button_pressed"]
+[connection signal="pressed" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_start_button_pressed"]
