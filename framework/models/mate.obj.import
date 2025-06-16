@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cr7acoty3n02c"
+path="res://.godot/imported/mate.obj-f06f72e21e4d7e259f3b4508b8b64161.mesh"
+
+[deps]
+
+files=["res://.godot/imported/mate.obj-f06f72e21e4d7e259f3b4508b8b64161.mesh"]
+
+source_file="res://framework/models/mate.obj"
+dest_files=["res://.godot/imported/mate.obj-f06f72e21e4d7e259f3b4508b8b64161.mesh", "res://.godot/imported/mate.obj-f06f72e21e4d7e259f3b4508b8b64161.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
