@@ -7,6 +7,7 @@ extends Node3D
 
 const POWEROFF_COLOR_INACTIVE := Color("#cd5424")
 const POWEROFF_COLOR_ACTIVE := Color("#ed7444")
+const SCOREBOARD_MAX_NAME_LEN := 20
 
 @onready var camera: Camera3D = $Camera
 @onready var marker_top_left: Marker3D = $Monitor/MarkerTopLeft
@@ -236,6 +237,8 @@ func show_scoreboard(score: int) -> void:
 				if scoreboard_name:
 					scoreboard_name = scoreboard_name.left(-1)
 					backspace()
+				continue
+			if scoreboard_name.length() >= SCOREBOARD_MAX_NAME_LEN:
 				continue
 			scoreboard_name += chr
 			push_str(chr)
