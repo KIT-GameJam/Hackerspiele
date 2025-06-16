@@ -77,7 +77,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			var key: Key = event.key_label
 			if key == KEY_ENTER:
 				key_input.emit("")
-			elif key >= KEY_A and key <= KEY_Z:
+			elif (key >= KEY_A and key <= KEY_Z) or (key >= KEY_0 and key <= KEY_9):
 				key_input.emit(OS.get_keycode_string(key))
 
 func clear_terminal() -> void:
