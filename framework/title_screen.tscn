@@ -1,10 +1,11 @@
-[gd_scene load_steps=25 format=3 uid="uid://ck0n3e7m71aoy"]
+[gd_scene load_steps=28 format=3 uid="uid://ck0n3e7m71aoy"]
 
 [ext_resource type="Script" uid="uid://btgg6ulu6in8t" path="res://framework/title_screen.gd" id="1_f6akd"]
 [ext_resource type="PackedScene" uid="uid://1ju8eyujir3q" path="res://framework/models/monitor.glb" id="1_m3mpr"]
 [ext_resource type="FontFile" uid="uid://cuoy0amwy2mxc" path="res://fonts/VT323/VT323-Regular.ttf" id="3_th5dg"]
 [ext_resource type="ArrayMesh" uid="uid://cr7acoty3n02c" path="res://framework/models/mate.obj" id="4_sndid"]
 [ext_resource type="Shader" uid="uid://7ojoo23teqvk" path="res://framework/shaders/glass.tres" id="5_vromf"]
+[ext_resource type="Shader" uid="uid://duxxqg2h0syth" path="res://framework/shaders/mate.tres" id="6_0qgvj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f6akd"]
 bg_color = Color(0, 0, 0, 1)
@@ -65,6 +66,16 @@ albedo_color = Color(0.313146, 0.174428, 0.0210792, 1)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0qgvj"]
 render_priority = 0
 shader = ExtResource("5_vromf")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4toer"]
+render_priority = 0
+shader = ExtResource("6_0qgvj")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vromf"]
+material = SubResource("ShaderMaterial_4toer")
+top_radius = 0.54
+bottom_radius = 0.54
+height = 1.8
 
 [node name="TitleScreen" type="Node3D"]
 script = ExtResource("1_f6akd")
@@ -169,11 +180,12 @@ transform = Transform3D(0.53, 0, 0, 0, 0.53, 0, 0, 0, 0.53, 2.35392, 0.401857, 1
 mesh = ExtResource("4_sndid")
 surface_material_override/0 = SubResource("ShaderMaterial_0qgvj")
 
-[connection signal="mouse_entered" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_mouse_entered"]
-[connection signal="mouse_exited" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_mouse_exited"]
+[node name="MateInhalt" type="MeshInstance3D" parent="Mate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.363, 0)
+mesh = SubResource("CylinderMesh_vromf")
+
 [connection signal="mouse_entered" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_mouse_entered"]
 [connection signal="mouse_exited" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_mouse_exited"]
 [connection signal="pressed" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_pressed"]
 [connection signal="pressed" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_pressed"]
 [connection signal="pressed" from="Monitor/ScreenLayer/Screen/StartButton" to="." method="_on_start_button_pressed"]
