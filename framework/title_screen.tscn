@@ -194,6 +194,6 @@ mesh = SubResource("CylinderMesh_vromf")
 
 [connection signal="mouse_entered" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_mouse_entered"]
 [connection signal="mouse_exited" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_mouse_exited"]
-[connection signal="pressed" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_pressed"]
 [connection signal="pressed" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_pressed"]
 [connection signal="pressed" from="Monitor/ScreenLayer/Screen/StartButton" to="." method="_on_start_button_pressed"]

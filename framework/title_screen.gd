@@ -28,6 +28,7 @@ signal key_input(chr: String)
 
 @export var SCOREBOARD_SIZE := 5
 var scoreboard := []
+const SCOREBOARD_PATH := "user://scoreboard.dat"
 
 const GameManager: PackedScene = preload("res://framework/game_manager.tscn")
 
@@ -42,6 +43,8 @@ class PrintEvent:
 		self.val = val
 
 func _ready() -> void:
+	load_scoreboard()
+
 	clear_terminal()
 	push_str("\n\n\n")
 	push_str("     +>+>+>+ Häckerspiele +<+<+<+\n")
@@ -220,6 +223,7 @@ func show_scoreboard(score: int) -> void:
 		waiting_for_input = false
 		scoreboard.insert(pos, [scoreboard_name, score])
 		scoreboard.resize(min(scoreboard.size(), SCOREBOARD_SIZE))
+		save_scoreboard()
 
 	# print scoreboard
 	clear_terminal()
@@ -228,3 +232,14 @@ func show_scoreboard(score: int) -> void:
 	for i in range(scoreboard.size()):
 		var entry = scoreboard[i]
 		push_str(str(i + 1) + ".  " + str(entry[1]) + "  " + entry[0] + "\n")
+
+func load_scoreboard() -> void:
+	if FileAccess.file_exists(SCOREBOARD_PATH):
+		print("loading scoreboard")
+		var file = FileAccess.open(SCOREBOARD_PATH, FileAccess.READ)
+		scoreboard = file.get_var()
+
+func save_scoreboard() -> void:
+	var file := FileAccess.open(SCOREBOARD_PATH, FileAccess.WRITE)
+	file.store_var(scoreboard)
+	print(JSON.stringify(scoreboard))
