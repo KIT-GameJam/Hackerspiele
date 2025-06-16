@@ -110,6 +110,11 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_ekofo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_2bbnd")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_fmn24")
 
+[node name="Label" type="Label" parent="Monitor/ScreenLayer"]
+offset_left = 340.0
+offset_right = 511.0
+offset_bottom = 81.0
+
 [node name="MarkerTopLeft" type="Marker3D" parent="Monitor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.732, 2.73, 0.93)
 
@@ -138,3 +143,8 @@ omni_range = 10.0
 [connection signal="mouse_entered" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_mouse_entered"]
 [connection signal="mouse_exited" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_mouse_exited"]
 [connection signal="pressed" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_poweroff_button_pressed"]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+
+[connection signal="pressed" from="Monitor/ScreenLayer/Screen/Button" to="." method="_on_start_button_pressed"]

@@ -35,7 +35,17 @@ func _ready() -> void:
 	update_cursor_pos()
 	update_poweroff_button_color(POWEROFF_COLOR_INACTIVE)
 
+var current_game: Node = null
+var won_games := 0
+var lifes := 3
+@onready var timer: Timer = $Timer
+@onready var timer_label: Label = $Monitor/ScreenLayer/Label
+
+# TODO: automatically discover games
+const hello_game: PackedScene = preload("res://microgames/hello/hello.tscn")
+
 func _process(delta: float) -> void:
+	timer_label.text = str(timer.time_left)
 	while blink_time <= 0.0:
 		blink_time += BLINK_SPEED
 		toggle_cursor_visible()
@@ -107,3 +117,40 @@ func _on_poweroff_button_mouse_exited() -> void:
 
 func _on_poweroff_button_pressed() -> void:
 	get_tree().quit()
+
+func load_game(scene: PackedScene) -> void:
+	hide()
+	#screen_layer.hide()
+
+	if current_game:
+		current_game.queue_free()
+	current_game = scene.instantiate()
+	add_child(current_game)
+	current_game.win.connect(game_won)
+	current_game.loss.connect(game_loss)
+
+	timer.start()
+	timer.timeout.connect(current_game._on_timeout)
+
+func game_won() -> void:
+	print("you won")
+	won_games += 1
+	timer.stop()
+	load_game(hello_game)
+
+func game_loss() -> void:
+	print("you lost")
+	lifes -= 1
+	timer.stop()
+	if lifes <= 0:
+		print("rip")
+		print("Score: ", won_games)
+		current_game.queue_free()
+
+		show()
+		#screen_layer.show()
+	else:
+		load_game(hello_game)
+
+func _on_start_button_pressed() -> void:
+	load_game(hello_game)

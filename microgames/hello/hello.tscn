@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://chuo7jsb2b1sa"]
+
+[ext_resource type="Script" uid="uid://d0c3kie3rdxkq" path="res://microgames/hello/hello.gd" id="2_gejsk"]
+
+[node name="Hello" type="Node2D"]
+script = ExtResource("2_gejsk")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_left = 24.0
+offset_top = 11.0
+offset_right = 614.0
+offset_bottom = 348.0
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
