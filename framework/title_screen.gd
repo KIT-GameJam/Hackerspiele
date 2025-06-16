@@ -38,9 +38,9 @@ class PrintEvent:
 	var ty: PrintEventType
 	var val
 	var onclick: Callable
-	func _init(ty: PrintEventType, val) -> void:
-		self.ty = ty
-		self.val = val
+	func _init(p_ty: PrintEventType, p_val) -> void:
+		self.ty = p_ty
+		self.val = p_val
 
 func _ready() -> void:
 	load_scoreboard()
