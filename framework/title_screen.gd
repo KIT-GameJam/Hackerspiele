@@ -12,6 +12,7 @@ extends Node3D
 @onready var screen_layer: CanvasLayer = $Monitor/ScreenLayer
 @onready var screen: Panel = $Monitor/ScreenLayer/Screen
 @onready var label: Label = $Monitor/ScreenLayer/Screen/Label
+@onready var cursor_rect: Panel = $Monitor/ScreenLayer/Screen/CursorRect
 var blink_time := 0.0
 var print_time := 0.0
 var cursor := Vector2i(0, 0)
@@ -25,11 +26,13 @@ func _ready() -> void:
 		if row != TERM_H - 1:
 			label.text += "\n"
 	push_str("Häckerspiele".repeat(80))
+	update_cursor_pos()
 
 func _process(delta: float) -> void:
 	while blink_time <= 0.0:
 		blink_time += BLINK_SPEED
 		toggle_cursor_visible()
+	blink_time -= delta
 	while print_queue and print_time <= 0.0:
 		putc(print_queue.pop_front())
 		print_time += PRINT_TIMEOUT
@@ -43,8 +46,11 @@ func push_str(s: String):
 	for chr in s:
 		print_queue.append(chr)
 
+func get_char_index(row: int, col: int) -> int:
+	return col + row * (TERM_W + 1)
+
 func setc(row: int, col: int, chr: String) -> void:
-	label.text[col + row * (TERM_W + 1)] = chr
+	label.text[get_char_index(row, col)] = chr
 
 func putc(chr: String) -> void:
 	setc(cursor.y, cursor.x, chr)
@@ -56,9 +62,15 @@ func putc(chr: String) -> void:
 			cursor.y += 1
 	else:
 		cursor.x += 1
+	update_cursor_pos()
+
+func update_cursor_pos() -> void:
+	var bounds := label.get_character_bounds(get_char_index(cursor.y, cursor.x))
+	cursor_rect.position = label.position + bounds.position
+	cursor_rect.position.y += bounds.size.y - cursor_rect.size.y
 
 func toggle_cursor_visible() -> void:
-	pass
+	cursor_rect.visible = not cursor_rect.visible
 
 func update_screen_pos() -> void:
 	var top_left = camera.unproject_position(marker_top_left.global_position)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ck0n3e7m71aoy"]
+[gd_scene load_steps=7 format=3 uid="uid://ck0n3e7m71aoy"]
 
 [ext_resource type="Script" uid="uid://btgg6ulu6in8t" path="res://framework/title_screen.gd" id="1_f6akd"]
 [ext_resource type="PackedScene" uid="uid://1ju8eyujir3q" path="res://framework/models/monitor.glb" id="1_m3mpr"]
@@ -16,10 +16,15 @@ shadow_size = 2
 shadow_color = Color(0.258552, 0.668512, 0.157625, 1)
 shadow_offset = Vector2(0, 0)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_th5dg"]
+bg_color = Color(0.258552, 0.668512, 0.157625, 1)
+shadow_color = Color(0.258552, 0.668512, 0.157625, 1)
+shadow_size = 2
+
 [node name="TitleScreen" type="Node3D"]
 script = ExtResource("1_f6akd")
-BLINK_SPEED = 0.5
-PRINT_TIMEOUT = 0.004
+BLINK_SPEED = 0.3
+PRINT_TIMEOUT = 0.06
 TERM_W = 38
 TERM_H = 14
 
@@ -38,15 +43,6 @@ offset_right = 512.0
 offset_bottom = 512.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_f6akd")
 
-[node name="Button" type="Button" parent="Monitor/ScreenLayer/Screen"]
-layout_mode = 2
-offset_left = 143.0
-offset_top = 342.0
-offset_right = 386.0
-offset_bottom = 409.0
-text = "Start
-"
-
 [node name="Label" type="Label" parent="Monitor/ScreenLayer/Screen"]
 layout_mode = 0
 offset_left = 8.0
@@ -55,6 +51,12 @@ offset_right = 504.0
 offset_bottom = 504.0
 text = "Häckerspiele"
 label_settings = SubResource("LabelSettings_th5dg")
+
+[node name="CursorRect" type="Panel" parent="Monitor/ScreenLayer/Screen"]
+layout_mode = 0
+offset_right = 13.0
+offset_bottom = 5.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_th5dg")
 
 [node name="MarkerTopLeft" type="Marker3D" parent="Monitor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.732, 2.73, 0.93)
