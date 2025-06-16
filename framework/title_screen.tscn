@@ -1,0 +1,84 @@
+[gd_scene load_steps=7 format=3 uid="uid://ck0n3e7m71aoy"]
+
+[ext_resource type="Script" uid="uid://btgg6ulu6in8t" path="res://framework/title_screen.gd" id="1_f6akd"]
+[ext_resource type="PackedScene" uid="uid://1ju8eyujir3q" path="res://framework/models/monitor.glb" id="1_m3mpr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f6akd"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_f6akd"]
+font_names = PackedStringArray("Monospace")
+font_weight = 800
+
+[sub_resource type="LabelSettings" id="LabelSettings_th5dg"]
+font = SubResource("SystemFont_f6akd")
+font_size = 46
+font_color = Color(0.258552, 0.668512, 0.157625, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_th5dg"]
+bg_color = Color(0.258552, 0.668512, 0.157625, 1)
+
+[node name="TitleScreen" type="Node3D"]
+script = ExtResource("1_f6akd")
+BLINK_SPEED = 0.5
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, -0.173648, 0.984808, 0, 0.984808, 0.173648, -1, 7.59039e-09, -4.30473e-08, 7.32191, 2.65801, 0)
+projection = 1
+size = 2.26
+
+[node name="Monitor" parent="." instance=ExtResource("1_m3mpr")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2, 0, 0)
+
+[node name="ScreenLayer" type="CanvasLayer" parent="Monitor"]
+
+[node name="Screen" type="Panel" parent="Monitor/ScreenLayer"]
+offset_right = 512.0
+offset_bottom = 512.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_f6akd")
+
+[node name="Button" type="Button" parent="Monitor/ScreenLayer/Screen"]
+layout_mode = 2
+offset_left = 143.0
+offset_top = 342.0
+offset_right = 386.0
+offset_bottom = 409.0
+text = "Start
+"
+
+[node name="Label" type="Label" parent="Monitor/ScreenLayer/Screen"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 126.0
+offset_right = 511.0
+offset_bottom = 253.0
+text = "Häckerspiele"
+label_settings = SubResource("LabelSettings_th5dg")
+horizontal_alignment = 1
+
+[node name="Cursor" type="Panel" parent="Monitor/ScreenLayer/Screen"]
+layout_mode = 0
+offset_left = 432.0
+offset_top = 167.0
+offset_right = 461.0
+offset_bottom = 178.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_th5dg")
+
+[node name="MarkerTopLeft" type="Marker3D" parent="Monitor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.732, 2.73, 0.93)
+
+[node name="MarkerTopRight" type="Marker3D" parent="Monitor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.731967, 2.73035, 0.93)
+
+[node name="MarkerBottomRight" type="Marker3D" parent="Monitor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.732, 1.508, 0.93)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.28281, 3.92547, 1.97244)
+light_energy = 2.5
+omni_range = 10.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="OmniLight3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.353148, -6.17166, -8.26729)
+light_energy = 0.8
+omni_range = 10.0
