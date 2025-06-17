@@ -127,6 +127,7 @@ func create_terminal_button(text: String, onclick: Callable) -> Button:
 	button.position = bounds.position
 	button.size = bounds.size * Vector2(text.length(), 1.0)
 	button.tooltip_text = text
+	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	button.connect("pressed", onclick)
 	return button
 
