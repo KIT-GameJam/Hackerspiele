@@ -13,7 +13,13 @@ func _ready() -> void:
 	label.text = "Do{0} {1}click the button!".format([donts, nots])
 
 func _on_button_pressed() -> void:
-	finished.emit(Result.Win if should_click else Result.Loss)
+	if should_click:
+		win.emit()
+	else:
+		loss.emit()
 
-func on_timeout() -> Result:
-	return Result.Loss if should_click else Result.Win
+func on_timeout() -> void:
+	if should_click:
+		loss.emit()
+	else:
+		win.emit()
