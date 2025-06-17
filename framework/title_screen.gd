@@ -18,10 +18,12 @@ const SCOREBOARD_MAX_NAME_LEN := 20
 @onready var label: Label = $Monitor/ScreenLayer/Screen/Label
 @onready var cursor_rect: Panel = $Monitor/ScreenLayer/Screen/CursorRect
 @onready var poweroff_button: MeshInstance3D = $Monitor/PoweroffButton
+@onready var world_environment: WorldEnvironment = $WorldEnvironment
 var blink_time := 0.0
 var print_time := 0.0
 var cursor := Vector2i(0, 0)
 var print_queue: Array[PrintEvent] = []
+var environment_buffer: Environment = null
 ## true if currently waiting for input, false otherwise
 var waiting_for_input := false
 
@@ -203,14 +205,20 @@ func _on_poweroff_button_pressed() -> void:
 func disable() -> void:
 	hide()
 	screen_layer.hide()
+	environment_buffer = world_environment.environment
+	world_environment.environment = null
+	process_mode = Node.PROCESS_MODE_DISABLED
 
 func enable() -> void:
+	world_environment.environment = environment_buffer
 	show()
 	screen_layer.show()
+	process_mode = Node.PROCESS_MODE_INHERIT
 
 func _on_start_button_pressed() -> void:
 	disable()
 	var game_manager := GameManager.instantiate()
+	game_manager.process_mode = Node.PROCESS_MODE_PAUSABLE
 	add_child(game_manager)
 	game_manager.tree_exited.connect(enable)
 
