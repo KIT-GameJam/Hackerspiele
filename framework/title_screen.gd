@@ -55,9 +55,13 @@ func _ready() -> void:
 func print_game_title() -> void:
 	push_str("\n\n\n")
 	push_str("     +>+>+>+ Häckerspiele +<+<+<+\n")
-	push_str(" >>>>>>>>>>>>============<<<<<<<<<<<<\n\n")
-	push_str("     ")
+	push_str(" >>>>>>>>>>>>============<<<<<<<<<<<<\n\n\n")
+	push_str("            -> ")
 	put_button(" Start ", _on_start_button_pressed)
+	push_str("\n\n")
+	push_str("            -> ")
+	put_button(" Settings ", go_to_settings)
+	push_str("\n")
 
 func on_button() -> void:
 	print("hallo")
@@ -109,6 +113,10 @@ func put_button(s: String, onclick: Callable) -> void:
 	var event := PrintEvent.new(PrintEventType.BUTTON, s)
 	event.onclick = onclick
 	print_queue.append(event)
+
+func put_titlescreen_button() -> void:
+	push_str("-> ")
+	put_button("return to titlescreen", return_to_titlescreen)
 
 func push_str(s: String):
 	for chr in s:
@@ -266,7 +274,7 @@ func show_scoreboard(score: int) -> void:
 		var score_text := str(entry[1]).rpad(6)
 		push_str(str(i + 1) + ".  " + score_text + entry[0] + "\n")
 	push_str("\n")
-	put_button("return to titlescreen", return_to_titlescreen)
+	put_titlescreen_button()
 
 func return_to_titlescreen() -> void:
 	clear_terminal()
@@ -282,3 +290,9 @@ func save_scoreboard() -> void:
 	var file := FileAccess.open(SCOREBOARD_PATH, FileAccess.WRITE)
 	file.store_var(scoreboard)
 	print(JSON.stringify(scoreboard))
+
+func go_to_settings() -> void:
+	clear_terminal()
+	push_str("Settings\n")
+	push_str("========\n\n")
+	put_titlescreen_button()
