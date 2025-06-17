@@ -1,23 +1,93 @@
-[gd_scene load_steps=2 format=3 uid="uid://chuo7jsb2b1sa"]
+[gd_scene load_steps=8 format=3 uid="uid://chuo7jsb2b1sa"]
 
+[ext_resource type="FontFile" uid="uid://cmrep5rgp6jkj" path="res://microgames/hello/fonts/SSERIFF.ttf" id="2_8x2b2"]
+[ext_resource type="Texture2D" uid="uid://bprgm3xdhakiw" path="res://microgames/hello/textures/button_borders.png" id="2_33vh6"]
 [ext_resource type="Script" uid="uid://d0c3kie3rdxkq" path="res://microgames/hello/hello.gd" id="2_gejsk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dnqod"]
+bg_color = Color(0, 0.501961, 0.501961, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gejsk"]
+bg_color = Color(0.752941, 0.752941, 0.752941, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_33vh6"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8x2b2"]
+texture = ExtResource("2_33vh6")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
 
 [node name="Hello" type="Node2D"]
 script = ExtResource("2_gejsk")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Button" type="Button" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -295.0
-offset_top = -168.5
-offset_right = 295.0
-offset_bottom = 168.5
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dnqod")
 
-[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="HelloButton" type="Button" parent="CanvasLayer/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="MenuBar" type="Panel" parent="CanvasLayer/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gejsk")
+
+[node name="MenuBarBorder" type="Panel" parent="CanvasLayer/Panel/VBoxContainer/MenuBar"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_33vh6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel/VBoxContainer/MenuBar"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="Spacer" type="Control" parent="CanvasLayer/Panel/VBoxContainer/MenuBar/HBoxContainer"]
+custom_minimum_size = Vector2(4, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+
+[node name="Button" type="Button" parent="CanvasLayer/Panel/VBoxContainer/MenuBar/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(108, 44)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_8x2b2")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/disabled = SubResource("StyleBoxTexture_8x2b2")
+disabled = true
+text = "Stop"
+
+[connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/HelloButton" to="." method="_on_button_pressed"]

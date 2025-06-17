@@ -1,6 +1,6 @@
 extends MicroGame
 
-@onready var button: Button = $CanvasLayer/Button
+@onready var button: Button = find_child("HelloButton")
 var negations := randi_range(0, 5)
 var should_click := negations % 2 == 0
 
