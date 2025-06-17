@@ -253,7 +253,8 @@ func show_scoreboard(score: int) -> void:
 	push_str("==========\n")
 	for i in range(scoreboard.size()):
 		var entry = scoreboard[i]
-		push_str(str(i + 1) + ".  " + str(entry[1]) + "  " + entry[0] + "\n")
+		var score_text := str(entry[1]).rpad(6)
+		push_str(str(i + 1) + ".  " + score_text + entry[0] + "\n")
 
 func load_scoreboard() -> void:
 	if FileAccess.file_exists(SCOREBOARD_PATH):
