@@ -49,19 +49,7 @@ func _ready() -> void:
 	load_scoreboard()
 	update_poweroff_button_color(POWEROFF_COLOR_INACTIVE)
 
-	clear_terminal()
-	print_game_title()
-
-func print_game_title() -> void:
-	push_str("\n\n\n")
-	push_str("     +>+>+>+ Häckerspiele +<+<+<+\n")
-	push_str(" >>>>>>>>>>>>============<<<<<<<<<<<<\n\n\n")
-	push_str("            -> ")
-	put_button(" Start ", _on_start_button_pressed)
-	push_str("\n\n")
-	push_str("            -> ")
-	put_button(" Settings ", go_to_settings)
-	push_str("\n")
+	show_title_screen()
 
 func on_button() -> void:
 	print("hallo")
@@ -109,14 +97,15 @@ func clear_terminal() -> void:
 		label.remove_child(child)
 		child.queue_free()
 
-func put_button(s: String, onclick: Callable) -> void:
-	var event := PrintEvent.new(PrintEventType.BUTTON, s)
+func put_button(text: String, onclick: Callable) -> void:
+	var event := PrintEvent.new(PrintEventType.BUTTON, text)
 	event.onclick = onclick
 	print_queue.append(event)
 
-func put_titlescreen_button() -> void:
+func put_settings_button(text: String, on_click: Callable) -> void:
 	push_str("-> ")
-	put_button("return to titlescreen", return_to_titlescreen)
+	put_button(text, on_click)
+	push_str("\n")
 
 func push_str(s: String):
 	for chr in s:
@@ -210,6 +199,8 @@ func _on_poweroff_button_pressed() -> void:
 	get_tree().quit()
 
 
+# scoreboard
+
 func disable() -> void:
 	hide()
 	screen_layer.hide()
@@ -264,8 +255,9 @@ func show_scoreboard(score: int) -> void:
 		scoreboard.insert(pos, [scoreboard_name, score])
 		scoreboard.resize(min(scoreboard.size(), SCOREBOARD_SIZE))
 		save_scoreboard()
+	print_scoreboard(return_to_title_screen_button)
 
-	# print scoreboard
+func print_scoreboard(return_button: Callable) -> void:
 	clear_terminal()
 	push_str("Scoreboard\n")
 	push_str("==========\n")
@@ -274,11 +266,7 @@ func show_scoreboard(score: int) -> void:
 		var score_text := str(entry[1]).rpad(6)
 		push_str(str(i + 1) + ".  " + score_text + entry[0] + "\n")
 	push_str("\n")
-	put_titlescreen_button()
-
-func return_to_titlescreen() -> void:
-	clear_terminal()
-	print_game_title()
+	return_button.call()
 
 func load_scoreboard() -> void:
 	if FileAccess.file_exists(SCOREBOARD_PATH):
@@ -289,10 +277,48 @@ func load_scoreboard() -> void:
 func save_scoreboard() -> void:
 	var file := FileAccess.open(SCOREBOARD_PATH, FileAccess.WRITE)
 	file.store_var(scoreboard)
-	print(JSON.stringify(scoreboard))
 
-func go_to_settings() -> void:
+
+# menu
+
+func print_game_title() -> void:
+	push_str("\n\n\n")
+	push_str("     +>+>+>+ Häckerspiele +<+<+<+\n")
+	push_str(" >>>>>>>>>>>>============<<<<<<<<<<<<\n\n\n")
+	push_str("            -> ")
+	put_button(" Start ", _on_start_button_pressed)
+	push_str("\n\n")
+	push_str("            -> ")
+	put_button(" Settings ", show_settings)
+	push_str("\n")
+
+func show_title_screen() -> void:
+	clear_terminal()
+	print_game_title()
+
+func return_to_title_screen_button() -> void:
+	put_settings_button("return to title screen", show_title_screen)
+
+func return_to_settings_button() -> void:
+	put_settings_button("return to settings", show_settings)
+
+func show_settings() -> void:
 	clear_terminal()
 	push_str("Settings\n")
 	push_str("========\n\n")
-	put_titlescreen_button()
+	put_settings_button("show scoreboard", func():
+		print_scoreboard(return_to_settings_button)
+	)
+	put_settings_button("reset scoreboard", func():
+		clear_terminal()
+		push_str("Do you really want to\nreset the scoreboard?\n\n  ")
+		put_button("yes", func():
+			scoreboard = []
+			save_scoreboard()
+			show_settings()
+		)
+		push_str("    ")
+		put_button("no", show_settings)
+		push_str("\n")
+	)
+	return_to_title_screen_button()
