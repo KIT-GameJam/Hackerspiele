@@ -23,23 +23,22 @@ func next_game() -> void:
 	var scene: PackedScene = MicroGames.scenes.pick_random()
 	current_game = scene.instantiate()
 	add_child(current_game)
-	timer.timeout.connect(current_game.on_timeout)
-	current_game.win.connect(game_won)
-	current_game.loss.connect(game_loss)
+	timer.timeout.connect(func():
+		game_finished(current_game.on_timeout())
+	)
+	current_game.finished.connect(game_finished)
 	timer.start()
 
-func game_won() -> void:
-	won_games += 1
+func game_finished(result: MicroGame.Result) -> void:
 	timer.stop()
+	match result:
+		MicroGame.Result.Loss:
+			lifes -= 1
+			if lifes <= 0:
+				current_game.queue_free()
+				get_parent().show_scoreboard(won_games)
+				queue_free()
+				return
+		MicroGame.Result.Win:
+			won_games += 1
 	next_game()
-
-func game_loss() -> void:
-	lifes -= 1
-	timer.stop()
-	if lifes <= 0:
-		current_game.queue_free()
-
-		get_parent().show_scoreboard(won_games)
-		queue_free()
-	else:
-		next_game()

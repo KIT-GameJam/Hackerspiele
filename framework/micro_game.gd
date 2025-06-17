@@ -1,10 +1,11 @@
 class_name MicroGame
 extends Node
 
-signal win
-signal loss
+enum Result { Loss, Win }
+
+@warning_ignore("unused_signal")
+signal finished(result: Result)
 
 ## This function is called, when the timer expires.
-## It should emit win or loss.
-func on_timeout() -> void:
-	loss.emit()
+func on_timeout() -> Result:
+	return Result.Loss

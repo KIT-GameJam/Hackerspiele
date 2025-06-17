@@ -9,13 +9,7 @@ func _ready() -> void:
 	button.text = "Do " + nots + "click this button!"
 
 func _on_button_pressed() -> void:
-	if should_click:
-		win.emit()
-	else:
-		loss.emit()
+	finished.emit(Result.Win if should_click else Result.Loss)
 
-func on_timeout() -> void:
-	if should_click:
-		loss.emit()
-	else:
-		win.emit()
+func on_timeout() -> Result:
+	return Result.Loss if should_click else Result.Win
