@@ -69,7 +69,7 @@ orientation = 1
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sndid"]
 albedo_color = Color(0.313146, 0.174428, 0.0210792, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0qgvj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4xr2k"]
 render_priority = 0
 shader = ExtResource("5_vromf")
 
@@ -181,9 +181,9 @@ mesh = SubResource("QuadMesh_vromf")
 surface_material_override/0 = SubResource("StandardMaterial3D_sndid")
 
 [node name="Mate" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.53, 0, 0, 0, 0.53, 0, 0, 0, 0.53, 2.35392, 0.401857, 1.58301)
+transform = Transform3D(-0.0446442, 0, -0.528116, 0, 0.53, 0, 0.528116, 0, -0.0446442, 2.35392, 0.42596, 1.58301)
 mesh = ExtResource("4_sndid")
-surface_material_override/0 = SubResource("ShaderMaterial_0qgvj")
+surface_material_override/0 = SubResource("ShaderMaterial_4xr2k")
 
 [node name="MateInhalt" type="MeshInstance3D" parent="Mate"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.363, 0)
@@ -191,6 +191,6 @@ mesh = SubResource("CylinderMesh_vromf")
 
 [connection signal="mouse_entered" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_poweroff_button_mouse_entered"]
 [connection signal="mouse_exited" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_poweroff_button_mouse_exited"]
-[connection signal="pressed" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_poweroff_button_pressed"]
 [connection signal="pressed" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_poweroff_button_pressed"]
 [connection signal="timeout" from="Monitor/ScreenLayer/Screen/BlinkTimer" to="." method="_on_blink_timer_timeout"]

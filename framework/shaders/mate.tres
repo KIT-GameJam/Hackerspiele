@@ -9,12 +9,12 @@ default_input_values = [0, Quaternion(0, 0, 0, 0)]
 op_type = 2
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_or82i"]
-size = Vector2(244, 122)
+size = Vector2(244, 161)
 title = "Edge Color"
 attached_nodes = PackedInt32Array(12)
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_ftttl"]
-size = Vector2(244, 122)
+size = Vector2(244, 161)
 title = "Albedo"
 attached_nodes = PackedInt32Array(16)
 
@@ -27,7 +27,7 @@ default_input_values = [0, Quaternion(0, 0, 0, 0)]
 op_type = 2
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_b7ic3"]
-size = Vector2(1124, 382)
+size = Vector2(1124, 424)
 title = "Fresnel"
 attached_nodes = PackedInt32Array(4, 9, 8, 7, 6, 5, 30)
 
@@ -59,7 +59,7 @@ linked_parent_graph_frame = 28
 constant = 0.05
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_j72hc"]
-size = Vector2(244, 122)
+size = Vector2(244, 164)
 title = "Roughness"
 attached_nodes = PackedInt32Array(27)
 
@@ -69,7 +69,7 @@ constant = 8.0
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_i7a41"]
 linked_parent_graph_frame = 18
-size = Vector2(244, 122)
+size = Vector2(244, 164)
 title = "Fresnel Exponent"
 attached_nodes = PackedInt32Array(29)
 
@@ -81,14 +81,14 @@ op_type = 3
 linked_parent_graph_frame = 33
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_3d7g2"]
-size = Vector2(244, 122)
+size = Vector2(244, 161)
 title = "Foam Color"
 attached_nodes = PackedInt32Array(32)
 
 [sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_qnyvs"]
 
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_8rjw1"]
-default_input_values = [0, 0.0, 1, 0.55]
+default_input_values = [0, 0.0, 1, 0.6]
 operator = 1
 
 [sub_resource type="VisualShaderNodeFloatFunc" id="VisualShaderNodeFloatFunc_2s6v0"]
@@ -201,7 +201,7 @@ void fragment() {
 
 
 // FloatOp:36
-	float n_in36p1 = 0.55000;
+	float n_in36p1 = 0.60000;
 	float n_out36p0 = n_out35p1 - n_in36p1;
 
 
@@ -286,6 +286,7 @@ void fragment() {
 
 }
 "
+graph_offset = Vector2(-446.384, 822.452)
 flags/world_vertex_coords = true
 nodes/fragment/0/position = Vector2(800, 140)
 nodes/fragment/4/node = SubResource("VisualShaderNodeInput_3w7x2")
