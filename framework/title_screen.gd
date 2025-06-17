@@ -45,15 +45,17 @@ class PrintEvent:
 
 func _ready() -> void:
 	load_scoreboard()
+	update_poweroff_button_color(POWEROFF_COLOR_INACTIVE)
 
 	clear_terminal()
+	print_game_title()
+
+func print_game_title() -> void:
 	push_str("\n\n\n")
 	push_str("     +>+>+>+ Häckerspiele +<+<+<+\n")
 	push_str(" >>>>>>>>>>>>============<<<<<<<<<<<<\n\n")
 	push_str("     ")
 	put_button(" Start ", _on_start_button_pressed)
-	update_cursor_pos()
-	update_poweroff_button_color(POWEROFF_COLOR_INACTIVE)
 
 func on_button() -> void:
 	print("hallo")
@@ -255,6 +257,12 @@ func show_scoreboard(score: int) -> void:
 		var entry = scoreboard[i]
 		var score_text := str(entry[1]).rpad(6)
 		push_str(str(i + 1) + ".  " + score_text + entry[0] + "\n")
+	push_str("\n")
+	put_button("return to titlescreen", return_to_titlescreen)
+
+func return_to_titlescreen() -> void:
+	clear_terminal()
+	print_game_title()
 
 func load_scoreboard() -> void:
 	if FileAccess.file_exists(SCOREBOARD_PATH):
