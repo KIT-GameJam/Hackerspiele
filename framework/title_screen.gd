@@ -98,7 +98,7 @@ func clear_terminal() -> void:
 		child.queue_free()
 
 func put_button(text: String, onclick: Callable) -> void:
-	var event := PrintEvent.new(PrintEventType.BUTTON, text)
+	var event := PrintEvent.new(PrintEventType.BUTTON, " " + text + " ")
 	event.onclick = onclick
 	print_queue.append(event)
 
@@ -286,10 +286,10 @@ func print_game_title() -> void:
 	push_str("     +>+>+>+ Häckerspiele +<+<+<+\n")
 	push_str(" >>>>>>>>>>>>============<<<<<<<<<<<<\n\n\n")
 	push_str("            -> ")
-	put_button(" Start ", _on_start_button_pressed)
+	put_button("Start", _on_start_button_pressed)
 	push_str("\n\n")
 	push_str("            -> ")
-	put_button(" Settings ", show_settings)
+	put_button("Settings", show_settings)
 	push_str("\n")
 
 func show_title_screen() -> void:
