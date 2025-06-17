@@ -1,6 +1,5 @@
 extends Node3D
 
-@export var BLINK_SPEED: float
 @export var PRINT_TIMEOUT: float
 @export var TERM_W: int
 @export var TERM_H: int
@@ -19,7 +18,7 @@ const SCOREBOARD_MAX_NAME_LEN := 20
 @onready var cursor_rect: Panel = $Monitor/ScreenLayer/Screen/CursorRect
 @onready var poweroff_button: MeshInstance3D = $Monitor/PoweroffButton
 @onready var world_environment: WorldEnvironment = $WorldEnvironment
-var blink_time := 0.0
+@onready var blink_timer: Timer = $Monitor/ScreenLayer/Screen/BlinkTimer
 var print_time := 0.0
 var cursor := Vector2i(0, 0)
 var print_queue: Array[PrintEvent] = []
@@ -55,10 +54,6 @@ func on_button() -> void:
 	print("hallo")
 
 func _process(delta: float) -> void:
-	while blink_time <= 0.0:
-		blink_time += BLINK_SPEED
-		toggle_cursor_visible()
-	blink_time -= delta
 	while print_queue and print_time <= 0.0:
 		pop_print_queue()
 		var timeout := PRINT_TIMEOUT
@@ -81,6 +76,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
 				key_input.emit("\b")
 			elif (key >= KEY_A and key <= KEY_Z) or (key >= KEY_0 and key <= KEY_9):
 				key_input.emit(OS.get_keycode_string(key))
+
+func _on_blink_timer_timeout() -> void:
+	# toggle cursor visibility
+	cursor_rect.visible = not cursor_rect.visible
 
 func clear_terminal() -> void:
 	label.text = ""
@@ -171,9 +170,6 @@ func update_cursor_pos() -> void:
 	var bounds := get_cursor_char_bounds()
 	cursor_rect.position = label.position + bounds.position
 	cursor_rect.position.y += bounds.size.y - cursor_rect.size.y
-
-func toggle_cursor_visible() -> void:
-	cursor_rect.visible = not cursor_rect.visible
 
 func update_screen_pos() -> void:
 	var top_left = camera.unproject_position(marker_top_left.global_position)

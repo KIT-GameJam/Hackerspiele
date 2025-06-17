@@ -85,7 +85,6 @@ height = 1.8
 
 [node name="TitleScreen" type="Node3D"]
 script = ExtResource("1_f6akd")
-BLINK_SPEED = 0.3
 PRINT_TIMEOUT = 0.03
 TERM_W = 38
 TERM_H = 14
@@ -144,6 +143,10 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_ekofo")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_2bbnd")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_fmn24")
 
+[node name="BlinkTimer" type="Timer" parent="Monitor/ScreenLayer/Screen"]
+wait_time = 0.3
+autostart = true
+
 [node name="MarkerTopLeft" type="Marker3D" parent="Monitor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.732, 2.73, 0.93)
 
@@ -190,3 +193,4 @@ mesh = SubResource("CylinderMesh_vromf")
 [connection signal="mouse_exited" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_poweroff_button_mouse_exited"]
 [connection signal="pressed" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_poweroff_button_pressed"]
+[connection signal="timeout" from="Monitor/ScreenLayer/Screen/BlinkTimer" to="." method="_on_blink_timer_timeout"]
