@@ -255,18 +255,21 @@ func show_scoreboard(score: int) -> void:
 		scoreboard.insert(pos, [scoreboard_name, score])
 		scoreboard.resize(min(scoreboard.size(), SCOREBOARD_SIZE))
 		save_scoreboard()
-	print_scoreboard(return_to_title_screen_button)
+	print_scoreboard(pos)
+	push_str("Your score: " + str(score) + "\n\n")
+	put_settings_button("play again", _on_start_button_pressed)
+	return_to_title_screen_button()
 
-func print_scoreboard(return_button: Callable) -> void:
+func print_scoreboard(highlight_position := -1) -> void:
 	clear_terminal()
 	push_str("Scoreboard\n")
 	push_str("==========\n")
 	for i in range(scoreboard.size()):
 		var entry = scoreboard[i]
 		var score_text := str(entry[1]).rpad(6)
-		push_str(str(i + 1) + ".  " + score_text + entry[0] + "\n")
+		var prefix := ">" if i == highlight_position else " "
+		push_str(prefix + str(i + 1) + ".  " + score_text + entry[0] + "\n")
 	push_str("\n")
-	return_button.call()
 
 func load_scoreboard() -> void:
 	if FileAccess.file_exists(SCOREBOARD_PATH):
@@ -307,7 +310,8 @@ func show_settings() -> void:
 	push_str("Settings\n")
 	push_str("========\n\n")
 	put_settings_button("show scoreboard", func():
-		print_scoreboard(return_to_settings_button)
+		print_scoreboard()
+		return_to_settings_button()
 	)
 	put_settings_button("reset scoreboard", func():
 		clear_terminal()

@@ -29,18 +29,14 @@ func next_game() -> void:
 	timer.start()
 
 func game_won() -> void:
-	print("you won")
 	won_games += 1
 	timer.stop()
 	next_game()
 
 func game_loss() -> void:
-	print("you lost")
 	lifes -= 1
 	timer.stop()
 	if lifes <= 0:
-		print("rip")
-		print("Score: ", won_games)
 		current_game.queue_free()
 
 		get_parent().show_scoreboard(won_games)
