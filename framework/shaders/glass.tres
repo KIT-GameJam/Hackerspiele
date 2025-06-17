@@ -9,12 +9,12 @@ default_input_values = [0, Quaternion(0, 0, 0, 0)]
 op_type = 2
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_or82i"]
-size = Vector2(244, 161)
+size = Vector2(244, 122)
 title = "Edge Color"
 attached_nodes = PackedInt32Array(12)
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_ftttl"]
-size = Vector2(244, 161)
+size = Vector2(244, 122)
 title = "Albedo"
 attached_nodes = PackedInt32Array(16)
 
@@ -27,7 +27,7 @@ default_input_values = [0, Quaternion(0, 0, 0, 0)]
 op_type = 2
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_b7ic3"]
-size = Vector2(1124, 424)
+size = Vector2(1124, 382)
 title = "Fresnel"
 attached_nodes = PackedInt32Array(4, 9, 8, 7, 6, 5, 30)
 
@@ -59,7 +59,7 @@ linked_parent_graph_frame = 28
 constant = 0.142
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_j72hc"]
-size = Vector2(244, 164)
+size = Vector2(244, 122)
 title = "Roughness"
 attached_nodes = PackedInt32Array(27)
 
@@ -69,7 +69,7 @@ constant = 8.0
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_i7a41"]
 linked_parent_graph_frame = 18
-size = Vector2(244, 164)
+size = Vector2(244, 122)
 title = "Fresnel Exponent"
 attached_nodes = PackedInt32Array(29)
 
@@ -205,7 +205,6 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-695.402, 2.82532)
 nodes/fragment/4/node = SubResource("VisualShaderNodeInput_3w7x2")
 nodes/fragment/4/position = Vector2(-2100, -20)
 nodes/fragment/5/node = SubResource("VisualShaderNodeInput_j72hc")

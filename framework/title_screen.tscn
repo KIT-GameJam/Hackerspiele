@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://btgg6ulu6in8t" path="res://framework/title_screen.gd" id="1_f6akd"]
 [ext_resource type="PackedScene" uid="uid://1ju8eyujir3q" path="res://framework/models/monitor.glb" id="1_m3mpr"]
-[ext_resource type="Theme" uid="uid://fdu16ilqs3a5" path="res://themes/default.tres" id="3_4toer"]
-[ext_resource type="FontFile" uid="uid://cuoy0amwy2mxc" path="res://fonts/VT323/VT323-Regular.ttf" id="3_th5dg"]
+[ext_resource type="Theme" uid="uid://fdu16ilqs3a5" path="res://assets/themes/default.tres" id="3_4toer"]
+[ext_resource type="FontFile" uid="uid://cuoy0amwy2mxc" path="res://assets/fonts/VT323/VT323-Regular.ttf" id="3_th5dg"]
 [ext_resource type="ArrayMesh" uid="uid://cr7acoty3n02c" path="res://framework/models/mate.obj" id="4_sndid"]
 [ext_resource type="Shader" uid="uid://7ojoo23teqvk" path="res://framework/shaders/glass.tres" id="5_vromf"]
 [ext_resource type="Shader" uid="uid://duxxqg2h0syth" path="res://framework/shaders/mate.tres" id="6_0qgvj"]
@@ -191,6 +191,6 @@ mesh = SubResource("CylinderMesh_vromf")
 
 [connection signal="mouse_entered" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_poweroff_button_mouse_entered"]
 [connection signal="mouse_exited" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_poweroff_button_mouse_exited"]
-[connection signal="pressed" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_poweroff_button_pressed"]
+[connection signal="pressed" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="Monitor/ScreenLayer/Screen/BlinkTimer" to="." method="_on_blink_timer_timeout"]

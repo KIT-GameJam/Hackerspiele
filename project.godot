@@ -14,7 +14,7 @@ config/name="hackerspiele"
 config/description="Eine Minispielsammlung von Hackern für Hacker."
 run/main_scene="uid://ck0n3e7m71aoy"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://assets/logos/icon.svg"
 
 [input]
 
