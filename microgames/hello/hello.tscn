@@ -1,13 +1,40 @@
-[gd_scene load_steps=10 format=3 uid="uid://chuo7jsb2b1sa"]
+[gd_scene load_steps=16 format=3 uid="uid://chuo7jsb2b1sa"]
 
+[ext_resource type="Texture2D" uid="uid://cye3rwdrlnipf" path="res://microgames/hello/textures/window_borders.png" id="2_1rx3i"]
 [ext_resource type="FontFile" uid="uid://cmrep5rgp6jkj" path="res://microgames/hello/fonts/SSERIFF.ttf" id="2_8x2b2"]
-[ext_resource type="Texture2D" uid="uid://bprgm3xdhakiw" path="res://microgames/hello/textures/button_borders.png" id="2_33vh6"]
 [ext_resource type="Script" uid="uid://d0c3kie3rdxkq" path="res://microgames/hello/hello.gd" id="2_gejsk"]
 [ext_resource type="Texture2D" uid="uid://esuw27dlhoxa" path="res://assets/logos/kit_gamejam.png" id="4_8x2b2"]
+[ext_resource type="StyleBox" uid="uid://davr0qw80naqf" path="res://microgames/hello/textures/button_box_texture.tres" id="5_1rx3i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dnqod"]
 bg_color = Color(0, 0.501961, 0.501961, 1)
 corner_detail = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0ha24"]
+texture = ExtResource("2_1rx3i")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="Gradient" id="Gradient_1rx3i"]
+colors = PackedColorArray(0.501961, 0.501961, 0.501961, 1, 0.709804, 0.709804, 0.709804, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0ha24"]
+gradient = SubResource("Gradient_1rx3i")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_re64l"]
+texture = SubResource("GradientTexture1D_0ha24")
+
+[sub_resource type="LabelSettings" id="LabelSettings_ys4ov"]
+font = ExtResource("2_8x2b2")
+font_size = 20
+font_color = Color(0.709804, 0.709804, 0.709804, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1rx3i"]
+font = ExtResource("2_8x2b2")
+font_size = 30
+font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gejsk"]
 bg_color = Color(0.752941, 0.752941, 0.752941, 1)
@@ -17,13 +44,6 @@ anti_aliasing = false
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8x2b2"]
-texture = ExtResource("2_33vh6")
-texture_margin_left = 4.0
-texture_margin_top = 4.0
-texture_margin_right = 4.0
-texture_margin_bottom = 4.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_8x2b2"]
 font = ExtResource("2_8x2b2")
@@ -43,7 +63,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dnqod")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel"]
+[node name="ScreenVContainer" type="VBoxContainer" parent="CanvasLayer/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,15 +72,120 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 2
 
-[node name="HelloButton" type="Button" parent="CanvasLayer/Panel/VBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Panel/ScreenVContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="WindowPanel" type="PanelContainer" parent="CanvasLayer/Panel/ScreenVContainer/CenterContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(460, 300)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_0ha24")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel/ScreenVContainer/CenterContainer/WindowPanel"]
 layout_mode = 2
 
-[node name="MenuBar" type="Panel" parent="CanvasLayer/Panel/VBoxContainer"]
+[node name="Panel" type="Panel" parent="CanvasLayer/Panel/ScreenVContainer/CenterContainer/WindowPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_re64l")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel/ScreenVContainer/CenterContainer/WindowPanel/VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Spacer1" type="Control" parent="CanvasLayer/Panel/ScreenVContainer/CenterContainer/WindowPanel/VBoxContainer/Panel/HBoxContainer"]
+custom_minimum_size = Vector2(6, 0)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="CanvasLayer/Panel/ScreenVContainer/CenterContainer/WindowPanel/VBoxContainer/Panel/HBoxContainer"]
+custom_minimum_size = Vector2(32, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_8x2b2")
+expand_mode = 3
+
+[node name="Spacer2" type="Control" parent="CanvasLayer/Panel/ScreenVContainer/CenterContainer/WindowPanel/VBoxContainer/Panel/HBoxContainer"]
+custom_minimum_size = Vector2(6, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/ScreenVContainer/CenterContainer/WindowPanel/VBoxContainer/Panel/HBoxContainer"]
+layout_mode = 2
+text = "Hurry Up!!!"
+label_settings = SubResource("LabelSettings_ys4ov")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel/ScreenVContainer/CenterContainer/WindowPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Panel/ScreenVContainer/CenterContainer/WindowPanel/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="Control" type="Control" parent="CanvasLayer/Panel/ScreenVContainer/CenterContainer/WindowPanel/VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="HelloLabel" type="Label" parent="CanvasLayer/Panel/ScreenVContainer/CenterContainer/WindowPanel/VBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+text = "Dummy Text"
+label_settings = SubResource("LabelSettings_1rx3i")
+autowrap_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel/ScreenVContainer/CenterContainer/WindowPanel/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 2
+
+[node name="HelloButton" type="Button" parent="CanvasLayer/Panel/ScreenVContainer/CenterContainer/WindowPanel/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 46)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "The tooltip won't help you on this one"
+mouse_default_cursor_shape = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_8x2b2")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = ExtResource("5_1rx3i")
+theme_override_styles/hover_pressed_mirrored = ExtResource("5_1rx3i")
+theme_override_styles/hover_pressed = ExtResource("5_1rx3i")
+theme_override_styles/hover_mirrored = ExtResource("5_1rx3i")
+theme_override_styles/hover = ExtResource("5_1rx3i")
+theme_override_styles/pressed_mirrored = ExtResource("5_1rx3i")
+theme_override_styles/pressed = ExtResource("5_1rx3i")
+theme_override_styles/normal_mirrored = ExtResource("5_1rx3i")
+theme_override_styles/normal = ExtResource("5_1rx3i")
+text = "Button"
+
+[node name="Spacer" type="Control" parent="CanvasLayer/Panel/ScreenVContainer/CenterContainer/WindowPanel/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="CanvasLayer/Panel/ScreenVContainer/CenterContainer/WindowPanel/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MenuBar" type="Panel" parent="CanvasLayer/Panel/ScreenVContainer"]
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_gejsk")
 
-[node name="MenuBarBorder" type="Panel" parent="CanvasLayer/Panel/VBoxContainer/MenuBar"]
+[node name="MenuBarBorder" type="Panel" parent="CanvasLayer/Panel/ScreenVContainer/MenuBar"]
 custom_minimum_size = Vector2(0, 4)
 layout_mode = 1
 anchors_preset = 10
@@ -68,7 +193,7 @@ anchor_right = 1.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_33vh6")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel/VBoxContainer/MenuBar"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel/ScreenVContainer/MenuBar"]
 custom_minimum_size = Vector2(0, 52)
 layout_mode = 1
 anchors_preset = 12
@@ -79,21 +204,20 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 0
 
-[node name="Spacer" type="Control" parent="CanvasLayer/Panel/VBoxContainer/MenuBar/HBoxContainer"]
+[node name="Spacer" type="Control" parent="CanvasLayer/Panel/ScreenVContainer/MenuBar/HBoxContainer"]
 custom_minimum_size = Vector2(4, 0)
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
 
-[node name="Button" type="Button" parent="CanvasLayer/Panel/VBoxContainer/MenuBar/HBoxContainer"]
+[node name="Button" type="Button" parent="CanvasLayer/Panel/ScreenVContainer/MenuBar/HBoxContainer"]
 texture_filter = 1
 custom_minimum_size = Vector2(108, 44)
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_styles/disabled = SubResource("StyleBoxTexture_8x2b2")
+theme_override_styles/disabled = ExtResource("5_1rx3i")
 disabled = true
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/VBoxContainer/MenuBar/HBoxContainer/Button"]
+[node name="Icon" type="TextureRect" parent="CanvasLayer/Panel/ScreenVContainer/MenuBar/HBoxContainer/Button"]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
@@ -102,7 +226,7 @@ offset_bottom = 36.0
 texture = ExtResource("4_8x2b2")
 expand_mode = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer/MenuBar/HBoxContainer/Button"]
+[node name="Label" type="Label" parent="CanvasLayer/Panel/ScreenVContainer/MenuBar/HBoxContainer/Button"]
 layout_mode = 0
 offset_left = 46.0
 offset_top = 10.0
@@ -111,4 +235,4 @@ offset_bottom = 38.0
 text = "Stop"
 label_settings = SubResource("LabelSettings_8x2b2")
 
-[connection signal="pressed" from="CanvasLayer/Panel/VBoxContainer/HelloButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/ScreenVContainer/CenterContainer/WindowPanel/VBoxContainer/VBoxContainer/HBoxContainer/HelloButton" to="." method="_on_button_pressed"]
