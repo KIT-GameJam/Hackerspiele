@@ -14,7 +14,7 @@ func _on_button_pressed() -> void:
 	else:
 		loss.emit()
 
-func _on_timeout() -> void:
+func on_timeout() -> void:
 	if should_click:
 		loss.emit()
 	else:
