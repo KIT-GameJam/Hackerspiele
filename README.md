@@ -13,3 +13,5 @@ To add a new micogame, follow these steps:
 4. Open a PR with your changes.
 
 For an example, take a look at `microgames/hello/`.
+
+⚠️ **Important Note:** Only use the pre-defined actions `left`, `right`, `up`, `down` and `submit` for input methods! This way the game is playable with only keyboard or only game pad.
