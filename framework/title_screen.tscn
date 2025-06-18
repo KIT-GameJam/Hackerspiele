@@ -30,7 +30,9 @@ bg_color = Color(0.258552, 0.668512, 0.157625, 1)
 shadow_color = Color(0.258552, 0.668512, 0.157625, 1)
 shadow_size = 2
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_th5dg"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4toer"]
+bg_color = Color(0, 0, 0, 0)
+shadow_size = 1
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sndid"]
 
@@ -125,13 +127,13 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_th5dg")
 
 [node name="PoweroffButton" type="Button" parent="Monitor/ScreenLayer/Screen"]
 layout_mode = 0
-offset_left = 416.0
+offset_left = 421.0
 offset_top = 621.0
-offset_right = 466.0
+offset_right = 461.0
 offset_bottom = 671.0
 tooltip_text = "Exit Game"
 mouse_default_cursor_shape = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_th5dg")
+theme_override_styles/focus = SubResource("StyleBoxFlat_4toer")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_sndid")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_vromf")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0qgvj")
