@@ -12,7 +12,7 @@ func _ready() -> void:
 	var nots := "not ".repeat(not_negations)
 	var donts := "n't".repeat(dont_negations)
 	var really := "Really do" if really_count else "Do"
-	label.text = "{0}{1} {2}click the button!".format([really, donts, nots])
+	label.text = "{0}{1} {2}press the button!".format([really, donts, nots])
 
 func _process(_delta: float) -> void:
 	if Input.is_action_pressed("submit"):
