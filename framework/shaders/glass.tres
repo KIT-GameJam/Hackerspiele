@@ -29,7 +29,7 @@ default_input_values = [0, Quaternion(0, 0, 0, 0)]
 op_type = 2
 
 [sub_resource type="VisualShaderNodeFrame" id="VisualShaderNodeFrame_b7ic3"]
-size = Vector2(1124, 424)
+size = Vector2(1124, 284)
 title = "Fresnel"
 attached_nodes = PackedInt32Array(4, 9, 8, 7, 6, 5, 30)
 
@@ -254,7 +254,6 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-347.667, -205.186)
 nodes/fragment/0/position = Vector2(1480, 460)
 nodes/fragment/4/node = SubResource("VisualShaderNodeInput_3w7x2")
 nodes/fragment/4/position = Vector2(-2100, -20)

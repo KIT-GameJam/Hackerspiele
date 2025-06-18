@@ -16,6 +16,12 @@ run/main_scene="uid://ck0n3e7m71aoy"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://assets/logos/icon.svg"
 
+[gui]
+
+theme/custom="uid://b2fo7vry15yci"
+theme/custom_font="uid://sa1ml6cgmorr"
+theme/default_font_hinting=2
+
 [input]
 
 up={
