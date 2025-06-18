@@ -4,6 +4,7 @@ var current_game: Node = null
 var won_games := 0
 var lifes := 3
 @onready var timer: Timer = $Timer
+@onready var timer_progress: TextureProgressBar = $CanvasLayer/Panel/HBoxContainer/TimerProgress
 
 @onready var timer_label: Label = $CanvasLayer/Panel/HBoxContainer/TimerLabel
 @onready var score_label: Label = $CanvasLayer/Panel/HBoxContainer/ScoreLabel
@@ -19,6 +20,9 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	timer_label.text = String.num(timer.time_left, 1) + " s"
 	score_label.text = "Score: " + str(won_games)
+	var progress: float = timer.time_left / timer.wait_time
+	timer_progress.value = 100.0 * progress
+	timer_progress.modulate = Color.from_hsv(0.33 * progress * progress, 0.8, 1.0)
 
 func next_game() -> void:
 	if current_game:
