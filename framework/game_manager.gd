@@ -1,6 +1,6 @@
 extends Node2D
 
-var current_game: Node = null
+var current_game: MicroGame = null
 var won_games := 0
 var lifes := 3
 @onready var timer: Timer = $Timer
@@ -19,10 +19,10 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	timer_label.text = String.num(timer.time_left, 1) + " s"
-	score_label.text = "Score: " + str(won_games)
 	var progress: float = timer.time_left / timer.wait_time
 	timer_progress.value = 100.0 * progress
 	timer_progress.modulate = Color.from_hsv(0.33 * progress * progress, 0.8, 1.0)
+	score_label.text = "Score: " + str(won_games)
 	if Input.is_action_just_pressed("pause"):
 		pause()
 
@@ -39,27 +39,30 @@ func next_game() -> void:
 	var scene: PackedScene = MicroGames.scenes.pick_random()
 	current_game = scene.instantiate()
 	add_child(current_game)
-	timer.timeout.connect(current_game.on_timeout)
-	current_game.win.connect(game_won)
-	current_game.loss.connect(game_loss)
+	current_game.finished.connect(game_finished)
+	timer.wait_time = current_game.time
+	timer.timeout.connect(handle_timeout)
 	timer.start()
 
-func game_won() -> void:
-	won_games += 1
+func handle_timeout() -> void:
+	game_finished(current_game.on_timeout())
+
+func game_finished(result: MicroGame.Result) -> void:
 	timer.stop()
+	timer.timeout.disconnect(handle_timeout)
+	match result:
+		MicroGame.Result.Loss:
+			lifes -= 1
+			update_life_count()
+			if lifes <= 0:
+				current_game.queue_free()
+
+				get_parent().show_scoreboard(won_games)
+				queue_free()
+				return
+		MicroGame.Result.Win:
+			won_games += 1
 	next_game()
-
-func game_loss() -> void:
-	lifes -= 1
-	update_life_count()
-	timer.stop()
-	if lifes <= 0:
-		current_game.queue_free()
-
-		get_parent().show_scoreboard(won_games)
-		queue_free()
-	else:
-		next_game()
 
 func update_life_count() -> void:
 	var missing: int = lifes - hearts.size()
