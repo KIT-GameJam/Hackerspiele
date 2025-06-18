@@ -7,15 +7,18 @@ var lifes := 3
 
 @onready var timer_label: Label = $CanvasLayer/Panel/HBoxContainer/TimerLabel
 @onready var score_label: Label = $CanvasLayer/Panel/HBoxContainer/ScoreLabel
-@onready var lifes_label: Label = $CanvasLayer/Panel/HBoxContainer/LifesLabel
+
+@onready var heart_container: HBoxContainer = $CanvasLayer/Panel/HBoxContainer/HeartContainer
+@onready var heart_template: TextureRect = $CanvasLayer/Panel/HBoxContainer/HeartContainer/Heart
+var hearts: Array[TextureRect] = []
 
 func _ready() -> void:
+	update_life_count()
 	next_game()
 
 func _process(_delta: float) -> void:
 	timer_label.text = String.num(timer.time_left, 1) + " s"
 	score_label.text = "Score: " + str(won_games)
-	lifes_label.text = "Lifes: " + str(lifes)
 
 func next_game() -> void:
 	if current_game:
@@ -35,6 +38,7 @@ func game_won() -> void:
 
 func game_loss() -> void:
 	lifes -= 1
+	update_life_count()
 	timer.stop()
 	if lifes <= 0:
 		current_game.queue_free()
@@ -43,3 +47,17 @@ func game_loss() -> void:
 		queue_free()
 	else:
 		next_game()
+
+func update_life_count() -> void:
+	var missing: int = lifes - hearts.size()
+	if missing > 0:
+		for i in range(missing):
+			var heart: TextureRect = heart_template.duplicate(0)
+			heart.visible = true
+			hearts.append(heart)
+			heart_container.add_child(heart)
+	elif missing < 0:
+		for i in range(-missing):
+			var heart: TextureRect = hearts.pop_back()
+			heart_container.remove_child(heart)
+			heart.queue_free()

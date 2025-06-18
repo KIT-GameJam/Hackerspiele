@@ -5,4 +5,5 @@ bg_color = Color(0.0214346, 0.0214346, 0.0214346, 1)
 
 [resource]
 Label/colors/font_color = Color(1, 1, 1, 1)
+Label/font_sizes/font_size = 18
 Panel/styles/panel = SubResource("StyleBoxFlat_qby0n")
