@@ -1,10 +1,10 @@
 extends Node2D
 class_name GameManager
 
+@export var max_lifes := 3
 var current_game: MicroGame = null
 var won_games: int
 var lifes: int
-var max_lifes := 3
 @onready var timer: Timer = $MicrogameSlot/Timer
 @onready var timer_progress: TextureProgressBar = $CanvasLayer/Panel/HBoxContainer/TimerProgress
 @onready var switch_game_timer: Timer = $MicrogameSlot/SwitchGameTimer
