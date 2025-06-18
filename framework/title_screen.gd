@@ -139,6 +139,8 @@ func create_terminal_button(text: String, onclick: Callable) -> Button:
 	button.size = bounds.size * Vector2(text.length(), 1.0)
 	button.tooltip_text = text
 	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	if get_viewport().gui_get_focus_owner() == null:
+		button.grab_focus.call_deferred()
 	button.connect("pressed", onclick)
 	return button
 
