@@ -7,6 +7,9 @@ extends Node3D
 const POWEROFF_COLOR_INACTIVE := Color("#cd5424")
 const POWEROFF_COLOR_ACTIVE := Color("#ed7444")
 const SCOREBOARD_MAX_NAME_LEN := 20
+const VOLUME_SLIDER_SIZE := 16
+const VOLUME_SLIDER_FULL_CHAR := "▓"
+const VOLUME_SLIDER_EMPTY_CHAR := "░"
 
 @onready var camera: Camera3D = $Camera
 @onready var marker_top_left: Marker3D = $Monitor/MarkerTopLeft
@@ -36,7 +39,7 @@ const SCOREBOARD_PATH := "user://scoreboard.dat"
 
 const GameManager: PackedScene = preload("res://framework/game_manager.tscn")
 
-enum PrintEventType { CHAR, BUTTON }
+enum PrintEventType { CHAR, BUTTON, SYNC }
 
 class PrintEvent:
 	var ty: PrintEventType
@@ -111,6 +114,11 @@ func push_str(s: String):
 	for chr in s:
 		print_queue.append(PrintEvent.new(PrintEventType.CHAR, chr))
 
+func push_sync(handler: Callable) -> void:
+	var event := PrintEvent.new(PrintEventType.SYNC, null)
+	event.onclick = handler
+	print_queue.append(event)
+
 func pop_print_queue() -> void:
 	var event: PrintEvent = print_queue.pop_front()
 	match event.ty:
@@ -121,6 +129,8 @@ func pop_print_queue() -> void:
 			for chr in text.reverse():
 				print_queue.push_front(PrintEvent.new(PrintEventType.CHAR, chr))
 			label.add_child(create_terminal_button(text, event.onclick))
+		PrintEventType.SYNC:
+			event.onclick.call()
 
 func create_terminal_button(text: String, onclick: Callable) -> Button:
 	var button := Button.new()
@@ -324,10 +334,59 @@ func return_to_title_screen_button() -> void:
 func return_to_settings_button() -> void:
 	put_settings_button("return to settings", show_settings)
 
+func change_volume(bus_idx: int, volume_cursor: Vector2i, delta: int):
+	var val := linear_to_slider_volume(AudioServer.get_bus_volume_linear(bus_idx)) + delta
+	AudioServer.set_bus_volume_linear(bus_idx, slider_volume_to_linear(val))
+	update_volume_graphics(volume_cursor, val)
+
+func update_volume_graphics(volume_cursor: Vector2i, val: int):
+	for i in range(VOLUME_SLIDER_SIZE):
+		var chr := VOLUME_SLIDER_FULL_CHAR if i < val else VOLUME_SLIDER_EMPTY_CHAR
+		setc(volume_cursor.y, volume_cursor.x + val, chr)
+
+func slider_volume_to_linear(val: int) -> float:
+	return float(val) / VOLUME_SLIDER_SIZE
+
+func linear_to_slider_volume(linear: float) -> int:
+	return int(roundf(linear * float(VOLUME_SLIDER_SIZE)))
+
+func put_volume_slider(name: String, bus_name: String, handler: Callable) -> void:
+	var bus_idx := AudioServer.get_bus_index(bus_name)
+	push_str((name + ":").rpad(8))
+	push_sync(func():
+		var volume_cursor := cursor + Vector2i(2, 0)
+		put_button("-", func():
+			change_volume(bus_idx, volume_cursor, -1)
+		)
+		var volume_bars := linear_to_slider_volume(AudioServer.get_bus_volume_linear(bus_idx))
+		push_sync(func():
+			update_volume_graphics(volume_cursor, volume_bars)
+			cursor.x += VOLUME_SLIDER_SIZE
+			put_button("+", func():
+				change_volume(bus_idx, volume_cursor, 1)
+			)
+			push_str("\n")
+			handler.call()
+		)
+	)
+
+func show_volume_settings() -> void:
+	clear_terminal()
+	push_str("Volume Settings\n")
+	push_str("===============\n\n")
+	put_volume_slider("Master", "Master", func():
+		put_volume_slider("UI", "Ui", func():
+			put_volume_slider("Music", "Music", func():
+				return_to_settings_button()
+			)
+		)
+	)
+
 func show_settings() -> void:
 	clear_terminal()
 	push_str("Settings\n")
 	push_str("========\n\n")
+	put_settings_button("volume settings", show_volume_settings)
 	put_settings_button("show scoreboard", func():
 		print_scoreboard()
 		return_to_settings_button()
