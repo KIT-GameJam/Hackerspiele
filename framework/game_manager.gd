@@ -6,6 +6,7 @@ var won_games: int
 var lifes: int
 @onready var timer: Timer = $MicrogameSlot/Timer
 @onready var timer_progress: TextureProgressBar = $CanvasLayer/Panel/HBoxContainer/TimerProgress
+@onready var switch_game_timer: Timer = $MicrogameSlot/SwitchGameTimer
 
 @onready var timer_label: Label = $CanvasLayer/Panel/HBoxContainer/TimerLabel
 @onready var score_label: Label = $CanvasLayer/Panel/HBoxContainer/ScoreLabel
@@ -61,11 +62,16 @@ func start() -> void:
 	lifes = 3
 	won_games = 0
 	update_life_count()
-	next_game()
+	start_game()
 
 func next_game() -> void:
 	if current_game:
 		current_game.queue_free()
+	show_title_screen()
+	switch_game_timer.start()
+	title_screen.switch_game_screen()
+
+func start_game() -> void:
 	hide_title_screen()
 	var scene: PackedScene = MicroGames.scenes.pick_random()
 	current_game = scene.instantiate()
@@ -112,3 +118,6 @@ func update_life_count() -> void:
 			var heart: TextureRect = hearts.pop_back()
 			heart_container.remove_child(heart)
 			heart.queue_free()
+
+func _on_switch_game_timer_timeout() -> void:
+	start_game()

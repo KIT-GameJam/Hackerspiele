@@ -109,4 +109,9 @@ stretch_mode = 0
 [node name="Timer" type="Timer" parent="MicrogameSlot"]
 one_shot = true
 
+[node name="SwitchGameTimer" type="Timer" parent="MicrogameSlot"]
+wait_time = 2.0
+one_shot = true
+
 [connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/TextureButton" to="." method="pause"]
+[connection signal="timeout" from="MicrogameSlot/SwitchGameTimer" to="." method="_on_switch_game_timer_timeout"]

@@ -388,3 +388,7 @@ func show_settings() -> void:
 		put_settings_button("return", show_pause_screen)
 	else:
 		return_to_title_screen_button()
+
+func switch_game_screen() -> void:
+	clear_terminal()
+	push_str("Keep it up!")
