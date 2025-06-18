@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bdgy134fdvdkn"]
+[gd_scene load_steps=9 format=3 uid="uid://bdgy134fdvdkn"]
 
 [ext_resource type="Script" uid="uid://wbi3h78qfjef" path="res://framework/game_manager.gd" id="1_68sdn"]
 [ext_resource type="Texture2D" uid="uid://1a508bcv4xi5" path="res://assets/heart.png" id="2_5425x"]
@@ -11,6 +11,24 @@ colors = PackedColorArray(1, 1, 1, 1)
 gradient = SubResource("Gradient_5425x")
 width = 1
 
+[sub_resource type="Gradient" id="Gradient_pqoom"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_q6y0k"]
+gradient = SubResource("Gradient_pqoom")
+width = 20
+
+[sub_resource type="Gradient" id="Gradient_q6y0k"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8)
+colors = PackedColorArray(0, 0, 0, 0, 0.513726, 0.513726, 0.513726, 1, 0, 0, 0, 0, 0.513726, 0.513726, 0.513726, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_m1iqg"]
+gradient = SubResource("Gradient_q6y0k")
+width = 20
+
 [node name="GameManager" type="Node2D" groups=["game-manager"]]
 script = ExtResource("1_68sdn")
 
@@ -18,6 +36,7 @@ script = ExtResource("1_68sdn")
 wait_time = 5.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 3
 
 [node name="Panel" type="Panel" parent="CanvasLayer"]
 anchors_preset = 10
@@ -77,3 +96,15 @@ stretch_mode = 5
 
 [node name="Space3" type="Control" parent="CanvasLayer/Panel/HBoxContainer"]
 layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+action_mode = 0
+texture_normal = SubResource("GradientTexture1D_q6y0k")
+texture_hover = SubResource("GradientTexture1D_m1iqg")
+stretch_mode = 0
+
+[connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/TextureButton" to="." method="pause"]

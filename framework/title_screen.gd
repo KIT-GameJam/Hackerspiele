@@ -227,11 +227,20 @@ func scoreboard_position(score: int) -> int:
 			return i
 	return size
 
+func show_pause_screen() -> void:
+	clear_terminal()
+	push_str("Game Paused\n")
+	push_str("-----------\n\n")
+	put_settings_button("Settings", show_settings)
+	push_str("\n")
+	put_settings_button("Resume", unpause)
+
 func pause() -> void:
 	is_paused = true
 	enable()
 	game_manager_buffer = get_tree().get_first_node_in_group("game-manager")
 	remove_child(game_manager_buffer)
+	show_pause_screen()
 
 func unpause() -> void:
 	is_paused = false
@@ -335,4 +344,7 @@ func show_settings() -> void:
 		put_button("no", show_settings)
 		push_str("\n")
 	)
-	return_to_title_screen_button()
+	if is_paused:
+		put_settings_button("return", show_pause_screen)
+	else:
+		return_to_title_screen_button()
