@@ -5,12 +5,18 @@ class_name TitleScreen
 @export var TERM_W: int
 @export var TERM_H: int
 
+@export var SCOREBOARD_SIZE := 5
+var scoreboard := []
+const SCOREBOARD_PATH := "user://scoreboard.dat"
+
 const POWEROFF_COLOR_INACTIVE := Color("#cd5424")
 const POWEROFF_COLOR_ACTIVE := Color("#ed7444")
 const SCOREBOARD_MAX_NAME_LEN := 20
 const VOLUME_SLIDER_SIZE := 16
 const VOLUME_SLIDER_FULL_CHAR := "#"
 const VOLUME_SLIDER_EMPTY_CHAR := "-"
+const AUDIO_CFG_PATH := "user://audio.cfg"
+const VOLUME_SECTION := "volume"
 
 @onready var camera: Camera3D = $Camera
 @onready var marker_top_left: Marker3D = $Monitor/MarkerTopLeft
@@ -34,10 +40,6 @@ var is_paused := false
 
 signal key_input(chr: String)
 
-@export var SCOREBOARD_SIZE := 5
-var scoreboard := []
-const SCOREBOARD_PATH := "user://scoreboard.dat"
-
 enum PrintEventType { CHAR, BUTTON, SYNC }
 
 class PrintEvent:
@@ -53,6 +55,7 @@ class Sync:
 
 func _ready() -> void:
 	load_scoreboard()
+	load_audio_settings()
 	update_poweroff_button_color(POWEROFF_COLOR_INACTIVE)
 
 	show_title_screen()
@@ -293,6 +296,34 @@ func save_scoreboard() -> void:
 	file.store_var(scoreboard)
 
 
+# audio
+
+func change_volume(bus_idx: int, volume_cursor: Vector2i, delta: int):
+	var val := clampi(linear_to_slider_volume(AudioServer.get_bus_volume_linear(bus_idx)) + delta, 0, VOLUME_SLIDER_SIZE)
+	AudioServer.set_bus_volume_linear(bus_idx, slider_volume_to_linear(val))
+	update_volume_graphics(volume_cursor, val)
+	save_audio_settings()
+
+func load_audio_settings() -> void:
+	var config := ConfigFile.new()
+	var err := config.load(AUDIO_CFG_PATH)
+	if err != OK:
+		return
+	print("loading audio settings")
+	for bus_name in config.get_section_keys(VOLUME_SECTION):
+		var value = config.get_value(VOLUME_SECTION, bus_name)
+		if value != null:
+			var bus_idx := AudioServer.get_bus_index(bus_name)
+			AudioServer.set_bus_volume_linear(bus_idx, value)
+
+func save_audio_settings() -> void:
+	var config := ConfigFile.new()
+	for bus_idx in range(AudioServer.bus_count):
+		var bus_name := AudioServer.get_bus_name(bus_idx)
+		config.set_value(VOLUME_SECTION, bus_name, AudioServer.get_bus_volume_linear(bus_idx))
+	config.save(AUDIO_CFG_PATH)
+
+
 # menu
 
 func print_game_title() -> void:
@@ -315,11 +346,6 @@ func return_to_title_screen_button() -> void:
 
 func return_to_settings_button() -> void:
 	put_settings_button("return to settings", show_settings)
-
-func change_volume(bus_idx: int, volume_cursor: Vector2i, delta: int):
-	var val := clampi(linear_to_slider_volume(AudioServer.get_bus_volume_linear(bus_idx)) + delta, 0, VOLUME_SLIDER_SIZE)
-	AudioServer.set_bus_volume_linear(bus_idx, slider_volume_to_linear(val))
-	update_volume_graphics(volume_cursor, val)
 
 func update_volume_graphics(volume_cursor: Vector2i, val: int):
 	for i in range(VOLUME_SLIDER_SIZE):
