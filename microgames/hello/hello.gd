@@ -14,6 +14,10 @@ func _ready() -> void:
 	var really := "Really do" if really_count else "Do"
 	label.text = "{0}{1} {2}click the button!".format([really, donts, nots])
 
+func _process(_delta: float) -> void:
+	if Input.is_action_pressed("submit"):
+		_on_button_pressed()
+
 func _on_button_pressed() -> void:
 	finished.emit(Result.Win if should_click else Result.Loss)
 
