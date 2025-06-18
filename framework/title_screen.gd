@@ -329,9 +329,9 @@ func slider_volume_to_linear(val: int) -> float:
 func linear_to_slider_volume(linear: float) -> int:
 	return int(roundf(linear * float(VOLUME_SLIDER_SIZE)))
 
-func put_volume_slider(name: String, bus_name: String, handler: Callable) -> void:
+func put_volume_slider(slider_name: String, bus_name: String, handler: Callable) -> void:
 	var bus_idx := AudioServer.get_bus_index(bus_name)
-	push_str((name + ":").rpad(8))
+	push_str((slider_name + ":").rpad(8))
 	push_sync(func():
 		var volume_cursor := cursor + Vector2i(2, 0)
 		put_button("-", func():
