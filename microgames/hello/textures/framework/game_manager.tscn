@@ -1,0 +1,110 @@
+[gd_scene load_steps=9 format=3 uid="uid://bdgy134fdvdkn"]
+
+[ext_resource type="Script" uid="uid://wbi3h78qfjef" path="res://microgames/hello/textures/framework/game_manager.gd" id="1_68sdn"]
+[ext_resource type="Texture2D" uid="uid://1a508bcv4xi5" path="res://assets/heart.png" id="2_5425x"]
+
+[sub_resource type="Gradient" id="Gradient_5425x"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_pqoom"]
+gradient = SubResource("Gradient_5425x")
+width = 1
+
+[sub_resource type="Gradient" id="Gradient_pqoom"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_q6y0k"]
+gradient = SubResource("Gradient_pqoom")
+width = 20
+
+[sub_resource type="Gradient" id="Gradient_q6y0k"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8)
+colors = PackedColorArray(0, 0, 0, 0, 0.513726, 0.513726, 0.513726, 1, 0, 0, 0, 0, 0.513726, 0.513726, 0.513726, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_m1iqg"]
+gradient = SubResource("Gradient_q6y0k")
+width = 20
+
+[node name="GameManager" type="Node2D" groups=["game-manager"]]
+script = ExtResource("1_68sdn")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 28.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Space0" type="Control" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+
+[node name="Space1" type="Control" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TimerLabel" type="Label" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+
+[node name="TimerProgress" type="TextureProgressBar" parent="CanvasLayer/Panel/HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_vertical = 4
+value = 64.0
+fill_mode = 4
+nine_patch_stretch = true
+texture_progress = SubResource("GradientTexture1D_pqoom")
+
+[node name="Space2" type="Control" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LifesLabel" type="Label" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+text = "Lifes:"
+
+[node name="HeartContainer" type="HBoxContainer" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+
+[node name="Heart" type="TextureRect" parent="CanvasLayer/Panel/HBoxContainer/HeartContainer"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("2_5425x")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Space3" type="Control" parent="CanvasLayer/Panel/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/HBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+action_mode = 0
+texture_normal = SubResource("GradientTexture1D_q6y0k")
+texture_hover = SubResource("GradientTexture1D_m1iqg")
+stretch_mode = 0
+
+[connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/TextureButton" to="." method="pause"]
