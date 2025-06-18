@@ -12,7 +12,7 @@ config_version=5
 
 config/name="hackerspiele"
 config/description="Eine Minispielsammlung von Hackern für Hacker."
-run/main_scene="uid://ck0n3e7m71aoy"
+run/main_scene="uid://bdgy134fdvdkn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://assets/logos/icon.svg"
 

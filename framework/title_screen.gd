@@ -1,4 +1,5 @@
 extends Node3D
+class_name TitleScreen
 
 @export var PRINT_TIMEOUT: float
 @export var TERM_W: int
@@ -29,15 +30,12 @@ var environment_buffer: Environment = null
 ## true if currently waiting for input, false otherwise
 var waiting_for_input := false
 var is_paused := false
-var game_manager_buffer
 
 signal key_input(chr: String)
 
 @export var SCOREBOARD_SIZE := 5
 var scoreboard := []
 const SCOREBOARD_PATH := "user://scoreboard.dat"
-
-const GameManager: PackedScene = preload("res://framework/game_manager.tscn")
 
 enum PrintEventType { CHAR, BUTTON, SYNC }
 
@@ -66,9 +64,10 @@ func _process(delta: float) -> void:
 		print_time -= delta
 	else:
 		print_time = 0.0
-	if is_paused and Input.is_action_just_pressed("pause"):
-		unpause()
 	update_screen_pos()
+
+func get_game_manager() -> GameManager:
+	return get_tree().get_first_node_in_group("game-manager")
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if print_queue.is_empty() and waiting_for_input:
@@ -211,25 +210,8 @@ func _on_poweroff_button_pressed() -> void:
 
 # scoreboard
 
-func disable() -> void:
-	hide()
-	screen_layer.hide()
-	environment_buffer = world_environment.environment
-	world_environment.environment = null
-	process_mode = Node.PROCESS_MODE_DISABLED
-
-func enable() -> void:
-	world_environment.environment = environment_buffer
-	show()
-	screen_layer.show()
-	process_mode = Node.PROCESS_MODE_INHERIT
-
 func _on_start_button_pressed() -> void:
-	disable()
-	var game_manager := GameManager.instantiate()
-	game_manager.process_mode = Node.PROCESS_MODE_PAUSABLE
-	add_child(game_manager)
-	game_manager.tree_exited.connect(enable)
+	get_game_manager().start()
 
 func scoreboard_position(score: int) -> int:
 	var size := scoreboard.size()
@@ -245,20 +227,17 @@ func show_pause_screen() -> void:
 	push_str("-----------\n\n")
 	put_settings_button("Settings", show_settings)
 	push_str("\n")
-	put_settings_button("Resume", unpause)
+	put_settings_button("Resume", unpause_game_manager)
+
+func unpause_game_manager() -> void:
+	get_game_manager().unpause()
 
 func pause() -> void:
 	is_paused = true
-	enable()
-	game_manager_buffer = get_tree().get_first_node_in_group("game-manager")
-	remove_child(game_manager_buffer)
 	show_pause_screen()
 
 func unpause() -> void:
 	is_paused = false
-	add_child(game_manager_buffer)
-	game_manager_buffer.unpause()
-	disable()
 
 func show_scoreboard(score: int) -> void:
 	clear_terminal()

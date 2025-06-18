@@ -1,12 +1,12 @@
 [gd_scene load_steps=30 format=3 uid="uid://ck0n3e7m71aoy"]
 
-[ext_resource type="Script" uid="uid://btgg6ulu6in8t" path="res://microgames/hello/textures/framework/title_screen.gd" id="1_f6akd"]
-[ext_resource type="PackedScene" uid="uid://1ju8eyujir3q" path="res://microgames/hello/textures/framework/models/monitor.glb" id="1_m3mpr"]
+[ext_resource type="Script" uid="uid://btgg6ulu6in8t" path="res://framework/title_screen.gd" id="1_f6akd"]
+[ext_resource type="PackedScene" uid="uid://1ju8eyujir3q" path="res://framework/models/monitor.glb" id="1_m3mpr"]
 [ext_resource type="Theme" uid="uid://fdu16ilqs3a5" path="res://assets/themes/terminal.tres" id="3_4toer"]
 [ext_resource type="FontFile" uid="uid://cuoy0amwy2mxc" path="res://assets/fonts/VT323/VT323-Regular.ttf" id="3_th5dg"]
-[ext_resource type="ArrayMesh" uid="uid://cr7acoty3n02c" path="res://microgames/hello/textures/framework/models/mate.obj" id="4_sndid"]
-[ext_resource type="Shader" uid="uid://7ojoo23teqvk" path="res://microgames/hello/textures/framework/shaders/glass.tres" id="5_vromf"]
-[ext_resource type="Shader" uid="uid://duxxqg2h0syth" path="res://microgames/hello/textures/framework/shaders/mate.tres" id="6_0qgvj"]
+[ext_resource type="ArrayMesh" uid="uid://cr7acoty3n02c" path="res://framework/models/mate.obj" id="4_sndid"]
+[ext_resource type="Shader" uid="uid://7ojoo23teqvk" path="res://framework/shaders/glass.tres" id="5_vromf"]
+[ext_resource type="Shader" uid="uid://duxxqg2h0syth" path="res://framework/shaders/mate.tres" id="6_0qgvj"]
 
 [sub_resource type="Environment" id="Environment_0qgvj"]
 background_energy_multiplier = 10.0
