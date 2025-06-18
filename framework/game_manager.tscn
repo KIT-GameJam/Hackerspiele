@@ -11,7 +11,7 @@ colors = PackedColorArray(1, 1, 1, 1)
 gradient = SubResource("Gradient_5425x")
 width = 1
 
-[node name="GameManager" type="Node2D"]
+[node name="GameManager" type="Node2D" groups=["game-manager"]]
 script = ExtResource("1_68sdn")
 
 [node name="Timer" type="Timer" parent="."]

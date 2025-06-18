@@ -25,6 +25,8 @@ var print_queue: Array[PrintEvent] = []
 var environment_buffer: Environment = null
 ## true if currently waiting for input, false otherwise
 var waiting_for_input := false
+var is_paused := false
+var game_manager_buffer
 
 signal key_input(chr: String)
 
@@ -50,9 +52,6 @@ func _ready() -> void:
 
 	show_title_screen()
 
-func on_button() -> void:
-	print("hallo")
-
 func _process(delta: float) -> void:
 	while print_queue and print_time <= 0.0:
 		pop_print_queue()
@@ -64,6 +63,8 @@ func _process(delta: float) -> void:
 		print_time -= delta
 	else:
 		print_time = 0.0
+	if is_paused and Input.is_action_just_pressed("pause"):
+		unpause()
 	update_screen_pos()
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -225,6 +226,18 @@ func scoreboard_position(score: int) -> int:
 		if score > entry[1]:
 			return i
 	return size
+
+func pause() -> void:
+	is_paused = true
+	enable()
+	game_manager_buffer = get_tree().get_first_node_in_group("game-manager")
+	remove_child(game_manager_buffer)
+
+func unpause() -> void:
+	is_paused = false
+	add_child(game_manager_buffer)
+	game_manager_buffer.unpause()
+	disable()
 
 func show_scoreboard(score: int) -> void:
 	clear_terminal()

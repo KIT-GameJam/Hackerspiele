@@ -23,6 +23,15 @@ func _process(_delta: float) -> void:
 	var progress: float = timer.time_left / timer.wait_time
 	timer_progress.value = 100.0 * progress
 	timer_progress.modulate = Color.from_hsv(0.33 * progress * progress, 0.8, 1.0)
+	if Input.is_action_just_pressed("pause"):
+		pause()
+
+func pause() -> void:
+	process_mode = Node.PROCESS_MODE_DISABLED
+	get_parent().pause()
+
+func unpause() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func next_game() -> void:
 	if current_game:
