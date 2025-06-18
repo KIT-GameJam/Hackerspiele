@@ -23,6 +23,7 @@ const VOLUME_SLIDER_EMPTY_CHAR := "░"
 @onready var poweroff_button: MeshInstance3D = $Monitor/PoweroffButton
 @onready var world_environment: WorldEnvironment = $WorldEnvironment
 @onready var blink_timer: Timer = $Monitor/ScreenLayer/Screen/BlinkTimer
+@onready var game_manager: GameManager = get_tree().get_first_node_in_group("game-manager")
 var print_time := 0.0
 var cursor := Vector2i(0, 0)
 var print_queue: Array[PrintEvent] = []
@@ -65,9 +66,6 @@ func _process(delta: float) -> void:
 	else:
 		print_time = 0.0
 	update_screen_pos()
-
-func get_game_manager() -> GameManager:
-	return get_tree().get_first_node_in_group("game-manager")
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if print_queue.is_empty() and waiting_for_input:
@@ -211,7 +209,7 @@ func _on_poweroff_button_pressed() -> void:
 # scoreboard
 
 func _on_start_button_pressed() -> void:
-	get_game_manager().start()
+	game_manager.start()
 
 func scoreboard_position(score: int) -> int:
 	var size := scoreboard.size()
@@ -230,7 +228,7 @@ func show_pause_screen() -> void:
 	put_settings_button("Resume", unpause_game_manager)
 
 func unpause_game_manager() -> void:
-	get_game_manager().unpause()
+	game_manager.unpause()
 
 func pause() -> void:
 	is_paused = true
@@ -389,6 +387,30 @@ func show_settings() -> void:
 	else:
 		return_to_title_screen_button()
 
-func switch_game_screen() -> void:
+const POSITIVE_MESSAGES := [
+	"Keep it up!",
+	"GO GO GO!",
+	"Nice!",
+	"Never Stop!",
+	"Oh yeah!",
+	"Very good!",
+	"You are a superhero!"
+]
+const NEGATIVE_MESSAGES := [
+	"What a bummer",
+	"What was that?",
+	"Oops",
+	"Oh no!",
+	"Maybe next time",
+	"| ||\n|| |_"  # this is an important meme don't remove!
+]
+
+func switch_game_screen(was_successfull: bool) -> void:
 	clear_terminal()
-	push_str("Keep it up!")
+	var msg: String = (POSITIVE_MESSAGES if was_successfull else NEGATIVE_MESSAGES).pick_random()
+	push_str(msg + "\n\n")
+	push_str("Lifes: ")
+	push_str("♥".repeat(game_manager.lifes))
+	push_str("†".repeat(game_manager.max_lifes - game_manager.lifes))
+	push_str("\n")
+	push_str("Score: " + str(game_manager.won_games) + "\n")

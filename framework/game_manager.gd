@@ -4,6 +4,7 @@ class_name GameManager
 var current_game: MicroGame = null
 var won_games: int
 var lifes: int
+var max_lifes := 3
 @onready var timer: Timer = $MicrogameSlot/Timer
 @onready var timer_progress: TextureProgressBar = $CanvasLayer/Panel/HBoxContainer/TimerProgress
 @onready var switch_game_timer: Timer = $MicrogameSlot/SwitchGameTimer
@@ -59,17 +60,17 @@ func unpause() -> void:
 	title_screen.unpause()
 
 func start() -> void:
-	lifes = 3
+	lifes = max_lifes
 	won_games = 0
 	update_life_count()
 	start_game()
 
-func next_game() -> void:
+func next_game(was_successfull: bool) -> void:
 	if current_game:
 		current_game.queue_free()
 	show_title_screen()
 	switch_game_timer.start()
-	title_screen.switch_game_screen()
+	title_screen.switch_game_screen(was_successfull)
 
 func start_game() -> void:
 	hide_title_screen()
@@ -94,6 +95,7 @@ func game_over() -> void:
 func game_finished(result: MicroGame.Result) -> void:
 	timer.stop()
 	timer.timeout.disconnect(handle_timeout)
+	var was_successfull: bool = false
 	match result:
 		MicroGame.Result.Loss:
 			lifes -= 1
@@ -103,7 +105,8 @@ func game_finished(result: MicroGame.Result) -> void:
 				return
 		MicroGame.Result.Win:
 			won_games += 1
-	next_game()
+			was_successfull = true
+	next_game(was_successfull)
 
 func update_life_count() -> void:
 	var missing: int = lifes - hearts.size()
