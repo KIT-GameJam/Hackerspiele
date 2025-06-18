@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://ca2e44oufqic1"]
+
+[ext_resource type="Script" uid="uid://d142r662hxohe" path="res://microgames/skiing/entities/obstacle/obstacle.gd" id="1_a0uk1"]
+
+[node name="Obstacle" type="Area3D"]
+collision_layer = 4
+collision_mask = 2
+monitorable = false
+script = ExtResource("1_a0uk1")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

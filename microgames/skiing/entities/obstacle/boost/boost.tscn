@@ -1,0 +1,55 @@
+[gd_scene load_steps=11 format=3 uid="uid://bhisri4qewu6l"]
+
+[ext_resource type="PackedScene" uid="uid://ca2e44oufqic1" path="res://microgames/skiing/entities/obstacle/obstacle.tscn" id="1_21hda"]
+[ext_resource type="Texture2D" uid="uid://bh4jbnfo0448y" path="res://microgames/skiing/textures/star.png" id="2_ijnyw"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g6k0t"]
+emission_shape = 3
+emission_box_extents = Vector3(0.5, 0.01, 0.5)
+gravity = Vector3(0, 2, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ngc7"]
+transparency = 1
+albedo_texture = ExtResource("2_ijnyw")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 6.0
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_35ugo"]
+material = SubResource("StandardMaterial3D_2ngc7")
+size = Vector2(0.1, 0.1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ijnyw"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_g6k0t"]
+noise = SubResource("FastNoiseLite_ijnyw")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dbcwr"]
+albedo_color = Color(0.183808, 0.768249, 0.846222, 1)
+metallic = 1.0
+metallic_specular = 1.0
+metallic_texture = SubResource("NoiseTexture2D_g6k0t")
+
+[sub_resource type="BoxMesh" id="BoxMesh_2ngc7"]
+material = SubResource("StandardMaterial3D_dbcwr")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_21hda"]
+size = Vector3(1, 0.119263, 1)
+
+[node name="Boost" instance=ExtResource("1_21hda")]
+obstacle_type = 2
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00799982, 0)
+amount = 5
+process_material = SubResource("ParticleProcessMaterial_g6k0t")
+draw_pass_1 = SubResource("QuadMesh_35ugo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.0209625, 0, 0, 0, 1, 0, 0.00765425, 0)
+mesh = SubResource("BoxMesh_2ngc7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0653687, 0)
+shape = SubResource("BoxShape3D_21hda")

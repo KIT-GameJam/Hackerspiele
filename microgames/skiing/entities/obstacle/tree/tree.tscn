@@ -1,0 +1,46 @@
+[gd_scene load_steps=10 format=3 uid="uid://d20tuopu6rand"]
+
+[ext_resource type="PackedScene" uid="uid://ca2e44oufqic1" path="res://microgames/skiing/entities/obstacle/obstacle.tscn" id="1_exm61"]
+[ext_resource type="PackedScene" uid="uid://deely3h5eu0sg" path="res://microgames/skiing/entities/obstacle/tree/tree_1.tscn" id="2_ihxpy"]
+[ext_resource type="Script" uid="uid://dpxtjmtu1k5t1" path="res://microgames/skiing/entities/obstacle/tree/tree_mesh.gd" id="2_w38bo"]
+[ext_resource type="PackedScene" uid="uid://1ba23m2y5un8" path="res://microgames/skiing/entities/obstacle/tree/tree_2.tscn" id="4_oyi4f"]
+[ext_resource type="PackedScene" uid="uid://bdbqwb8bxcjyg" path="res://microgames/skiing/entities/obstacle/tree/tree_3.tscn" id="5_vrw3v"]
+[ext_resource type="PackedScene" uid="uid://dt8ukglm7xxjs" path="res://microgames/skiing/entities/obstacle/tree/tree_4.tscn" id="6_6r5g7"]
+[ext_resource type="PackedScene" uid="uid://d0uur1bd4ybt6" path="res://microgames/skiing/entities/obstacle/tree/tree_5.tscn" id="7_43l2l"]
+[ext_resource type="PackedScene" uid="uid://b2tsqj6vk2d4y" path="res://microgames/skiing/entities/obstacle/tree/tree_6.tscn" id="8_mql5y"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_de1em"]
+height = 3.9248
+radius = 1.39062
+
+[node name="Tree" instance=ExtResource("1_exm61")]
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95816, 0)
+shape = SubResource("CylinderShape3D_de1em")
+
+[node name="TreeMesh" type="Node3D" parent="." index="1"]
+script = ExtResource("2_w38bo")
+
+[node name="Tree 1_0" parent="TreeMesh" index="0" instance=ExtResource("2_ihxpy")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.10868, 3.3, -0.407812)
+
+[node name="Tree 2_0" parent="TreeMesh" index="1" instance=ExtResource("4_oyi4f")]
+visible = false
+
+[node name="Tree 3_0" parent="TreeMesh" index="2" instance=ExtResource("5_vrw3v")]
+visible = false
+
+[node name="Tree 4_0" parent="TreeMesh" index="3" instance=ExtResource("6_6r5g7")]
+transform = Transform3D(4, 0, 0, 0, -1.74846e-07, 4, 0, -4, -1.74846e-07, 0, 1.34986, 0)
+visible = false
+
+[node name="Tree 5_0" parent="TreeMesh" index="4" instance=ExtResource("7_43l2l")]
+transform = Transform3D(4, 0, 0, 0, -1.74846e-07, 4, 0, -4, -1.74846e-07, 0, 5.54156, 0)
+visible = false
+
+[node name="Tree 6_0" parent="TreeMesh" index="5" instance=ExtResource("8_mql5y")]
+transform = Transform3D(4, 0, 0, 0, -1.74846e-07, 4, 0, -4, -1.74846e-07, 2.1129, 14.1221, 0)
+visible = false

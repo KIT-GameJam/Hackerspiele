@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://82na1lysy36p"]
+
+[ext_resource type="PackedScene" uid="uid://df52vkcmnnsoc" path="res://microgames/skiing/entities/goal/crack.tscn" id="1_6xcja"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4ab6j"]
+size = Vector3(3.29646, 8.99219, 2.63586)
+
+[node name="Goal" type="Area3D"]
+collision_layer = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.299674, 4.00293, 0.00262445)
+shape = SubResource("BoxShape3D_4ab6j")
+
+[node name="crack" parent="." instance=ExtResource("1_6xcja")]

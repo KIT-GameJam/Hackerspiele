@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=3 uid="uid://cvvtcjyc22a1e"]
+
+[ext_resource type="Material" uid="uid://ckhkyqyrvdxcq" path="res://microgames/skiing/entities/sign/sign_material.tres" id="1_mvabi"]
+[ext_resource type="Texture2D" uid="uid://8o1huaugkrr0" path="res://microgames/skiing/textures/flip_is_cool.webp" id="2_dx08o"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_q5yut"]
+size = Vector3(0.1, 2, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_svbwx"]
+material = ExtResource("1_mvabi")
+size = Vector3(1.7, 1.2, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_25g7i"]
+albedo_texture = ExtResource("2_dx08o")
+
+[sub_resource type="QuadMesh" id="QuadMesh_0176y"]
+material = SubResource("StandardMaterial3D_25g7i")
+
+[node name="Sign" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.999331, 0)
+material_override = ExtResource("1_mvabi")
+mesh = SubResource("BoxMesh_q5yut")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(0.963153, -9.30881e-10, 0.268954, 0.0306703, 0.993477, -0.109834, -0.267199, 0.114036, 0.95687, -0.0506606, 0.330205, -0.0911491)
+mesh = SubResource("BoxMesh_svbwx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D/MeshInstance3D"]
+transform = Transform3D(-0.999966, -0.00436588, -0.0069522, -0.00449769, 0.999808, 0.0190593, 0.00686735, 0.01909, -0.999794, 0.0205596, -0.0087744, -0.0736259)
+mesh = SubResource("QuadMesh_0176y")

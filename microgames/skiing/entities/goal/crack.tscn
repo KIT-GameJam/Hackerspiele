@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://df52vkcmnnsoc"]
+
+[ext_resource type="PackedScene" uid="uid://b7f334gjiro30" path="res://microgames/skiing/models/crack.gltf" id="1_i7d2u"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i7d2u"]
+albedo_color = Color(1, 0.830822, 0.532883, 1)
+emission_enabled = true
+emission = Color(0.757969, 0.700609, 0.528528, 1)
+emission_energy_multiplier = 15.0
+
+[node name="crack" instance=ExtResource("1_i7d2u")]
+
+[node name="Cube" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_i7d2u")

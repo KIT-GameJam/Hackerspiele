@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://c0ltgqegshcb8"]
+
+[ext_resource type="Script" uid="uid://clicylv1am2xe" path="res://entities/player/player.gd" id="1_symyc"]
+[ext_resource type="Texture2D" uid="uid://bidht0cgkkraa" path="res://textures/snowflake.png" id="2_abrql"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u3f3p"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sglur"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 4.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+gravity = Vector3(0, 0, 10)
+scale_min = 0.5
+turbulence_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sglur"]
+transparency = 1
+albedo_texture = ExtResource("2_abrql")
+
+[sub_resource type="QuadMesh" id="QuadMesh_bls4j"]
+material = SubResource("StandardMaterial3D_sglur")
+size = Vector2(0.5, 0.5)
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_symyc")
+
+[node name="Character" type="Node3D" parent="."]
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Character"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Character"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_u3f3p")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.5)
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00108433, 1.50746, -6.00381)
+amount = 50
+lifetime = 2.0
+randomness = 0.5
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_sglur")
+draw_pass_1 = SubResource("QuadMesh_bls4j")

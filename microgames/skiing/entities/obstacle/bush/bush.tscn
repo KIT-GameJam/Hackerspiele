@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://cxar0n417gjxs"]
+
+[ext_resource type="PackedScene" uid="uid://ca2e44oufqic1" path="res://microgames/skiing/entities/obstacle/obstacle.tscn" id="1_3ho8a"]
+[ext_resource type="Script" uid="uid://dpxtjmtu1k5t1" path="res://microgames/skiing/entities/obstacle/tree/tree_mesh.gd" id="2_vaoej"]
+[ext_resource type="PackedScene" uid="uid://u8t7dksqesa7" path="res://microgames/skiing/models/bush1.gltf" id="3_khbbl"]
+[ext_resource type="PackedScene" uid="uid://ddoaixi00ej1s" path="res://microgames/skiing/models/bush2.gltf" id="4_extdp"]
+[ext_resource type="PackedScene" uid="uid://sojqkcsahsdy" path="res://microgames/skiing/models/bush3.gltf" id="5_fxw4y"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wecri"]
+height = 0.5
+
+[node name="Bush" instance=ExtResource("1_3ho8a")]
+obstacle_type = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.246748, 0)
+shape = SubResource("CylinderShape3D_wecri")
+
+[node name="BushMesh" type="Node3D" parent="." index="1"]
+script = ExtResource("2_vaoej")
+
+[node name="blockbench_export" parent="BushMesh" index="0" instance=ExtResource("3_khbbl")]
+transform = Transform3D(1.5, 0, 0, 0, 1.62372, 0, 0, 0, 1.5, 0, 0, 0)
+
+[node name="blockbench_export2" parent="BushMesh" index="1" instance=ExtResource("4_extdp")]
+transform = Transform3D(1, 0, 0, 0, 1.23712, 0, 0, 0, 1, 0, 0, 0)
+visible = false
+
+[node name="blockbench_export3" parent="BushMesh" index="2" instance=ExtResource("5_fxw4y")]
+transform = Transform3D(1, 0, 0, 0, 1.17024, 0, 0, 0, 1, 0, 0, 0)
+visible = false

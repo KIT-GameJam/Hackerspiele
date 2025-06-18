@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bdgy134fdvdkn"]
 
-[ext_resource type="Script" uid="uid://wbi3h78qfjef" path="res://framework/game_manager.gd" id="1_68sdn"]
+[ext_resource type="Script" uid="uid://wbi3h78qfjef" path="res://microgames/hello/textures/framework/game_manager.gd" id="1_68sdn"]
 [ext_resource type="Texture2D" uid="uid://1a508bcv4xi5" path="res://assets/heart.png" id="2_5425x"]
 
 [sub_resource type="Gradient" id="Gradient_5425x"]
