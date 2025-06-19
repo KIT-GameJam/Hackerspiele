@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjx7q841lj1uc"]
+
+[ext_resource type="Script" uid="uid://dx8yoj15wmb4c" path="res://microgames/martian_mike/utils/bg.gd" id="1_xn8t2"]
+
+[node name="BG" type="ParallaxBackground"]
+script = ExtResource("1_xn8t2")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+position = Vector2(316, 320)
+motion_mirroring = Vector2(640, 640)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer"]
+texture_repeat = 2
+position = Vector2(158, -108)
+region_enabled = true
+region_rect = Rect2(0, 0, 1280, 1280)

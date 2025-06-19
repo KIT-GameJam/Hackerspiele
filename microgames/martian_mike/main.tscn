@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfadr3o0gamhq"]
+
+[ext_resource type="Script" uid="uid://cla3xfte6i43m" path="res://microgames/martian_mike/main.gd" id="1_uriww"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_uriww")
+time = 30.0

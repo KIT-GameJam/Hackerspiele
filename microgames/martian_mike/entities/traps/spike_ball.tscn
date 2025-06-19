@@ -1,0 +1,71 @@
+[gd_scene load_steps=7 format=3 uid="uid://ch8l5br1486b8"]
+
+[ext_resource type="Script" uid="uid://bq4d2xm4hm2l7" path="res://microgames/martian_mike/entities/traps/trap.gd" id="1_q26pn"]
+[ext_resource type="Texture2D" uid="uid://dkj83me166150" path="res://microgames/martian_mike/assets/textures/other/Spiked Ball.png" id="2_hqfxr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wmith"]
+radius = 18.1108
+
+[sub_resource type="Animation" id="Animation_1iji3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hitbox:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(100, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5xd4t"]
+resource_name = "move"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hitbox:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1.69407e-21, 0), Vector2(100, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kpx81"]
+_data = {
+&"RESET": SubResource("Animation_1iji3"),
+&"move": SubResource("Animation_5xd4t")
+}
+
+[node name="SpiceBall" type="Node2D" groups=["traps"]]
+script = ExtResource("1_q26pn")
+
+[node name="Hitbox" type="Area2D" parent="."]
+position = Vector2(100, 0)
+scale = Vector2(-0.621375, -0.602985)
+collision_layer = 8
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Hitbox"]
+position = Vector2(2.72632e-21, 0)
+rotation = 3.14159
+scale = Vector2(1.60934, 1.65842)
+texture = ExtResource("2_hqfxr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_wmith")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_kpx81")
+}
+autoplay = "move"
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_player_entered"]

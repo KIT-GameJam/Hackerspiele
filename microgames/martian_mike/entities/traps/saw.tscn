@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=3 uid="uid://d2ydpr2fenu0a"]
+
+[ext_resource type="Script" uid="uid://bq4d2xm4hm2l7" path="res://microgames/martian_mike/entities/traps/trap.gd" id="1_cxpx7"]
+[ext_resource type="Texture2D" uid="uid://cbgyp3b5diwwr" path="res://microgames/martian_mike/assets/textures/other/Saw.png" id="2_477jt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wmith"]
+radius = 18.1108
+
+[sub_resource type="Animation" id="Animation_cx43y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_vnaks"]
+resource_name = "spin"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qipkw"]
+_data = {
+&"RESET": SubResource("Animation_cx43y"),
+&"spin": SubResource("Animation_vnaks")
+}
+
+[node name="Saw" type="Node2D" groups=["traps"]]
+script = ExtResource("1_cxpx7")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Hitbox"]
+texture = ExtResource("2_477jt")
+hframes = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_wmith")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Hitbox/Sprite2D")
+libraries = {
+&"": SubResource("AnimationLibrary_qipkw")
+}
+autoplay = "spin"
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_player_entered"]
