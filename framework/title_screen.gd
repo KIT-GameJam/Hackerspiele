@@ -42,7 +42,7 @@ var waiting_for_input := false
 var is_paused := false
 var bottle_offset_left := 0.0
 var bottle_offset_right := 0.0
-var bottles: Array[Node] = []
+var bottles: Array[MeshInstance3D] = []
 
 signal key_input(chr: String)
 
@@ -228,7 +228,7 @@ func reset_bottles() -> void:
 	bottles = []
 
 func add_bottle() -> void:
-	var new_bottle := $Mate.duplicate()
+	var new_bottle: MeshInstance3D = $Mate.duplicate()
 	new_bottle.remove_child(new_bottle.get_child(0))
 	var scatter := randf_range(-BOTTLE_SCATTER, BOTTLE_SCATTER)
 	if randi_range(0, 1):
@@ -239,6 +239,7 @@ func add_bottle() -> void:
 		new_bottle.position.x += bottle_offset_right
 		bottle_offset_right -= BOTTLE_OFFSET
 		new_bottle.position.z -= scatter + 3.16
+	new_bottle.rotation_degrees.y += randf_range(-15.0, 15.0)
 	add_child(new_bottle)
 	bottles.append(new_bottle)
 
