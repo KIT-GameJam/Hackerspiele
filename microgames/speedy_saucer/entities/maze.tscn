@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://bhuplhud1lp6l"]
+
+[ext_resource type="Texture2D" uid="uid://be04w81ahektt" path="res://microgames/speedy_saucer/assets/darkPurple.png" id="1_iiyv0"]
+[ext_resource type="Script" uid="uid://btrgyud8med3p" path="res://microgames/speedy_saucer/entities/maze.gd" id="1_rmlds"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rmlds"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_q0eha"]
+font_size = 100
+
+[node name="Maze" type="Node2D"]
+script = ExtResource("1_rmlds")
+
+[node name="Level" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level"]
+
+[node name="Polygon2D" type="Polygon2D" parent="Level"]
+texture = ExtResource("1_iiyv0")
+
+[node name="WinZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WinZone"]
+scale = Vector2(20, 20)
+shape = SubResource("RectangleShape2D_rmlds")
+
+[node name="Labels" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Start" type="Label" parent="Labels"]
+offset_left = -125.0
+offset_top = -67.0
+offset_right = 110.0
+offset_bottom = 70.0
+text = "Start"
+label_settings = SubResource("LabelSettings_q0eha")
+
+[node name="Win" type="Label" parent="Labels"]
+offset_left = 1251.0
+offset_top = -69.0
+offset_right = 1499.0
+offset_bottom = 68.0
+text = "Win"
+label_settings = SubResource("LabelSettings_q0eha")
+
+[connection signal="body_exited" from="Level" to="." method="_on_level_player_exited"]
+[connection signal="body_entered" from="WinZone" to="." method="_on_win_zone_player_entered"]
