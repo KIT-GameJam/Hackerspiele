@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcomrn6a6k114"]
+
+[ext_resource type="Script" uid="uid://ddckwflm6domi" path="res://microgames/kaputtmachen/main.gd" id="1_cymel"]
+[ext_resource type="Texture2D" uid="uid://5vp3sjfhmb64" path="res://microgames/kaputtmachen/assets/canon.png" id="2_i1shy"]
+[ext_resource type="Texture2D" uid="uid://blmfyo8d4mc01" path="res://microgames/kaputtmachen/assets/viewport.png" id="3_axlsi"]
+
+[sub_resource type="Gradient" id="Gradient_axlsi"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0.582466, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2m5rh"]
+gradient = SubResource("Gradient_axlsi")
+width = 2
+height = 2
+fill = 2
+fill_to = Vector2(1, 1)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_cymel")
+time = 15.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -2
+
+[node name="Background" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("3_axlsi")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Control2" type="Control" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Canon" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(120, 307)
+texture = ExtResource("2_i1shy")
+
+[node name="Ball" type="Sprite2D" parent="."]
+visible = false
+texture = SubResource("GradientTexture2D_2m5rh")
