@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cqdq7wkn6wgxv"]
+
+[ext_resource type="Texture2D" uid="uid://s7intve38wdm" path="res://microgames/coin_collector/assets/Wall.png" id="1_5qc8w"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_g71yd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gefcb"]
+size = Vector2(8, 8)
+
+[node name="Wall" type="StaticBody2D"]
+collision_layer = 2
+physics_material_override = SubResource("PhysicsMaterial_g71yd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_5qc8w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gefcb")
