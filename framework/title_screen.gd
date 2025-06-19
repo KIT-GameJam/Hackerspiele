@@ -154,7 +154,10 @@ func create_terminal_button(text: String, onclick: Callable) -> Button:
 	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	if get_viewport().gui_get_focus_owner() == null:
 		button.grab_focus.call_deferred()
-	button.connect("pressed", onclick)
+	button.connect("pressed", func():
+		game_manager.beep_sound.play()
+		onclick.call()
+	)
 	return button
 
 func get_char_index(row: int, col: int) -> int:

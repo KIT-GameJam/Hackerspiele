@@ -25,6 +25,7 @@ var hearts: Array[TextureRect] = []
 @onready var microgame_slot: Node = $MicrogameSlot
 @onready var title_screen: TitleScreen = preload("res://framework/title_screen.tscn").instantiate()
 @onready var canvas_layer: CanvasLayer = $CanvasLayer
+@onready var beep_sound: AudioStreamPlayer = $BeepSound
 
 func _ready() -> void:
 	show_title_screen()
