@@ -31,6 +31,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Start" type="Label" parent="Labels"]
+layout_mode = 0
 offset_left = -125.0
 offset_top = -67.0
 offset_right = 110.0
@@ -39,6 +40,7 @@ text = "Start"
 label_settings = SubResource("LabelSettings_q0eha")
 
 [node name="Win" type="Label" parent="Labels"]
+layout_mode = 0
 offset_left = 1251.0
 offset_top = -69.0
 offset_right = 1499.0
