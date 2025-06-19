@@ -2,8 +2,13 @@ extends Node2D
 class_name GameManager
 
 @export var max_lifes := 3
+## A value >= 1.0 that is used as the base of a power that calculates the time reduction for micro games.
+@export var time_falloff_base := 1.1
+## The strongest time reduce factor that could be reached (in infinity)
+@export var time_falloff_converge = 0.4
 var current_game: MicroGame = null
 var won_games: int
+var played_games: int
 var lifes: int
 var in_switch_state := false
 @onready var timer: Timer = $MicrogameSlot/Timer
@@ -73,6 +78,7 @@ func unpause() -> void:
 func start() -> void:
 	lifes = max_lifes
 	won_games = 0
+	played_games = 0
 	update_life_count()
 	title_screen.reset_bottles()
 	start_game()
@@ -94,7 +100,8 @@ func start_game() -> void:
 	current_game = scene.instantiate()
 	microgame_slot.add_child(current_game)
 	current_game.finished.connect(game_finished)
-	timer.wait_time = current_game.time
+	var factor: float = pow(time_falloff_base, -played_games) * (1.0 - time_falloff_converge) + time_falloff_converge
+	timer.wait_time = current_game.time * factor
 	timer.timeout.connect(handle_timeout)
 	timer.start()
 
@@ -113,6 +120,7 @@ func game_finished(result: MicroGame.Result) -> void:
 	timer.stop()
 	timer.timeout.disconnect(handle_timeout)
 	var was_successfull: bool = false
+	played_games += 1
 	match result:
 		MicroGame.Result.Loss:
 			lifes -= 1
