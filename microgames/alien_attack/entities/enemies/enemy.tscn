@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://drlon2mrqkjie"]
+
+[ext_resource type="Script" uid="uid://csubbini0tdht" path="res://microgames/alien_attack/entities/enemies/enemy.gd" id="1_n4fth"]
+[ext_resource type="Texture2D" uid="uid://b017k8fideg5p" path="res://microgames/alien_attack/assets/textures/enemy_ship.png" id="2_3tqq2"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r80qx"]
+radius = 104.0
+height = 460.929
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e8cdg"]
+
+[node name="Enemy" type="Area2D"]
+scale = Vector2(0.49175, 0.49175)
+collision_layer = 2
+collision_mask = 13
+script = ExtResource("1_n4fth")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.5708
+scale = Vector2(0.386779, 0.386779)
+texture = ExtResource("2_3tqq2")
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-16.2684, 0)
+rotation = -1.5708
+scale = Vector2(0.370596, 0.370596)
+shape = SubResource("CapsuleShape2D_r80qx")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(18.302, -50.8388)
+rotation = -1.5708
+scale = Vector2(1.96643, 1.96643)
+shape = SubResource("CircleShape2D_e8cdg")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(20.3355, 52.8724)
+rotation = -1.5708
+scale = Vector2(1.96643, 1.96643)
+shape = SubResource("CircleShape2D_e8cdg")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
+position = Vector2(75.2415, 0)
+rotation = -1.5708
+scale = Vector2(1.96643, 1.96643)
+shape = SubResource("CircleShape2D_e8cdg")
+
+[connection signal="body_entered" from="." to="." method="_on_player_entered"]

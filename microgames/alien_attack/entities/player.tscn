@@ -1,0 +1,89 @@
+[gd_scene load_steps=11 format=3 uid="uid://kflk33pgif8l"]
+
+[ext_resource type="Script" uid="uid://bmd70t8fabtsn" path="res://microgames/alien_attack/entities/player.gd" id="1_13hkq"]
+[ext_resource type="Texture2D" uid="uid://l28ss75fwpog" path="res://microgames/alien_attack/assets/textures/player_ship.png" id="2_7o6rb"]
+[ext_resource type="AudioStream" uid="uid://cp2lhvwla3e3y" path="res://microgames/alien_attack/assets/audio/sfx_laser2.wav" id="3_ske58"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_10oqn"]
+radius = 118.0
+height = 360.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_allxc"]
+
+[sub_resource type="Gradient" id="Gradient_5y1pa"]
+offsets = PackedFloat32Array(0, 0.516393, 1)
+colors = PackedColorArray(1, 0.933333, 0, 0, 1, 0.560784, 0, 1, 1, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nipx6"]
+gradient = SubResource("Gradient_5y1pa")
+
+[sub_resource type="Curve" id="Curve_5oluv"]
+_data = [Vector2(0, 0.208791), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_04q8g"]
+curve = SubResource("Curve_5oluv")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4u74y"]
+lifetime_randomness = 0.3
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 50, 1)
+spread = 30.0
+initial_velocity_min = -400.0
+initial_velocity_max = -400.0
+gravity = Vector3(0, 0, 0)
+scale_min = 10.0
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_04q8g")
+color_ramp = SubResource("GradientTexture1D_nipx6")
+
+[node name="Player" type="CharacterBody2D"]
+scale = Vector2(0.181617, 0.181617)
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("1_13hkq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("2_7o6rb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(60.567, 3.8147e-06)
+shape = SubResource("CapsuleShape2D_10oqn")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(33.0366, 192.713)
+scale = Vector2(6.03379, 6.03379)
+shape = SubResource("CircleShape2D_allxc")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(38.5426, -198.219)
+scale = Vector2(6.03379, 6.03379)
+shape = SubResource("CircleShape2D_allxc")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
+position = Vector2(-27.5305, -137.652)
+scale = Vector2(6.03379, 6.03379)
+shape = SubResource("CircleShape2D_allxc")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="."]
+position = Vector2(-27.5305, 143.158)
+scale = Vector2(6.03379, 6.03379)
+shape = SubResource("CircleShape2D_allxc")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="."]
+position = Vector2(-82.5914, -3.05176e-05)
+scale = Vector2(6.03379, 6.03379)
+shape = SubResource("CircleShape2D_allxc")
+
+[node name="RocketContainer" type="Node" parent="."]
+
+[node name="RocketShotSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ske58")
+
+[node name="FlameParticleEffect" type="GPUParticles2D" parent="."]
+position = Vector2(-165.183, 0)
+amount = 100
+lifetime = 0.3
+process_material = SubResource("ParticleProcessMaterial_4u74y")
