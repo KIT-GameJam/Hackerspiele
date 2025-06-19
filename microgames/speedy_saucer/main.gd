@@ -1,15 +1,17 @@
 extends MicroGame
 
 @onready var level_node = $Level
-const level_count := 2
-const level_scenes := [
-	preload("res://microgames/speedy_saucer/levels/level0.tscn"),
-	preload("res://microgames/speedy_saucer/levels/level1.tscn"),
+const level_count := 3
+const level_paths := [
+	"res://microgames/speedy_saucer/levels/level0.tscn",
+	"res://microgames/speedy_saucer/levels/level1.tscn",
+	"res://microgames/speedy_saucer/levels/level2.tscn",
 ] 
 
 func _ready() -> void:
 	var random_level_idx = randi_range(0, level_count - 1)
-	var level: Maze = level_scenes[random_level_idx].instantiate()
+	var level_scene = load(level_paths[random_level_idx])
+	var level: Maze = level_scene.instantiate()
 	level_node.add_child(level)
 	level.win.connect(_on_win)
 	level.loss.connect(_on_loose)
