@@ -10,6 +10,7 @@ var current_game: MicroGame = null
 var won_games: int
 var played_games: int
 var lifes: int
+var in_game := false
 var in_switch_state := false
 @onready var timer: Timer = $MicrogameSlot/Timer
 @onready var timer_progress: TextureProgressBar = $CanvasLayer/Panel/HBoxContainer/TimerProgress
@@ -110,6 +111,7 @@ func start_game() -> void:
 	timer.wait_time = current_game.time * factor
 	timer.timeout.connect(handle_timeout)
 	timer.start()
+	in_game = true
 
 func handle_timeout() -> void:
 	game_finished(current_game.on_timeout())
@@ -123,9 +125,14 @@ func game_over() -> void:
 	title_screen.show_scoreboard(won_games)
 
 func game_finished(result: MicroGame.Result) -> void:
+	if in_game:
+		in_game = false
+	else:
+		# prevent game_finished from running more than once
+		return
 	timer.stop()
 	timer.timeout.disconnect(handle_timeout)
-	var was_successfull: bool = false
+	var was_successfull := false
 	played_games += 1
 	match result:
 		MicroGame.Result.Loss:
