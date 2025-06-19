@@ -115,7 +115,7 @@ bus = &"Ui"
 one_shot = true
 
 [node name="SwitchGameTimer" type="Timer" parent="MicrogameSlot"]
-wait_time = 2.0
+wait_time = 1.5
 one_shot = true
 
 [connection signal="pressed" from="CanvasLayer/Panel/HBoxContainer/TextureButton" to="." method="pause"]
