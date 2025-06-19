@@ -63,12 +63,14 @@ func start() -> void:
 	lifes = max_lifes
 	won_games = 0
 	update_life_count()
+	title_screen.reset_bottles()
 	start_game()
 
 func next_game(was_successfull: bool) -> void:
 	if current_game:
 		current_game.queue_free()
 	show_title_screen()
+	title_screen.add_bottle()
 	switch_game_timer.start()
 	title_screen.switch_game_screen(was_successfull)
 

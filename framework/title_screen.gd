@@ -17,6 +17,8 @@ const VOLUME_SLIDER_FULL_CHAR := "#"
 const VOLUME_SLIDER_EMPTY_CHAR := "-"
 const AUDIO_CFG_PATH := "user://audio.cfg"
 const VOLUME_SECTION := "volume"
+const BOTTLE_SCATTER := 0.3
+const BOTTLE_OFFSET := 1.0
 
 @onready var camera: Camera3D = $Camera
 @onready var marker_top_left: Marker3D = $Monitor/MarkerTopLeft
@@ -38,6 +40,9 @@ var environment_buffer: Environment = null
 ## true if currently waiting for input, false otherwise
 var waiting_for_input := false
 var is_paused := false
+var bottle_offset_left := 0.0
+var bottle_offset_right := 0.0
+var bottles: Array[Node] = []
 
 signal key_input(chr: String)
 
@@ -60,6 +65,7 @@ func _ready() -> void:
 	update_poweroff_button_color(POWEROFF_COLOR_INACTIVE)
 
 	show_title_screen()
+	reset_bottles()
 
 func _process(delta: float) -> void:
 	while print_queue and print_time <= 0.0:
@@ -213,6 +219,28 @@ func _on_poweroff_button_mouse_exited() -> void:
 func _on_poweroff_button_pressed() -> void:
 	get_tree().quit()
 
+func reset_bottles() -> void:
+	bottle_offset_left = 0.0
+	bottle_offset_right = 0.0
+	for bottle in bottles:
+		remove_child(bottle)
+		bottle.queue_free()
+	bottles = []
+
+func add_bottle() -> void:
+	var new_bottle := $Mate.duplicate()
+	new_bottle.remove_child(new_bottle.get_child(0))
+	var scatter := randf_range(-BOTTLE_SCATTER, BOTTLE_SCATTER)
+	if randi_range(0, 1):
+		bottle_offset_left -= BOTTLE_OFFSET
+		new_bottle.position.x += bottle_offset_left
+		new_bottle.position.z += scatter
+	else:
+		new_bottle.position.x += bottle_offset_right
+		bottle_offset_right -= BOTTLE_OFFSET
+		new_bottle.position.z -= scatter + 3.16
+	add_child(new_bottle)
+	bottles.append(new_bottle)
 
 # scoreboard
 
