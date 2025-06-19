@@ -10,7 +10,7 @@ func _ready() -> void:
 	level.loss.connect(_on_loose)
 
 func _on_win():
-	finished.emit(Result.Loss)
+	finished.emit(Result.Win)
 
 func _on_loose():
-	finished.emit(Result.Win)
+	finished.emit(Result.Loss)
