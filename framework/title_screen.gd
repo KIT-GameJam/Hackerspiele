@@ -285,6 +285,7 @@ func show_scoreboard(score: int) -> void:
 		push_str("Enter your name:\n")
 		waiting_for_input = true
 		var scoreboard_name := ""
+		DisplayServer.virtual_keyboard_show("")
 		while true:
 			var chr = await key_input
 			if chr.is_empty():
@@ -299,6 +300,7 @@ func show_scoreboard(score: int) -> void:
 				continue
 			scoreboard_name += chr
 			push_str(chr)
+		DisplayServer.virtual_keyboard_hide()
 		waiting_for_input = false
 		scoreboard.insert(pos, [scoreboard_name, score])
 		scoreboard.resize(min(scoreboard.size(), SCOREBOARD_SIZE))
