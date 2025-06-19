@@ -48,6 +48,9 @@ func hide_title_screen() -> void:
 		remove_child(title_screen)
 
 func pause() -> void:
+	if current_game == null and not in_switch_state:
+		# pausing is only allowed in microgames and switch screen
+		return
 	if current_game:
 		microgame_slot.process_mode = Node.PROCESS_MODE_DISABLED
 		microgame_slot.remove_child(current_game)
@@ -101,6 +104,7 @@ func handle_timeout() -> void:
 func game_over() -> void:
 	microgame_slot.remove_child(current_game)
 	current_game.queue_free()
+	current_game = null
 
 	show_title_screen()
 	title_screen.show_scoreboard(won_games)
