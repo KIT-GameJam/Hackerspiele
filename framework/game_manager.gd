@@ -84,21 +84,26 @@ func start() -> void:
 	title_screen.reset_bottles()
 	start_game()
 
+func load_game() -> void:
+	if current_game:
+		return
+	var scene: PackedScene = MicroGames.scenes.pick_random()
+	current_game = scene.instantiate()
+
 func next_game(was_successfull: bool) -> void:
 	if current_game:
 		current_game.queue_free()
-		current_game = null
 	in_switch_state = true
 	show_title_screen()
 	title_screen.add_bottle()
 	switch_game_timer.start()
 	title_screen.switch_game_screen(was_successfull)
+	load_game() # preload next game
 
 func start_game() -> void:
 	in_switch_state = false
 	hide_title_screen()
-	var scene: PackedScene = MicroGames.scenes.pick_random()
-	current_game = scene.instantiate()
+	load_game() # load next game, if there isn't one already
 	microgame_slot.add_child(current_game)
 	current_game.finished.connect(game_finished)
 	var factor: float = pow(time_falloff_base, -played_games) * (1.0 - time_falloff_converge) + time_falloff_converge
