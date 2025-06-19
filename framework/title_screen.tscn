@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://ck0n3e7m71aoy"]
+[gd_scene load_steps=33 format=3 uid="uid://ck0n3e7m71aoy"]
 
 [ext_resource type="Script" uid="uid://btgg6ulu6in8t" path="res://framework/title_screen.gd" id="1_f6akd"]
 [ext_resource type="PackedScene" uid="uid://1ju8eyujir3q" path="res://framework/models/monitor.glb" id="1_m3mpr"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://44wlppmlhhw5" path="res://assets/logos/logo.png" id="5_4xr2k"]
 [ext_resource type="Shader" uid="uid://7ojoo23teqvk" path="res://framework/shaders/glass.tres" id="5_vromf"]
 [ext_resource type="Shader" uid="uid://duxxqg2h0syth" path="res://framework/shaders/mate.tres" id="6_0qgvj"]
+[ext_resource type="AudioStream" uid="uid://cfr43x8eu62vi" path="res://assets/sounds/GPN23MainTheme.mp3" id="9_yy6u4"]
 
 [sub_resource type="Environment" id="Environment_0qgvj"]
 background_energy_multiplier = 10.0
@@ -214,6 +215,11 @@ surface_material_override/0 = SubResource("ShaderMaterial_4xr2k")
 [node name="MateInhalt" type="MeshInstance3D" parent="Mate"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.363, 0)
 mesh = SubResource("CylinderMesh_vromf")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_yy6u4")
+autoplay = true
+bus = &"Music"
 
 [connection signal="mouse_entered" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_poweroff_button_mouse_entered"]
 [connection signal="mouse_exited" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_poweroff_button_mouse_exited"]
