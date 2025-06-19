@@ -462,7 +462,7 @@ const NEGATIVE_MESSAGES := [
 	"Oops",
 	"Oh no!",
 	"Maybe next time",
-	"| ||\n|| |_"  # this is an important meme don't remove!
+	"|  ||\n|| |_"  # this is an important meme, don't remove!
 ]
 
 func switch_game_screen(was_successfull: bool) -> void:
