@@ -63,6 +63,7 @@ func pause() -> void:
 	if current_game == null and not in_switch_state:
 		# pausing is only allowed in microgames and switch screen
 		return
+	in_game = false
 	if current_game:
 		microgame_slot.process_mode = Node.PROCESS_MODE_DISABLED
 		microgame_slot.remove_child(current_game)
@@ -81,6 +82,7 @@ func unpause() -> void:
 	hide_title_screen()
 	switch_game_timer.paused = false
 	title_screen.unpause()
+	in_game = true
 
 func start() -> void:
 	lifes = max_lifes
@@ -135,7 +137,7 @@ func game_finished(result: MicroGame.Result) -> void:
 	if in_game:
 		in_game = false
 	else:
-		# prevent game_finished from running more than once
+		# prevent game_finished from running if paused or after the game already finished
 		return
 	timer.stop()
 	timer.timeout.disconnect(handle_timeout)
