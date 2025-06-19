@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cy2ruukqamlnb"
 path.s3tc="res://.godot/imported/snow_02_diff_1k.jpg-9a1cc215f48bcadde10ead97a7085ebe.s3tc.ctex"
+path.etc2="res://.godot/imported/snow_02_diff_1k.jpg-9a1cc215f48bcadde10ead97a7085ebe.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://microgames/skiing/textures/snow/snow_02_diff_1k.jpg"
-dest_files=["res://.godot/imported/snow_02_diff_1k.jpg-9a1cc215f48bcadde10ead97a7085ebe.s3tc.ctex"]
+dest_files=["res://.godot/imported/snow_02_diff_1k.jpg-9a1cc215f48bcadde10ead97a7085ebe.s3tc.ctex", "res://.godot/imported/snow_02_diff_1k.jpg-9a1cc215f48bcadde10ead97a7085ebe.etc2.ctex"]
 
 [params]
 
