@@ -1,0 +1,93 @@
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    name: Export Game
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3.3.0
+
+    - name: export game
+      id: export
+      uses: firebelley/godot-export@v5.2.0
+      with:
+        godot_executable_download_url: https://github.com/godotengine/godot-builds/releases/download/4.4-stable/Godot_v4.4-stable_linux.x86_64.zip
+        godot_export_templates_download_url: https://github.com/godotengine/godot-builds/releases/download/4.4-stable/Godot_v4.4-stable_export_templates.tpz
+        relative_project_path: ./
+        archive_output: true
+        cache: true
+
+    - uses: actions/upload-artifact@v4
+      name: Upload raw
+      with:
+        name: Raw Outputs
+        path: ${{ steps.export.outputs.build_directory }}/*
+        if-no-files-found: error
+
+    - uses: actions/upload-artifact@v4
+      name: Upload archives
+      with:
+        name: Archives
+        path: ${{ steps.export.outputs.archive_directory }}/*
+        if-no-files-found: error
+
+  deploy-web:
+    name: Deploy Web Demo
+    environment: isiko404.dev Deployment
+    runs-on: ubuntu-latest
+    needs: export
+    steps:
+
+    - uses: actions/download-artifact@v4
+      with:
+        name: Raw Outputs
+
+    - name: Display structure of downloaded files
+      run: ls -R
+    - name: Display structure of probably deployable files
+      run: ls -al ./Web
+    - name: Display structure of Deployable files
+      run: ls -al ${{ vars.BUILD_DIR_WEB }}
+
+    - name: Deploy web-demo
+      uses: easingthemes/ssh-deploy@main
+      with:
+        SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
+        SOURCE: ${{ vars.BUILD_DIR_WEB }}
+        REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
+        REMOTE_USER: ${{ secrets.DEPLOY_USER }}
+        TARGET: ${{ vars.DEPLOY_DIR_WEB }}
+        SCRIPT_AFTER: echo $RSYNC_STDOUT
+        REMOTE_PORT: ${{ secrets.DEPLOY_PORT }}
+  deploy-downloads:
+    name: Deploy Game Downloads
+    environment: isiko404.dev Deployment
+    runs-on: ubuntu-latest
+    needs: export
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: Archives
+
+    - name: Display structure of downloaded files
+      run: ls -R
+    - name: Display structure of probably deployable files
+      run: ls -al ./*
+    - name: Display structure of Deployable files
+      run: ls -al ${{ vars.BUILD_DIR_DOWNLOADS }}
+
+    - name: Deploy web-demo
+      uses: easingthemes/ssh-deploy@main
+      with:
+        SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
+        SOURCE: ${{ vars.BUILD_DIR_DOWNLOADS }}
+        REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
+        REMOTE_USER: ${{ secrets.DEPLOY_USER }}
+        TARGET: ${{ vars.DEPLOY_DIR_DOWNLOADS }}
+        SCRIPT_AFTER: echo $RSYNC_STDOUT
+        REMOTE_PORT: ${{ secrets.DEPLOY_PORT }}
