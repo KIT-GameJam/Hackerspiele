@@ -5,6 +5,7 @@ class_name GameManager
 var current_game: MicroGame = null
 var won_games: int
 var lifes: int
+var in_switch_state := false
 @onready var timer: Timer = $MicrogameSlot/Timer
 @onready var timer_progress: TextureProgressBar = $CanvasLayer/Panel/HBoxContainer/TimerProgress
 @onready var switch_game_timer: Timer = $MicrogameSlot/SwitchGameTimer
@@ -38,7 +39,8 @@ func _process(_delta: float) -> void:
 
 func show_title_screen() -> void:
 	canvas_layer.hide()
-	add_child(title_screen)
+	if title_screen.get_parent() != self:
+		add_child(title_screen)
 
 func hide_title_screen() -> void:
 	canvas_layer.show()
@@ -49,6 +51,7 @@ func pause() -> void:
 	if current_game:
 		microgame_slot.process_mode = Node.PROCESS_MODE_DISABLED
 		microgame_slot.remove_child(current_game)
+	switch_game_timer.paused = true
 	show_title_screen()
 	title_screen.pause()
 
@@ -56,7 +59,12 @@ func unpause() -> void:
 	if current_game:
 		microgame_slot.add_child(current_game)
 		microgame_slot.process_mode = Node.PROCESS_MODE_INHERIT
+	if in_switch_state:
+		# if unpaused while in switch screen, directly go to next microgame
+		switch_game_timer.stop()
+		start_game()
 	hide_title_screen()
+	switch_game_timer.paused = false
 	title_screen.unpause()
 
 func start() -> void:
@@ -69,12 +77,15 @@ func start() -> void:
 func next_game(was_successfull: bool) -> void:
 	if current_game:
 		current_game.queue_free()
+		current_game = null
+	in_switch_state = true
 	show_title_screen()
 	title_screen.add_bottle()
 	switch_game_timer.start()
 	title_screen.switch_game_screen(was_successfull)
 
 func start_game() -> void:
+	in_switch_state = false
 	hide_title_screen()
 	var scene: PackedScene = MicroGames.scenes.pick_random()
 	current_game = scene.instantiate()
