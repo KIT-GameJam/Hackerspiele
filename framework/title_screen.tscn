@@ -1,10 +1,11 @@
-[gd_scene load_steps=30 format=3 uid="uid://ck0n3e7m71aoy"]
+[gd_scene load_steps=32 format=3 uid="uid://ck0n3e7m71aoy"]
 
 [ext_resource type="Script" uid="uid://btgg6ulu6in8t" path="res://framework/title_screen.gd" id="1_f6akd"]
 [ext_resource type="PackedScene" uid="uid://1ju8eyujir3q" path="res://framework/models/monitor.glb" id="1_m3mpr"]
 [ext_resource type="Theme" uid="uid://fdu16ilqs3a5" path="res://assets/themes/terminal.tres" id="3_4toer"]
 [ext_resource type="FontFile" uid="uid://cuoy0amwy2mxc" path="res://assets/fonts/VT323/VT323-Regular.ttf" id="3_th5dg"]
 [ext_resource type="ArrayMesh" uid="uid://cr7acoty3n02c" path="res://framework/models/mate.obj" id="4_sndid"]
+[ext_resource type="Texture2D" uid="uid://44wlppmlhhw5" path="res://assets/logos/logo.png" id="5_4xr2k"]
 [ext_resource type="Shader" uid="uid://7ojoo23teqvk" path="res://framework/shaders/glass.tres" id="5_vromf"]
 [ext_resource type="Shader" uid="uid://duxxqg2h0syth" path="res://framework/shaders/mate.tres" id="6_0qgvj"]
 
@@ -53,6 +54,14 @@ shadow_size = 1
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2bbnd"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fmn24"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4xr2k"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.258552, 0.668512, 0.157625, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_sndid"]
 size = Vector2(0.12, 0.12)
@@ -148,6 +157,24 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_fmn24")
 [node name="BlinkTimer" type="Timer" parent="Monitor/ScreenLayer/Screen"]
 wait_time = 0.3
 autostart = true
+
+[node name="Logo" type="PanelContainer" parent="Monitor/ScreenLayer/Screen"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -56.0
+offset_top = 13.0
+offset_right = 40.0
+offset_bottom = 109.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4xr2k")
+
+[node name="TextureRect" type="TextureRect" parent="Monitor/ScreenLayer/Screen/Logo"]
+layout_mode = 2
+texture = ExtResource("5_4xr2k")
+expand_mode = 3
+stretch_mode = 5
 
 [node name="MarkerTopLeft" type="Marker3D" parent="Monitor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.732, 2.73, 0.93)

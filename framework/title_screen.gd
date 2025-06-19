@@ -26,6 +26,7 @@ const VOLUME_SECTION := "volume"
 @onready var screen: Panel = $Monitor/ScreenLayer/Screen
 @onready var label: Label = $Monitor/ScreenLayer/Screen/Label
 @onready var cursor_rect: Panel = $Monitor/ScreenLayer/Screen/CursorRect
+@onready var logo: Control = $Monitor/ScreenLayer/Screen/Logo
 @onready var poweroff_button: MeshInstance3D = $Monitor/PoweroffButton
 @onready var world_environment: WorldEnvironment = $WorldEnvironment
 @onready var blink_timer: Timer = $Monitor/ScreenLayer/Screen/BlinkTimer
@@ -98,6 +99,7 @@ func clear_terminal() -> void:
 	print_queue.clear()
 	cursor = Vector2i.ZERO
 	update_cursor_pos()
+	logo.hide()
 	while label.get_child_count() > 0:
 		var child = label.get_child(0)
 		label.remove_child(child)
@@ -340,6 +342,7 @@ func print_game_title() -> void:
 func show_title_screen() -> void:
 	clear_terminal()
 	print_game_title()
+	logo.show()
 
 func return_to_title_screen_button() -> void:
 	put_settings_button("return to title screen", show_title_screen)
