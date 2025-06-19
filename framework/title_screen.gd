@@ -15,6 +15,8 @@ const SCOREBOARD_MAX_NAME_LEN := 20
 const VOLUME_SLIDER_SIZE := 16
 const VOLUME_SLIDER_FULL_CHAR := "#"
 const VOLUME_SLIDER_EMPTY_CHAR := "-"
+const LIFE_DISPLAY_EXIST_CHAR := "#"
+const LIFE_DISPLAY_MISSING_CHAR := "-"
 const AUDIO_CFG_PATH := "user://audio.cfg"
 const VOLUME_SECTION := "volume"
 const BOTTLE_SCATTER := 0.3
@@ -465,7 +467,7 @@ func switch_game_screen(was_successfull: bool) -> void:
 	var msg: String = (POSITIVE_MESSAGES if was_successfull else NEGATIVE_MESSAGES).pick_random()
 	push_str(msg + "\n\n")
 	push_str("Lifes: ")
-	push_str("♥".repeat(game_manager.lifes))
-	push_str("†".repeat(game_manager.max_lifes - game_manager.lifes))
+	push_str(LIFE_DISPLAY_EXIST_CHAR.repeat(game_manager.lifes))
+	push_str(LIFE_DISPLAY_MISSING_CHAR.repeat(game_manager.max_lifes - game_manager.lifes))
 	push_str("\n")
 	push_str("Score: " + str(game_manager.won_games) + "\n")
