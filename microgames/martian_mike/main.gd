@@ -7,12 +7,13 @@ const level_scenes := [
 ]
 
 func _ready() -> void:
-	var level_idx := 1
-	var level: MartianMikeLevel = level_scenes.pick_random().instantiate()
+	if not storage.has("next_level_idx") or storage.next_level_idx >= level_scenes.size():
+		storage.next_level_idx = 0
+	var level: MartianMikeLevel = level_scenes[storage.next_level_idx].instantiate()
 	time = level.level_time
 	level.win.connect(_on_win)
 	add_child(level)
-	
+	storage.next_level_idx += 1
 
 func _on_win() -> void:
 	finished.emit(Result.Win)
