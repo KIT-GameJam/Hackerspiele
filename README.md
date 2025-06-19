@@ -7,10 +7,11 @@ The microgames are made by participants in a [game jam](https://en.wikipedia.org
 
 To add a new micogame, follow these steps:
 
-1. Create a new directory for your game in `microgames/`.
-2. Create your game. The script of the main scene should extend `MicroGame` and send the `finished` signal to indicate a win or a loss. When the time is up, the `on_timeout` function will be called. By default, it will return `Result.Loss`, but this behaviour can be overwritten.
-3. Add your main scene to the `scenes` array in `microgames/microgames.gd`.
-4. Open a PR with your changes.
+1. Fork this repository.
+2. Create a new directory for your game in `microgames/`.
+3. Create your game. The script of the main scene should extend `MicroGame` and send the `finished` signal to indicate a win or a loss. When the time is up, the `on_timeout` function will be called. By default, it will return `Result.Loss`, but this behaviour can be overwritten. You can also adjust the default time by editing the `time` export var.
+4. Add your main scene to the `scenes` array in `microgames/microgames.gd`.
+5. Open a PR with your changes.
 
 For an example, take a look at `microgames/hello/`.
 
