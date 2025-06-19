@@ -28,8 +28,13 @@ var hearts: Array[TextureRect] = []
 @onready var canvas_layer: CanvasLayer = $CanvasLayer
 @onready var beep_sound: AudioStreamPlayer = $BeepSound
 
+var game_storage: Array[Dictionary] = []
+
 func _ready() -> void:
 	show_title_screen()
+
+	for _i in range(MicroGames.scenes.size()):
+		game_storage.append({})
 
 func _process(_delta: float) -> void:
 	if current_game:
@@ -88,8 +93,9 @@ func start() -> void:
 func load_game() -> void:
 	if current_game:
 		return
-	var scene: PackedScene = MicroGames.scenes.pick_random()
-	current_game = scene.instantiate()
+	var idx := randi_range(0, MicroGames.scenes.size() - 1)
+	current_game = MicroGames.scenes[idx].instantiate()
+	current_game.storage = game_storage[idx]
 
 func next_game(was_successfull: bool) -> void:
 	if current_game:
@@ -118,6 +124,7 @@ func handle_timeout() -> void:
 
 func game_over() -> void:
 	microgame_slot.remove_child(current_game)
+	current_game.storage.clear()
 	current_game.queue_free()
 	current_game = null
 
