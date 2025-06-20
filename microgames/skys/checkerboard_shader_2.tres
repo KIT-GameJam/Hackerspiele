@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=6 format=3 uid="uid://ciudg7yraetu7"]
+[gd_resource type="VisualShader" load_steps=6 format=3 uid="uid://rmul5k7ovqim"]
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_sc0rw"]
 input_name = "uv"
@@ -15,7 +15,7 @@ op_type = 4
 
 [sub_resource type="VisualShaderNodeExpression" id="VisualShaderNodeExpression_4igad"]
 size = Vector2(480, 220)
-expression = "float scale = 1./45.;
+expression = "float scale = 20.;
 float x = mod(scale*uv.x, 1);
 float y = mod(scale*uv.y, 1);
 if (max(x,y) <  0.5 || 0.5 < min(x,y) ) {
@@ -49,7 +49,7 @@ void fragment() {
 // Expression:9
 	n_out9p0 = 0.0;
 	{
-		float scale = 1./45.;
+		float scale = 20.;
 		float x = mod(scale*n_out2p0.x, 1);
 		float y = mod(scale*n_out2p0.y, 1);
 		if (max(x,y) <  0.5 || 0.5 < min(x,y) ) {
@@ -87,7 +87,7 @@ nodes/fragment/9/position = Vector2(-340, 300)
 nodes/fragment/9/size = Vector2(480, 220)
 nodes/fragment/9/input_ports = "0,3,uv;"
 nodes/fragment/9/output_ports = "0,0,b;"
-nodes/fragment/9/expression = "float scale = 1./45.;
+nodes/fragment/9/expression = "float scale = 20.;
 float x = mod(scale*uv.x, 1);
 float y = mod(scale*uv.y, 1);
 if (max(x,y) <  0.5 || 0.5 < min(x,y) ) {

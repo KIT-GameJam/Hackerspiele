@@ -2,35 +2,35 @@
 
 [ext_resource type="Script" uid="uid://dybpuggjfbxof" path="res://microgames/skys/main.gd" id="1_8ly23"]
 [ext_resource type="Script" uid="uid://dnpg2lienvak5" path="res://microgames/skys/player_body.gd" id="2_8ly23"]
-[ext_resource type="Shader" uid="uid://ciudg7yraetu7" path="res://microgames/skys/checkerboard_shader.tres" id="3_8ly23"]
-[ext_resource type="Texture2D" uid="uid://h2mi1v8xtbph" path="res://microgames/skys/ground.tres" id="4_dw3wm"]
+[ext_resource type="Shader" uid="uid://rmul5k7ovqim" path="res://microgames/skys/checkerboard_shader_2.tres" id="3_dw3wm"]
+[ext_resource type="Shader" uid="uid://c4ogfhoy30jxi" path="res://microgames/skys/player_shader.gdshader" id="3_ns583"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o85hp"]
+shader = ExtResource("3_ns583")
+shader_parameter/player_charge = 0.0
+shader_parameter/color_base = Color(0.12549, 0.768627, 0.309804, 1)
+shader_parameter/color_charged = Color(0.976471, 0.137255, 0.0901961, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_32utl"]
+radius = 22.0
+height = 108.0
 
 [sub_resource type="Gradient" id="Gradient_fgjxe"]
 offsets = PackedFloat32Array(0.162651)
-colors = PackedColorArray(0.406072, 0.720907, 0.491736, 1)
+colors = PackedColorArray(0.971765, 0.421768, 0.629596, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_8ly23"]
 gradient = SubResource("Gradient_fgjxe")
 width = 1
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_32utl"]
-radius = 0.5
-height = 2.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dw3wm"]
-shader = ExtResource("3_8ly23")
-
-[sub_resource type="QuadMesh" id="QuadMesh_o85hp"]
-size = Vector2(30, 30)
+radius = 22.0
+height = 108.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8ly23"]
 
-[sub_resource type="QuadMesh" id="QuadMesh_dw3wm"]
-size = Vector2(30, 30)
-
 [sub_resource type="QuadMesh" id="QuadMesh_8ly23"]
+size = Vector2(45, 45)
 
 [sub_resource type="Gradient" id="Gradient_dw3wm"]
 offsets = PackedFloat32Array(0, 0.0421687)
@@ -40,7 +40,7 @@ colors = PackedColorArray(0, 0, 0, 1, 0.125628, 0.497776, 1, 1)
 gradient = SubResource("Gradient_dw3wm")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o85hp"]
-size = Vector2(1, 1)
+size = Vector2(45, 45)
 
 [sub_resource type="Gradient" id="Gradient_8ly23"]
 offsets = PackedFloat32Array(0.00649351, 0.025974, 0.214286, 1)
@@ -68,43 +68,38 @@ offsets = PackedFloat32Array(0, 0.0180723)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_o85hp"]
 gradient = SubResource("Gradient_ns583")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ns583"]
+shader = ExtResource("3_dw3wm")
+
+[sub_resource type="QuadMesh" id="QuadMesh_o85hp"]
+size = Vector2(1280, 1280)
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_8ly23")
 time = 15.0
 
-[node name="PlayerBody" type="CharacterBody2D" parent="."]
+[node name="PlayerBody" type="CharacterBody2D" parent="." groups=["Player"]]
 script = ExtResource("2_8ly23")
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="PlayerBody"]
-position = Vector2(0, -1)
+[node name="PlayerMesh" type="MeshInstance2D" parent="PlayerBody" groups=["Player"]]
+material = SubResource("ShaderMaterial_o85hp")
+position = Vector2(0, -54)
 mesh = SubResource("CapsuleMesh_32utl")
 texture = SubResource("GradientTexture1D_8ly23")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody"]
-position = Vector2(0, -1)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody" groups=["Player"]]
+position = Vector2(0, -54)
 shape = SubResource("CapsuleShape2D_32utl")
 
 [node name="Camera2D" type="Camera2D" parent="PlayerBody"]
-zoom = Vector2(45, 45)
-
-[node name="Background" type="MeshInstance2D" parent="."]
-z_index = -100
-texture_filter = 1
-material = SubResource("ShaderMaterial_dw3wm")
-mesh = SubResource("QuadMesh_o85hp")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("WorldBoundaryShape2D_8ly23")
 
-[node name="Ground" type="MeshInstance2D" parent="."]
-position = Vector2(0, 15)
-mesh = SubResource("QuadMesh_dw3wm")
-texture = ExtResource("4_dw3wm")
-
 [node name="ObstacleBody" type="RigidBody2D" parent="."]
-position = Vector2(-3, -25)
+position = Vector2(-75, -25)
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="ObstacleBody"]
 position = Vector2(0, -0.5)
@@ -112,20 +107,18 @@ mesh = SubResource("QuadMesh_8ly23")
 texture = SubResource("GradientTexture1D_ns583")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleBody"]
-position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_o85hp")
 
-[node name="Parallax2D" type="Parallax2D" parent="."]
+[node name="ParallaxGround" type="Parallax2D" parent="."]
 z_index = -88
-repeat_size = Vector2(30, 0)
-repeat_times = 2
+repeat_size = Vector2(512, 0)
+repeat_times = 1000
 follow_viewport = false
 ignore_camera_scroll = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxGround"]
 z_index = -2
-position = Vector2(0, 15)
-scale = Vector2(0.059, 0.059)
+position = Vector2(0, 252)
 texture = SubResource("NoiseTexture2D_dw3wm")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
@@ -137,3 +130,13 @@ shape = SubResource("CapsuleShape2D_dw3wm")
 [node name="MeshInstance2D" type="MeshInstance2D" parent="RigidBody2D"]
 mesh = SubResource("CapsuleMesh_dw3wm")
 texture = SubResource("GradientTexture1D_o85hp")
+
+[node name="ParallaxBackground" type="Parallax2D" parent="."]
+repeat_size = Vector2(1280, 0)
+repeat_times = 10000
+
+[node name="Background" type="MeshInstance2D" parent="ParallaxBackground"]
+z_index = -100
+texture_filter = 1
+material = SubResource("ShaderMaterial_ns583")
+mesh = SubResource("QuadMesh_o85hp")
