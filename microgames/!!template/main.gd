@@ -1,4 +1,6 @@
 extends MicroGame
 
 func _ready() -> void:
-	finished.emit(Result.Win)
+	$AnimationPlayer.play("intro")
+	
+	#finished.emit(Result.Win)
