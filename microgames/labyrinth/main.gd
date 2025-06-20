@@ -4,6 +4,7 @@ extends MicroGame
 @export var move_time := 0.1
 
 @onready var tile_map: TileMapLayer = $TileMapLayer
+@onready var camera: Camera2D = $Camera2D
 var colours: Dictionary[String, Vector2i]
 var player_pos := Vector2i(5, 5)
 var player_colour: Vector2i
@@ -27,6 +28,9 @@ func _ready() -> void:
 	generate_maze(maze_bounds)
 	tile_map.set_cell(player_pos, 0, player_colour)
 	tile_map.set_cell(maze_bounds.end - Vector2i(2, 2), 0, exit_colour)
+
+	# move camera
+	camera.position = tile_map.map_to_local(maze_bounds.get_center())
 
 func _input(event: InputEvent) -> void:
 	var direction: Vector2i

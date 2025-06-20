@@ -52,7 +52,6 @@ time = 20.0
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(0, 2)
-scale = Vector2(16, 16)
 tile_set = SubResource("TileSet_p8kj7")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -65,3 +64,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_olmnv")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(16, 16)
