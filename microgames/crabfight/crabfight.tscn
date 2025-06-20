@@ -1,0 +1,170 @@
+[gd_scene load_steps=15 format=3 uid="uid://xqu1t0yrqkg7"]
+
+[ext_resource type="Script" uid="uid://c026jn8p1gwq8" path="res://microgames/crabfight/crabfight.gd" id="1_5h8xo"]
+[ext_resource type="PackedScene" uid="uid://03xsx5o3mjgs" path="res://microgames/crabfight/ferris.tscn" id="2_qttyf"]
+[ext_resource type="FontFile" uid="uid://sa1ml6cgmorr" path="res://assets/fonts/Share Tech Mono/ShareTechMono-Regular.ttf" id="3_oyg7h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qttyf"]
+size = Vector2(2421, 1023)
+
+[sub_resource type="QuadMesh" id="QuadMesh_qttyf"]
+size = Vector2(2048, 1024)
+
+[sub_resource type="Gradient" id="Gradient_oyg7h"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wu2i0"]
+gradient = SubResource("Gradient_oyg7h")
+width = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_wu2i0"]
+font = ExtResource("3_oyg7h")
+font_size = 76
+
+[sub_resource type="LabelSettings" id="LabelSettings_rabak"]
+font = ExtResource("3_oyg7h")
+font_size = 41
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wu2i0"]
+bg_color = Color(0.180005, 0.180005, 0.180005, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rabak"]
+bg_color = Color(0.5, 0.160833, 0.13, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_oyg7h"]
+font = ExtResource("3_oyg7h")
+font_size = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oyg7h"]
+bg_color = Color(0.31, 0.198917, 0.1767, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oyg7h"]
+size = Vector2(118, 746)
+
+[node name="Crabfight" type="Node2D"]
+script = ExtResource("1_5h8xo")
+time = 28.0
+
+[node name="GoodFerris" parent="." instance=ExtResource("2_qttyf")]
+position = Vector2(149, 402)
+scale = Vector2(0.2, 0.2)
+collision_layer = 3
+collision_mask = 2
+controlled_by_player = true
+
+[node name="BadFerris" parent="." instance=ExtResource("2_qttyf")]
+position = Vector2(1105, 383)
+scale = Vector2(0.2, 0.2)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1009, 1016.5)
+shape = SubResource("RectangleShape2D_qttyf")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="StaticBody2D"]
+position = Vector2(873, 1017)
+mesh = SubResource("QuadMesh_qttyf")
+texture = SubResource("GradientTexture1D_wu2i0")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -213.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Crab Fight!"
+label_settings = SubResource("LabelSettings_wu2i0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -85.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Kill your opponent in time"
+label_settings = SubResource("LabelSettings_rabak")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 136
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="YourLife" type="ProgressBar" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_wu2i0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_rabak")
+step = 1.0
+
+[node name="OpponentLife" type="ProgressBar" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_wu2i0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_rabak")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "You"
+label_settings = SubResource("LabelSettings_oyg7h")
+
+[node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Opponent"
+label_settings = SubResource("LabelSettings_oyg7h")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Panel" type="Panel" parent="CanvasLayer2"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_oyg7h")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(1325, 249)
+shape = SubResource("RectangleShape2D_oyg7h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(-46, 252)
+shape = SubResource("RectangleShape2D_oyg7h")

@@ -5,6 +5,7 @@ const scenes: Array[PackedScene] = [
 	preload("res://microgames/alien_attack/main.tscn"),
 	preload("res://microgames/bugfix/bugfix.tscn"),
 	preload("res://microgames/coin_collector/main.tscn"),
+	preload("res://microgames/crabfight/crabfight.tscn"),
 	preload("res://microgames/flyswatter/fly_swatter.tscn"),
 	preload("res://microgames/hello/hello.tscn"),
 	preload("res://microgames/kaputtmachen/main.tscn"),
