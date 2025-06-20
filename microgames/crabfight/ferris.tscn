@@ -1,0 +1,217 @@
+[gd_scene load_steps=18 format=3 uid="uid://03xsx5o3mjgs"]
+
+[ext_resource type="Texture2D" uid="uid://dqxfw33uitdld" path="res://microgames/crabfight/assets/ferris.svg" id="1_1k1to"]
+[ext_resource type="Script" uid="uid://ns3oc2lxqayg" path="res://microgames/crabfight/ferris.gd" id="1_o23ju"]
+[ext_resource type="PackedScene" uid="uid://d2rde7m01qpti" path="res://microgames/crabfight/arm.tscn" id="2_5ogrn"]
+[ext_resource type="PackedScene" uid="uid://etfu5ouoqq3f" path="res://microgames/crabfight/leg.tscn" id="4_e8puc"]
+[ext_resource type="Texture2D" uid="uid://du5x7nip2go7u" path="res://microgames/crabfight/assets/knife.svg" id="5_kqyc8"]
+[ext_resource type="Texture2D" uid="uid://bjsasy6tpn431" path="res://microgames/crabfight/assets/marker.svg" id="6_xqtlk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e8puc"]
+size = Vector2(851.25, 536.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xqtlk"]
+size = Vector2(291, 124)
+
+[sub_resource type="Animation" id="Animation_kqyc8"]
+resource_name = "stab"
+length = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.100343, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(400, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_xqtlk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5vth1"]
+_data = {
+&"RESET": SubResource("Animation_xqtlk"),
+&"stab": SubResource("Animation_kqyc8")
+}
+
+[sub_resource type="Animation" id="Animation_5vth1"]
+resource_name = "hover"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Marker:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.799361, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-2, -494), Vector2(-2, -600), Vector2(-2, -494)]
+}
+
+[sub_resource type="Animation" id="Animation_lbdor"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Marker:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2, -494)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bkcvu"]
+_data = {
+&"RESET": SubResource("Animation_lbdor"),
+&"hover": SubResource("Animation_5vth1")
+}
+
+[sub_resource type="Animation" id="Animation_bkcvu"]
+resource_name = "invincible"
+length = 1.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.100356, 0.2, 0.200711, 0.300356, 0.399289, 0.400711, 0.499644, 0.599289, 0.6, 0.699645, 0.799289, 0.8, 0.899645, 0.998578, 1, 1.09893, 1.19858, 1.19929, 1.20071, 1.30107, 1.40071, 1.40142, 1.50107, 1.6, 1.60142, 1.70036, 1.8, 1.80071),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_l43ne"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_le5gq"]
+_data = {
+&"RESET": SubResource("Animation_l43ne"),
+&"invincible": SubResource("Animation_bkcvu")
+}
+
+[node name="Ferris" type="CharacterBody2D"]
+slide_on_ceiling = false
+floor_stop_on_slope = false
+platform_on_leave = 1
+safe_margin = 1.0
+script = ExtResource("1_o23ju")
+
+[node name="RightArm" parent="." instance=ExtResource("2_5ogrn")]
+position = Vector2(476, -74)
+
+[node name="LeftArm" parent="." instance=ExtResource("2_5ogrn")]
+position = Vector2(-460, -80)
+rotation = -3.14159
+scale = Vector2(1, -1)
+
+[node name="RightLeg" parent="." instance=ExtResource("4_e8puc")]
+position = Vector2(384, 179)
+
+[node name="LeftLeg" parent="." instance=ExtResource("4_e8puc")]
+position = Vector2(-370, 176)
+rotation = -3.14159
+scale = Vector2(1, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.625, 37.75)
+shape = SubResource("RectangleShape2D_e8puc")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="Knife" type="Sprite2D" parent="Area2D"]
+position = Vector2(495.48, -13.3)
+scale = Vector2(0.52, 0.52)
+texture = ExtResource("5_kqyc8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(613.98, -15.3)
+shape = SubResource("RectangleShape2D_xqtlk")
+disabled = true
+
+[node name="Ferris" type="Sprite2D" parent="."]
+texture = ExtResource("1_1k1to")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_5vth1")
+}
+
+[node name="Marker" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-2, -494)
+texture = ExtResource("6_xqtlk")
+
+[node name="HoverPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_bkcvu")
+}
+autoplay = "hover"
+speed_scale = 1.8
+
+[node name="Invincibility" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_le5gq")
+}
+speed_scale = 1.5
+
+[connection signal="body_entered" from="Area2D" to="." method="got_hit"]
