@@ -12,6 +12,7 @@ var played_games: int
 var lifes: int
 var in_game := false
 var in_switch_state := false
+var game_idx_shuffle: Array[int] = []
 @onready var timer: Timer = $MicrogameSlot/Timer
 @onready var timer_progress: TextureProgressBar = $CanvasLayer/Panel/HBoxContainer/TimerProgress
 @onready var switch_game_timer: Timer = $MicrogameSlot/SwitchGameTimer
@@ -95,7 +96,10 @@ func start() -> void:
 func load_game() -> void:
 	if current_game:
 		return
-	var idx := randi_range(0, MicroGames.scenes.size() - 1)
+	if game_idx_shuffle.is_empty():
+		game_idx_shuffle.append_array(range(0, MicroGames.scenes.size()))
+		game_idx_shuffle.shuffle()
+	var idx: int = game_idx_shuffle.pop_front()
 	current_game = MicroGames.scenes[idx].instantiate()
 	current_game.storage = game_storage[idx]
 
