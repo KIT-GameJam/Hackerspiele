@@ -63,8 +63,6 @@ func _ready() -> void:
 	show_title_screen()
 	reset_bottles()
 
-	show_scoreboard(42)
-
 func _process(delta: float) -> void:
 	while print_queue and print_time <= 0.0:
 		pop_print_queue()
