@@ -597,6 +597,7 @@ sources/0 = SubResource("TileSetAtlasSource_cgxmu")
 pattern_0 = SubResource("TileMapPattern_0rxoi")
 
 [node name="Level" instance=ExtResource("1_6wve3")]
+level_time = 30
 
 [node name="BG" parent="." index="0"]
 bg_texture = ExtResource("2_iy351")
