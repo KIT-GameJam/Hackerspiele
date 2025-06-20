@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3 uid="uid://clne0fi17ai2g"]
+
+[ext_resource type="Script" uid="uid://dnfna7moqns8g" path="res://microgames/labyrinth/main.gd" id="1_p8kj7"]
+[ext_resource type="Texture2D" uid="uid://bgex3sie2ueqm" path="res://microgames/labyrinth/assets/colours.png" id="2_olmnv"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0258c"]
+texture = ExtResource("2_olmnv")
+texture_region_size = Vector2i(1, 1)
+0:0/0 = 0
+0:0/0/custom_data_0 = "white"
+1:0/0 = 0
+1:0/0/custom_data_0 = "black"
+2:0/0 = 0
+2:0/0/custom_data_0 = "red"
+3:0/0 = 0
+3:0/0/custom_data_0 = "green"
+4:0/0 = 0
+4:0/0/custom_data_0 = "blue"
+5:0/0 = 0
+5:0/0/custom_data_0 = "yellow"
+6:0/0 = 0
+6:0/0/custom_data_0 = "cyan"
+7:0/0 = 0
+7:0/0/custom_data_0 = "magenta"
+8:0/0 = 0
+8:0/0/custom_data_0 = "orange"
+9:0/0 = 0
+9:0/0/custom_data_0 = "dark_red"
+10:0/0 = 0
+10:0/0/custom_data_0 = "dark_green"
+11:0/0 = 0
+11:0/0/custom_data_0 = "dark_blue"
+12:0/0 = 0
+12:0/0/custom_data_0 = "purple"
+13:0/0 = 0
+13:0/0/custom_data_0 = "spring_green"
+14:0/0 = 0
+14:0/0/custom_data_0 = "teal"
+15:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_p8kj7"]
+tile_size = Vector2i(1, 1)
+custom_data_layer_0/name = "colour"
+custom_data_layer_0/type = 4
+sources/0 = SubResource("TileSetAtlasSource_0258c")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_olmnv"]
+
+[node name="Labyrinth" type="Node2D"]
+script = ExtResource("1_p8kj7")
+time = 20.0
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+position = Vector2(0, 2)
+scale = Vector2(16, 16)
+tile_set = SubResource("TileSet_p8kj7")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_olmnv")
