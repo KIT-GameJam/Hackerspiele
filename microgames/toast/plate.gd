@@ -8,4 +8,7 @@ func _on_plate_reached_area_body_entered(body: Node2D) -> void:
 	texture = plate_with_toast_texture
 	toast.freeze = true
 	toast.visible = false
-	microgame_root._win()
+	if (toast.toastedness > 1.5):
+		microgame_root._lose()
+	else:
+		microgame_root._win()
