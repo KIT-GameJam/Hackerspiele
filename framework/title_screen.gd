@@ -297,6 +297,7 @@ func show_scoreboard(score: int) -> void:
 	if pos < SCOREBOARD_SIZE:
 		push_str("Enter your name:\n")
 		await push_sync()
+		line_edit.clear()
 		line_edit.show()
 		line_edit.grab_focus.call_deferred()
 		line_edit.position = label.position + get_cursor_char_bounds().position
