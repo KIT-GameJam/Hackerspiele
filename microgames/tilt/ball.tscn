@@ -1,12 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://bu6hgqwpedycw"]
+[gd_scene load_steps=4 format=3 uid="uid://bu6hgqwpedycw"]
 
 [ext_resource type="Script" uid="uid://bhe3epvt4y2jo" path="res://microgames/tilt/ball.gd" id="1_6xp2d"]
 [ext_resource type="Shape2D" uid="uid://ciwgdqblgap4i" path="res://microgames/tilt/ball.tres" id="1_ohqui"]
+[ext_resource type="Texture2D" uid="uid://d4mpakkq1w7kk" path="res://microgames/tilt/circle.svg" id="3_o4eug"]
 
 [node name="Ball" type="Node2D"]
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
+mass = 10.0
 script = ExtResource("1_6xp2d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
 shape = ExtResource("1_ohqui")
+
+[node name="s" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("3_o4eug")
