@@ -1,12 +1,29 @@
-[gd_scene load_steps=16 format=3 uid="uid://bl2l6ub7boqo1"]
+[gd_scene load_steps=23 format=3 uid="uid://bl2l6ub7boqo1"]
 
-[ext_resource type="Script" uid="uid://b273yl7tf3q0y" path="res://microgames/!!template/main.gd" id="1_75jvm"]
 [ext_resource type="Texture2D" uid="uid://fwv60bcp5xxc" path="res://microgames/toast/toast.png" id="2_hn71x"]
 [ext_resource type="Texture2D" uid="uid://duo87odxfb610" path="res://microgames/toast/background.png" id="2_k0wgn"]
 [ext_resource type="Texture2D" uid="uid://cgobcw678muej" path="res://microgames/toast/toaster.png" id="3_gmsgr"]
 [ext_resource type="Script" uid="uid://dvfxsux8ututp" path="res://microgames/toast/toaster.gd" id="4_gmsgr"]
+[ext_resource type="Script" uid="uid://b3w63frn1pnge" path="res://microgames/toast/plate.gd" id="4_on76y"]
 [ext_resource type="Texture2D" uid="uid://lcgeucf5fbvl" path="res://microgames/toast/spring_handle.png" id="5_fa81w"]
+[ext_resource type="Texture2D" uid="uid://bjmsfsykvv8jv" path="res://microgames/toast/plate_with_toast.png" id="6_bps7a"]
 [ext_resource type="Texture2D" uid="uid://ca8djrtauljyk" path="res://microgames/toast/speech_bubble.png" id="7_f60wu"]
+[ext_resource type="Script" uid="uid://ch2i8mxjiegjg" path="res://microgames/toast/half_pipe.gd" id="8_n4ocr"]
+[ext_resource type="PhysicsMaterial" uid="uid://1p4g1reai0iy" path="res://microgames/toast/slippery_slope_physics_material.tres" id="9_6eujq"]
+[ext_resource type="Texture2D" uid="uid://cfckigqn53jdo" path="res://microgames/toast/empty_plate.png" id="10_qrpjj"]
+
+[sub_resource type="GDScript" id="GDScript_on76y"]
+script/source = "extends MicroGame
+
+func _ready() -> void:
+	$AnimationPlayer.play(\"intro\")
+
+func _win():
+	$SpeechBubble/SpeechBubbleLabel.text = \"[shake rate=20.0 level=35 connected=1]OMG, THANKS! [color=red]❤️[/color][/shake]\"
+	$AnimationPlayer.play(\"outro_win\")
+	await $AnimationPlayer.animation_finished
+	finished.emit(Result.Win)
+"
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_k0wgn"]
 normal = Vector2(1, 0)
@@ -17,14 +34,50 @@ distance = 23.0
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_n4ocr"]
 normal = Vector2(-1, 0)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_on76y"]
+size = Vector2(1029.98, 144.841)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k0wgn"]
 size = Vector2(914.286, 605.715)
 
-[sub_resource type="LabelSettings" id="LabelSettings_n4ocr"]
-font_size = 116
-font_color = Color(0, 0, 0, 1)
-outline_size = 3
-outline_color = Color(0, 0, 0, 1)
+[sub_resource type="Animation" id="Animation_n4ocr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HandWithPlate:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1129, 587)]
+}
 
 [sub_resource type="Animation" id="Animation_f60wu"]
 resource_name = "intro"
@@ -53,46 +106,55 @@ tracks/1/keys = {
 "values": [Vector2(-125.2, 347.571), Vector2(0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_n4ocr"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_on76y"]
+resource_name = "outro_win"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D:zoom")
+tracks/0/path = NodePath("HandWithPlate:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(2, 2),
 "update": 0,
-"values": [Vector2(2, 2)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera2D:offset")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(1129, 587), Vector2(1605, 587)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6eujq"]
 _data = {
 &"RESET": SubResource("Animation_n4ocr"),
-&"intro": SubResource("Animation_f60wu")
+&"intro": SubResource("Animation_f60wu"),
+&"outro_win": SubResource("Animation_on76y")
 }
 
+[sub_resource type="LabelSettings" id="LabelSettings_on76y"]
+font_color = Color(0, 0, 0, 0.282353)
+
 [node name="Main" type="Node"]
-script = ExtResource("1_75jvm")
+script = SubResource("GDScript_on76y")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(598.5, 306.784)
 scale = Vector2(0.559647, 0.355778)
 texture = ExtResource("2_k0wgn")
+
+[node name="SpeechBubble" type="Sprite2D" parent="."]
+position = Vector2(987, 322)
+scale = Vector2(0.394942, 0.394942)
+texture = ExtResource("7_f60wu")
+
+[node name="SpeechBubbleLabel" type="RichTextLabel" parent="SpeechBubble"]
+offset_left = -511.0
+offset_top = -78.0
+offset_right = 522.0
+offset_bottom = 71.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 106
+bbcode_enabled = true
+text = "I WANT TOAST!!"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Boundary" type="StaticBody2D" parent="."]
 position = Vector2(189, 422)
@@ -109,19 +171,27 @@ shape = SubResource("WorldBoundaryShape2D_f60wu")
 position = Vector2(1093, -97)
 shape = SubResource("WorldBoundaryShape2D_n4ocr")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(585, 304)
-scale = Vector2(0.404827, 0.322933)
+[node name="HandWithPlate" type="Sprite2D" parent="." node_paths=PackedStringArray("toast", "microgame_root")]
+position = Vector2(1129, 587)
+scale = Vector2(0.113, 0.113)
+texture = ExtResource("10_qrpjj")
+script = ExtResource("4_on76y")
+plate_with_toast_texture = ExtResource("6_bps7a")
+toast = NodePath("../Toast")
+microgame_root = NodePath("..")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-position = Vector2(777.587, 232.652)
-scale = Vector2(1.51974, 1.71292)
-polygon = PackedVector2Array(-1325.77, -404.793, -1247.75, -406.601, -1205.13, -559.82, -1101.38, -665.105, -975.401, -696.071, -871.653, -674.394, -780.256, -612.462, -720.971, -528.854, -701.21, -435.955, -641.925, -439.052, -671.567, -624.849, -762.964, -742.52, -911.176, -795.162, -1084.09, -801.356, -1280.26, -652.461)
+[node name="StaticBody2D" type="StaticBody2D" parent="HandWithPlate"]
+position = Vector2(-1238.94, 44.2478)
 
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
-position = Vector2(764.364, 234)
-scale = Vector2(1.50628, 1.7179)
-polygon = PackedVector2Array(-1325.77, -404.793, -1247.75, -406.601, -1205.13, -559.82, -1101.38, -665.105, -975.401, -696.071, -871.653, -674.394, -780.256, -612.462, -720.971, -528.854, -701.21, -435.955, -641.925, -439.052, -671.567, -624.849, -762.964, -742.52, -911.176, -795.162, -1084.09, -801.356, -1280.26, -652.461)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HandWithPlate/StaticBody2D"]
+polygon = PackedVector2Array(-772.486, -139.477, -820.767, -80.4673, -702.748, 32.187, -85.832, 118.019, 590.093, 59.0095, 804.673, -37.5513, 745.664, -193.121, 670.561, -171.663, 697.383, -64.3738, 354.056, 37.5515, -80.4673, 42.916, -643.739, -32.1868, -718.841, -96.5605, -702.748, -177.028)
+
+[node name="PlateReachedArea" type="Area2D" parent="HandWithPlate"]
+position = Vector2(-1247.79, 44.248)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HandWithPlate/PlateReachedArea"]
+position = Vector2(21.4579, -118.019)
+shape = SubResource("RectangleShape2D_on76y")
 
 [node name="Toast" type="RigidBody2D" parent="."]
 position = Vector2(188.863, 423)
@@ -170,19 +240,6 @@ position = Vector2(-33.4969, -30.2058)
 scale = Vector2(0.999999, 0.999999)
 shape = SubResource("RectangleShape2D_k0wgn")
 
-[node name="SpeechBubble" type="Sprite2D" parent="."]
-position = Vector2(987, 322)
-scale = Vector2(0.394942, 0.394942)
-texture = ExtResource("7_f60wu")
-
-[node name="I WANT TOAST!" type="Label" parent="SpeechBubble"]
-offset_left = -446.0
-offset_top = -78.0
-offset_right = -98.0
-offset_bottom = -25.0
-text = "I WANT TOAST!!"
-label_settings = SubResource("LabelSettings_n4ocr")
-
 [node name="Camera2D" type="Camera2D" parent="."]
 scale = Vector2(14.7011, 0.876156)
 anchor_mode = 0
@@ -193,5 +250,66 @@ libraries = {
 &"": SubResource("AnimationLibrary_6eujq")
 }
 
+[node name="[INTERFACE]Obstacles" type="Node2D" parent="."]
+
+[node name="Obstacle1" type="Node2D" parent="[INTERFACE]Obstacles"]
+position = Vector2(25, -191)
+script = ExtResource("8_n4ocr")
+line_node = NodePath("Line2D")
+collision_polygon_node = NodePath("StaticBody2D/CollisionPolygon2D")
+line_width = 20.0
+
+[node name="Line2D" type="Line2D" parent="[INTERFACE]Obstacles/Obstacle1"]
+points = PackedVector2Array(181, 355, 203, 327, 232, 301, 258, 283, 282, 269, 304, 257, 331, 246, 355, 238, 380, 233, 406, 230, 432, 229, 462, 230, 486, 233, 510, 242, 534, 257, 552, 274, 565, 297, 571, 325, 574, 346, 573, 374, 567, 402, 559, 420, 550, 432)
+width = 21.52
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="[INTERFACE]Obstacles/Obstacle1"]
+physics_material_override = ExtResource("9_6eujq")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="[INTERFACE]Obstacles/Obstacle1/StaticBody2D"]
+polygon = PackedVector2Array(462.561, 220.013, 463.014, 220.049, 487.823, 223.15, 488.962, 223.431, 513.979, 232.812, 514.876, 233.255, 539.721, 248.783, 540.506, 249.389, 559.412, 267.245, 560.336, 268.426, 574.08, 292.741, 574.619, 294.162, 580.814, 323.074, 580.875, 323.415, 583.962, 345.026, 584.009, 345.913, 582.978, 374.795, 582.87, 375.666, 576.669, 404.602, 576.349, 405.588, 567.909, 424.577, 567.338, 425.549, 558, 438, 554.61, 440.874, 550.31, 441.995, 545.948, 441.142, 542.387, 438.484, 540.329, 434.545, 540.182, 430.103, 541.973, 426.036, 542, 426, 550.321, 414.905, 557.44, 398.888, 563.038, 372.764, 563.975, 346.533, 561.149, 326.757, 555.542, 300.59, 544.037, 280.234, 527.857, 264.953, 505.55, 251.011, 483.591, 242.777, 461.212, 239.979, 432.026, 239.006, 406.766, 239.978, 381.556, 242.887, 357.572, 247.684, 334.471, 255.384, 308.294, 266.048, 286.915, 277.71, 263.373, 291.443, 238.208, 308.865, 210.325, 333.864, 188.863, 361.178, 185.41, 363.975, 181.085, 365, 176.744, 364.049, 173.243, 361.311, 171.275, 357.327, 171.227, 352.883, 173.109, 348.858, 173.137, 348.822, 195.406, 320.48, 196.001, 319.845, 225.558, 293.345, 226.05, 292.957, 252.467, 274.668, 252.794, 274.46, 277.085, 260.29, 299.458, 248.086, 299.967, 247.845, 327.378, 236.678, 327.683, 236.565, 352.133, 228.415, 352.734, 228.255, 378.241, 223.154, 378.649, 223.09, 405.044, 220.044, 405.425, 220.015, 431.795, 219, 432.154, 219)
+
+[node name="Obstacle2" type="Node2D" parent="[INTERFACE]Obstacles"]
+position = Vector2(25, -191)
+script = ExtResource("8_n4ocr")
+line_node = NodePath("Line2D")
+collision_polygon_node = NodePath("StaticBody2D/CollisionPolygon2D")
+line_width = 20.0
+
+[node name="Line2D" type="Line2D" parent="[INTERFACE]Obstacles/Obstacle2"]
+position = Vector2(237, 225)
+points = PackedVector2Array(204, 210, 209, 262, 223, 290, 242, 313, 265, 329, 302, 343, 332, 351, 377, 364, 408, 373, 449, 384, 508, 404, 536, 421, 559, 445, 571, 466)
+width = 21.52
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="[INTERFACE]Obstacles/Obstacle2"]
+physics_material_override = ExtResource("9_6eujq")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="[INTERFACE]Obstacles/Obstacle2/StaticBody2D"]
+polygon = PackedVector2Array(446.431, 426.603, 449.533, 429.786, 450.95, 433.998, 450.954, 434.043, 455.776, 484.191, 468.435, 509.509, 485.836, 530.574, 506.695, 545.085, 542.066, 558.468, 571.676, 566.364, 616.782, 579.395, 647.69, 588.368, 688.748, 599.383, 689.057, 599.477, 748.729, 619.705, 749.722, 620.168, 778.748, 637.791, 779.768, 638.609, 803.644, 663.524, 804.378, 664.506, 816.682, 686.039, 817.975, 690.291, 817.297, 694.683, 814.783, 698.348, 810.93, 700.561, 806.498, 700.886, 802.362, 699.259, 799.34, 696.001, 799.318, 695.961, 787.928, 676.03, 766.688, 653.867, 740.749, 638.118, 683.096, 618.575, 642.31, 607.632, 611.22, 598.606, 566.324, 585.636, 536.179, 577.597, 535.698, 577.442, 497.885, 563.135, 496.795, 562.561, 472.729, 545.819, 471.725, 544.895, 451.929, 520.931, 451.31, 519.98, 436.643, 490.647, 436.134, 488.875, 431.046, 435.957, 431.614, 431.549, 434.036, 427.823, 437.833, 425.515, 442.256, 425.079)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 332.0
+offset_top = 550.0
+offset_right = 634.0
+offset_bottom = 619.0
+text = "Left/Right to rotate
+Space to charge, 
+release to pop"
+
+[node name="CreditLabel" type="Label" parent="."]
+offset_left = 14.0
+offset_top = 14.0
+offset_right = 316.0
+offset_bottom = 83.0
+text = "by Geometror"
+label_settings = SubResource("LabelSettings_on76y")
+
+[connection signal="body_entered" from="HandWithPlate/PlateReachedArea" to="HandWithPlate" method="_on_plate_reached_area_body_entered"]
 [connection signal="body_entered" from="Toaster/ToastInsideCheckArea" to="Toaster" method="_on_toast_inside_check_area_body_entered"]
 [connection signal="body_exited" from="Toaster/ToastInsideCheckArea" to="Toaster" method="_on_toast_inside_check_area_body_exited"]
