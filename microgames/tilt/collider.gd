@@ -1,5 +1,7 @@
 extends CollisionShape2D
 
 func _process(delta: float) -> void:
+	var tween = get_tree().create_tween()
 	var rotation_strength = Input.get_axis("left", "right")
-	self.rotation_degrees = 20 * rotation_strength
+	tween.tween_property(self, "rotation_degrees", 20 * rotation_strength, .1)
+	

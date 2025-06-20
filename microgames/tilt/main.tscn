@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://c4nehriuxfoby"]
 
-[ext_resource type="Script" uid="uid://b273yl7tf3q0y" path="res://microgames/!!template/main.gd" id="1_a0ysp"]
+[ext_resource type="Script" uid="uid://dfnmqui16aovs" path="res://microgames/tilt/main.gd" id="1_j1mdo"]
 [ext_resource type="Script" uid="uid://dpoxxu686sanw" path="res://microgames/tilt/collider.gd" id="2_6milr"]
 [ext_resource type="Shape2D" uid="uid://b0x5yvkxwqsg6" path="res://microgames/tilt/big_collider.tres" id="2_j1mdo"]
 [ext_resource type="Shape2D" uid="uid://fahgmp4rghpl" path="res://microgames/tilt/small_collider.tres" id="4_hgjtv"]
@@ -11,7 +11,8 @@ bounce = 0.05
 absorbent = true
 
 [node name="Main" type="Node2D"]
-script = ExtResource("1_a0ysp")
+script = ExtResource("1_j1mdo")
+time = 5000.0
 
 [node name="Main" type="StaticBody2D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_kb3li")
