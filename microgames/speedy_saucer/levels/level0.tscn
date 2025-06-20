@@ -23,12 +23,14 @@ offset_right = -66.0
 offset_bottom = -26.0
 
 [node name="Start" parent="Labels" index="0"]
+layout_mode = 0
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 235.0
 offset_bottom = 137.0
 
 [node name="Win" parent="Labels" index="1"]
+layout_mode = 0
 offset_left = 1601.0
 offset_top = 204.0
 offset_right = 1849.0

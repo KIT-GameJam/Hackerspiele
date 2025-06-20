@@ -1,0 +1,99 @@
+[gd_resource type="VisualShader" load_steps=6 format=3 uid="uid://rmul5k7ovqim"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_sc0rw"]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_1c0mj"]
+
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_f5sf8"]
+constant = Color(0, 0, 0, 1)
+
+[sub_resource type="VisualShaderNodeMix" id="VisualShaderNodeMix_aopum"]
+default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(1, 1, 1), 2, 1.0]
+expanded_output_ports = [0]
+op_type = 4
+
+[sub_resource type="VisualShaderNodeExpression" id="VisualShaderNodeExpression_4igad"]
+size = Vector2(480, 220)
+expression = "float scale = 20.;
+float x = mod(scale*uv.x, 1);
+float y = mod(scale*uv.y, 1);
+if (max(x,y) <  0.5 || 0.5 < min(x,y) ) {
+  b = 0.0;
+} else {
+  b = 1.;
+}
+"
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+
+
+
+void fragment() {
+// ColorConstant:5
+	vec4 n_out5p0 = vec4(0.000000, 0.000000, 0.000000, 1.000000);
+
+
+// ColorConstant:4
+	vec4 n_out4p0 = vec4(1.000000, 1.000000, 1.000000, 1.000000);
+
+
+// Input:2
+	vec2 n_out2p0 = UV;
+
+
+	float n_out9p0;
+// Expression:9
+	n_out9p0 = 0.0;
+	{
+		float scale = 20.;
+		float x = mod(scale*n_out2p0.x, 1);
+		float y = mod(scale*n_out2p0.y, 1);
+		if (max(x,y) <  0.5 || 0.5 < min(x,y) ) {
+		  n_out9p0 = 0.0;
+		} else {
+		  n_out9p0 = 1.;
+		}
+		
+	}
+
+
+// Mix:6
+	vec3 n_out6p0 = mix(vec3(n_out5p0.xyz), vec3(n_out4p0.xyz), n_out9p0);
+
+
+// Output:0
+	COLOR.rgb = n_out6p0;
+
+
+}
+"
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2(560, 60)
+nodes/fragment/2/node = SubResource("VisualShaderNodeInput_sc0rw")
+nodes/fragment/2/position = Vector2(-700, 300)
+nodes/fragment/4/node = SubResource("VisualShaderNodeColorConstant_1c0mj")
+nodes/fragment/4/position = Vector2(-180, 200)
+nodes/fragment/5/node = SubResource("VisualShaderNodeColorConstant_f5sf8")
+nodes/fragment/5/position = Vector2(-180, 100)
+nodes/fragment/6/node = SubResource("VisualShaderNodeMix_aopum")
+nodes/fragment/6/position = Vector2(200, 80)
+nodes/fragment/9/node = SubResource("VisualShaderNodeExpression_4igad")
+nodes/fragment/9/position = Vector2(-340, 300)
+nodes/fragment/9/size = Vector2(480, 220)
+nodes/fragment/9/input_ports = "0,3,uv;"
+nodes/fragment/9/output_ports = "0,0,b;"
+nodes/fragment/9/expression = "float scale = 20.;
+float x = mod(scale*uv.x, 1);
+float y = mod(scale*uv.y, 1);
+if (max(x,y) <  0.5 || 0.5 < min(x,y) ) {
+  b = 0.0;
+} else {
+  b = 1.;
+}
+"
+nodes/fragment/connections = PackedInt32Array(5, 0, 6, 0, 4, 0, 6, 1, 9, 0, 6, 2, 6, 0, 0, 0, 2, 0, 9, 0)
