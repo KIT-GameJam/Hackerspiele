@@ -11,7 +11,6 @@ const SCOREBOARD_PATH := "user://scoreboard.dat"
 
 const POWEROFF_COLOR_INACTIVE := Color("#cd5424")
 const POWEROFF_COLOR_ACTIVE := Color("#ed7444")
-const SCOREBOARD_MAX_NAME_LEN := 20
 const VOLUME_SLIDER_SIZE := 16
 const VOLUME_SLIDER_FULL_CHAR := "#"
 const VOLUME_SLIDER_EMPTY_CHAR := "-"
@@ -33,18 +32,15 @@ const BOTTLE_OFFSET := 1.0
 @onready var world_environment: WorldEnvironment = $WorldEnvironment
 @onready var blink_timer: Timer = $Monitor/ScreenLayer/Screen/BlinkTimer
 @onready var game_manager: GameManager = get_tree().get_first_node_in_group("game-manager")
+@onready var line_edit: LineEdit = $Monitor/ScreenLayer/Screen/LineEdit
 var print_time := 0.0
 var cursor := Vector2i(0, 0)
 var print_queue: Array[PrintEvent] = []
 var environment_buffer: Environment = null
-## true if currently waiting for input, false otherwise
-var waiting_for_input := false
 var is_paused := false
 var bottle_offset_left := 0.0
 var bottle_offset_right := 0.0
 var bottles: Array[MeshInstance3D] = []
-
-signal key_input(chr: String)
 
 enum PrintEventType { CHAR, BUTTON, SYNC }
 
@@ -67,6 +63,8 @@ func _ready() -> void:
 	show_title_screen()
 	reset_bottles()
 
+	show_scoreboard(42)
+
 func _process(delta: float) -> void:
 	while print_queue and print_time <= 0.0:
 		pop_print_queue()
@@ -79,17 +77,6 @@ func _process(delta: float) -> void:
 	else:
 		print_time = 0.0
 	update_screen_pos()
-
-func _unhandled_key_input(event: InputEvent) -> void:
-	if print_queue.is_empty() and waiting_for_input:
-		if event.is_pressed():
-			var key: Key = event.key_label
-			if key == KEY_ENTER:
-				key_input.emit("")
-			elif key == KEY_BACKSPACE:
-				key_input.emit("\b")
-			elif (key >= KEY_A and key <= KEY_Z) or (key >= KEY_0 and key <= KEY_9):
-				key_input.emit(OS.get_keycode_string(key))
 
 func _on_blink_timer_timeout() -> void:
 	# toggle cursor visibility
@@ -283,25 +270,12 @@ func show_scoreboard(score: int) -> void:
 	print()
 	if pos < SCOREBOARD_SIZE:
 		push_str("Enter your name:\n")
-		waiting_for_input = true
-		var scoreboard_name := ""
-		DisplayServer.virtual_keyboard_show("")
-		while true:
-			var chr = await key_input
-			if chr.is_empty():
-				push_str("\n")
-				break
-			if chr == "\b":
-				if scoreboard_name:
-					scoreboard_name = scoreboard_name.left(-1)
-					backspace()
-				continue
-			if scoreboard_name.length() >= SCOREBOARD_MAX_NAME_LEN:
-				continue
-			scoreboard_name += chr
-			push_str(chr)
-		DisplayServer.virtual_keyboard_hide()
-		waiting_for_input = false
+		await push_sync()
+		line_edit.show()
+		line_edit.grab_focus.call_deferred()
+		line_edit.position = label.position + get_cursor_char_bounds().position
+		var scoreboard_name = await line_edit.text_submitted
+		line_edit.hide()
 		scoreboard.insert(pos, [scoreboard_name, score])
 		scoreboard.resize(min(scoreboard.size(), SCOREBOARD_SIZE))
 		save_scoreboard()
@@ -472,3 +446,7 @@ func switch_game_screen(was_successfull: bool) -> void:
 	push_str("Lifes: " + str(game_manager.lifes))
 	push_str("\n")
 	push_str("Score: " + str(game_manager.won_games) + "\n")
+
+func _on_line_edit_text_changed(new_text: String) -> void:
+	cursor.x = new_text.length()
+	update_cursor_pos()

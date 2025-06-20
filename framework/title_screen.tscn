@@ -177,6 +177,24 @@ texture = ExtResource("5_4xr2k")
 expand_mode = 3
 stretch_mode = 5
 
+[node name="LineEdit" type="LineEdit" parent="Monitor/ScreenLayer/Screen"]
+visible = false
+layout_mode = 0
+offset_left = 232.0
+offset_top = 400.0
+offset_right = 274.562
+offset_bottom = 427.0
+theme = ExtResource("3_4toer")
+max_length = 20
+expand_to_text_length = true
+context_menu_enabled = false
+emoji_menu_enabled = false
+shortcut_keys_enabled = false
+middle_mouse_paste_enabled = false
+selecting_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+
 [node name="MarkerTopLeft" type="Marker3D" parent="Monitor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.732, 2.73, 0.93)
 
@@ -225,3 +243,4 @@ bus = &"Music"
 [connection signal="mouse_exited" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_poweroff_button_mouse_exited"]
 [connection signal="pressed" from="Monitor/ScreenLayer/Screen/PoweroffButton" to="." method="_on_poweroff_button_pressed"]
 [connection signal="timeout" from="Monitor/ScreenLayer/Screen/BlinkTimer" to="." method="_on_blink_timer_timeout"]
+[connection signal="text_changed" from="Monitor/ScreenLayer/Screen/LineEdit" to="." method="_on_line_edit_text_changed"]
