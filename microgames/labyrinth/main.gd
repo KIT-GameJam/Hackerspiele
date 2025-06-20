@@ -1,6 +1,7 @@
 extends MicroGame
 
-@export var maze_size := Vector2i(20, 20)
+@export_range(0, 100, 2) var maze_size := 16
+@export var move_time := 0.1
 
 @onready var tile_map: TileMapLayer = $TileMapLayer
 var colours: Dictionary[String, Vector2i]
@@ -22,20 +23,24 @@ func _ready() -> void:
 	wall_colour = colours.white
 	exit_colour = colours.orange
 
-	var maze_bounds := Rect2i(player_pos, maze_size)
+	var maze_bounds := Rect2i(player_pos, Vector2i(maze_size, maze_size))
 	generate_maze(maze_bounds)
 	tile_map.set_cell(player_pos, 0, player_colour)
 	tile_map.set_cell(maze_bounds.end - Vector2i(2, 2), 0, exit_colour)
 
 func _input(event: InputEvent) -> void:
+	var direction: Vector2i
 	if event.is_action_pressed("up"):
-		move_player(Vector2i.UP)
+		direction = Vector2i.UP
 	elif event.is_action_pressed("down"):
-		move_player(Vector2i.DOWN)
+		direction = Vector2i.DOWN
 	elif event.is_action_pressed("left"):
-		move_player(Vector2i.LEFT)
+		direction = Vector2i.LEFT
 	elif event.is_action_pressed("right"):
-		move_player(Vector2i.RIGHT)
+		direction = Vector2i.RIGHT
+	move_player(direction)
+	await get_tree().create_timer(move_time).timeout
+	move_player(direction)
 
 func move_player(direction: Vector2i) -> void:
 	tile_map.set_cell(player_pos)
@@ -56,8 +61,12 @@ func generate_maze(bounds: Rect2i):
 			var coords := bounds.position + Vector2i(i, j)
 			tile_map.set_cell(coords, 0, wall_colour)
 
+	# generate starting point
+	var x := randi_range(0, (bounds.size.x - 1) / 2)
+	var y := randi_range(0, (bounds.size.y - 1) / 2)
+	var start := bounds.position + 2 * Vector2i(x, y)
+
 	# randomized DFS
-	var start := bounds.get_center()
 	tile_map.set_cell(start)
 	var stack := [start]
 	var visited := {start: null}
