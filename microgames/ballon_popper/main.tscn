@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://cf5nudvdi8jht"]
+
+[ext_resource type="PackedScene" uid="uid://yuvlqf8bmj3s" path="res://microgames/ballon_popper/entities/ballon.tscn" id="1_df15i"]
+[ext_resource type="Script" uid="uid://cv3yat78jntli" path="res://microgames/ballon_popper/main.gd" id="1_wioa0"]
+[ext_resource type="PackedScene" uid="uid://ckgsp3p1m47rd" path="res://microgames/ballon_popper/entities/player.tscn" id="2_7vam6"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_7vam6"]
+plane = Plane(1, 0, 0, 0)
+
+[sub_resource type="Environment" id="Environment_7vam6"]
+background_mode = 1
+background_color = Color(0.0846899, 0.0846899, 0.0846899, 1)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_wioa0")
+time = 15.0
+
+[node name="Player" parent="." instance=ExtResource("2_7vam6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 2.5, 1.5)
+
+[node name="Ballons" type="Node3D" parent="."]
+
+[node name="Ballon" parent="Ballons" instance=ExtResource("1_df15i")]
+
+[node name="WorldBorders" type="StaticBody3D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="WorldBorders"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 7, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_7vam6")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="WorldBorders"]
+transform = Transform3D(1.91069e-15, -4.37114e-08, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, -4.37114e-08, 0, 4, 0)
+shape = SubResource("WorldBoundaryShape3D_7vam6")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="WorldBorders"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 0, -4, 0)
+shape = SubResource("WorldBoundaryShape3D_7vam6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBorders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_7vam6")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7vam6")
+
+[connection signal="popped" from="Ballons/Ballon" to="." method="_on_ballon_popped"]

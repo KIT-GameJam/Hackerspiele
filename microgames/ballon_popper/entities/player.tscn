@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckgsp3p1m47rd"]
+
+[ext_resource type="Script" uid="uid://ci5b2gshs5nu2" path="res://microgames/ballon_popper/entities/player.gd" id="1_p5ca6"]
+[ext_resource type="Material" uid="uid://coo4crk73rc20" path="res://microgames/ballon_popper/assets/cannon.tres" id="1_y4jg2"]
+[ext_resource type="Material" uid="uid://tfngdjpcc3rj" path="res://microgames/ballon_popper/assets/projectile.tres" id="3_a8wd4"]
+
+[node name="Player" type="Node3D"]
+script = ExtResource("1_p5ca6")
+
+[node name="Body" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -0.8)
+
+[node name="Cannon" type="CSGSphere3D" parent="Body"]
+radial_segments = 100
+rings = 100
+material = ExtResource("1_y4jg2")
+
+[node name="Led" type="CSGCylinder3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0.3, -0.3)
+radius = 0.05
+height = 1.0
+sides = 20
+material = ExtResource("1_y4jg2")
+
+[node name="Laser" type="CSGCylinder3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 7.3, -7.3)
+radius = 0.01
+height = 20.0
+sides = 20
+material = ExtResource("3_a8wd4")
+
+[node name="RayCast3D" type="RayCast3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0.7, -0.7)
+target_position = Vector3(0, -20, 0)
+collision_mask = 2
+
+[node name="Projectiles" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+current = true

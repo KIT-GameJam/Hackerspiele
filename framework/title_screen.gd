@@ -42,6 +42,10 @@ var bottle_offset_left := 0.0
 var bottle_offset_right := 0.0
 var bottles: Array[MeshInstance3D] = []
 
+var input_buffer := []
+
+enum Direction { LEFT, RIGHT, UP, DOWN }
+
 enum PrintEventType { CHAR, BUTTON, SYNC }
 
 class PrintEvent:
@@ -75,6 +79,30 @@ func _process(delta: float) -> void:
 	else:
 		print_time = 0.0
 	update_screen_pos()
+
+func _input(event: InputEvent) -> void:
+	# easter egg
+	const KONAMI: Array[Direction] = [Direction.UP, Direction.UP, Direction.DOWN, Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.LEFT, Direction.RIGHT]
+
+	if event.is_action_pressed("left"):
+		input_buffer.append(Direction.LEFT)
+	elif event.is_action_pressed("right"):
+		input_buffer.append(Direction.RIGHT)
+	elif event.is_action_pressed("up"):
+		input_buffer.append(Direction.UP)
+	elif event.is_action_pressed("down"):
+		input_buffer.append(Direction.DOWN)
+	else:
+		return
+
+	var buffer_size := input_buffer.size()
+	if buffer_size > KONAMI.size():
+		input_buffer = input_buffer.slice(buffer_size - KONAMI.size(), buffer_size)
+	if input_buffer == KONAMI:
+		if camera.projection != Camera3D.PROJECTION_PERSPECTIVE:
+			camera.projection = Camera3D.PROJECTION_PERSPECTIVE
+		else:
+			camera.projection = Camera3D.PROJECTION_ORTHOGONAL
 
 func _on_blink_timer_timeout() -> void:
 	# toggle cursor visibility
@@ -269,6 +297,7 @@ func show_scoreboard(score: int) -> void:
 	if pos < SCOREBOARD_SIZE:
 		push_str("Enter your name:\n")
 		await push_sync()
+		line_edit.clear()
 		line_edit.show()
 		line_edit.grab_focus.call_deferred()
 		line_edit.position = label.position + get_cursor_char_bounds().position
