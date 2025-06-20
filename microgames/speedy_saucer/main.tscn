@@ -6,7 +6,7 @@
 
 [node name="Main" type="Node"]
 script = ExtResource("1_xd0ow")
-time = 15.0
+time = 20.0
 
 [node name="Level" type="Node2D" parent="."]
 
