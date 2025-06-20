@@ -4,7 +4,7 @@ extends Node
 enum Result { Loss, Win }
 
 ## The default time for this microgame.
-@export var time = 5.0
+@export var time := 5.0
 
 ## Local storage that is persistent per run.
 var storage: Dictionary
