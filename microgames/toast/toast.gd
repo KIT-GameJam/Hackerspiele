@@ -5,9 +5,8 @@ var toastedness
 func _ready() -> void:
 	set_toastedness(0.0)
 
-func set_toastedness(toastedness: float):
-	self.toastedness = toastedness
-	var clamped_toastedness = clamp(toastedness, 0.0, 1.0)
+func set_toastedness(p_toastedness: float):
+	self.toastedness = p_toastedness
 	
 	var mat : ShaderMaterial = $ToastSprite.material
 	mat.set_shader_parameter("toastedness", toastedness)

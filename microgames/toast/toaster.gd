@@ -81,7 +81,6 @@ func reset_toast_to(rst_transform: Transform2D):
 	toast.freeze = true
 
 func pull_in_toast():
-	var t1 = create_tween()
 	#toast.freeze = true
 	#t1.tween_property(toast, "position", position,1.0).set_ease(Tween.EASE_IN_OUT)
 	#t1.tween_property(toast, "rotation", rotation, 1.0).set_ease(Tween.EASE_IN_OUT)
@@ -95,15 +94,9 @@ func pull_in_toast():
 
 func pop_toast():
 	toast.freeze = false
-	var t1 = create_tween()
+	#var t1 = create_tween()
 	#toast.freeze = false
 	toast.apply_impulse(Vector2.UP.rotated(rotation) * 2000.0 * chargeup)
 	$ToastInsideCheckArea.set_collision_layer_value(1, true)
 	$AnimationPlayer.play("RESET")
 	toast_locked = false
-
-func _on_toast_inside_check_area_body_exited(body: Node2D) -> void:
-	pass
-
-func _on_toast_inside_check_area_body_entered(body: Node2D) -> void:
-	pass
