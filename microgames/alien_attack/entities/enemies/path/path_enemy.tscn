@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://un4p7mvt70kv"]
+
+[ext_resource type="Script" uid="uid://dkf8iy5f4bsgi" path="res://microgames/alien_attack/entities/enemies/path/path_enemy.gd" id="1_kfcix"]
+[ext_resource type="PackedScene" uid="uid://drlon2mrqkjie" path="res://microgames/alien_attack/entities/enemies/enemy.tscn" id="2_483h8"]
+
+[node name="PathEnemy" type="Path2D"]
+script = ExtResource("1_kfcix")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(1084.51, 324.598)
+rotation = -1.04374
+progress = 2185.42
+loop = false
+
+[node name="Enemy" parent="PathFollow2D" instance=ExtResource("2_483h8")]
+speed = 0

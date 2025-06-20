@@ -1,13 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://dbfm5e6xa53ke"]
+[gd_scene load_steps=5 format=3 uid="uid://dbfm5e6xa53ke"]
 
 [ext_resource type="PackedScene" uid="uid://dtmwrdlcx1248" path="res://microgames/nox_box/entities/player.tscn" id="1_co780"]
 [ext_resource type="Script" uid="uid://b1ytxm88r3hth" path="res://microgames/nox_box/main.gd" id="1_px0i0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_px0i0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_px0i0"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_px0i0")
 time = 20.0
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Label" type="Label" parent="UI"]
+offset_left = -87.0
+offset_top = 33.0
+offset_right = 88.0
+offset_bottom = 54.0
+text = "Remove Boxes"
+label_settings = SubResource("LabelSettings_px0i0")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Player" parent="." instance=ExtResource("1_co780")]
 position = Vector2(-1, 0)
