@@ -595,6 +595,7 @@ sources/0 = SubResource("TileSetAtlasSource_w8l8d")
 pattern_0 = SubResource("TileMapPattern_0rxoi")
 
 [node name="Level" instance=ExtResource("1_6tmgn")]
+level_time = 30
 
 [node name="Start" parent="." index="2"]
 position = Vector2(2, 208)

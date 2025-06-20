@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmsp3of2vn0og"]
+
+[ext_resource type="Texture2D" uid="uid://cja6ena4vlu2d" path="res://microgames/nox_box/assets/Crate.png" id="1_ngg47"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_21cyy"]
+size = Vector2(18, 18)
+
+[node name="Box" type="RigidBody2D"]
+position = Vector2(5, 0)
+collision_layer = 2
+collision_mask = 2
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_21cyy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ngg47")
