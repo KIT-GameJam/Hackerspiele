@@ -30,6 +30,5 @@ func _get_spawn_pos(idx: int) -> Vector2:
 func _on_box_deathzone_entered(body: Node2D) -> void:
 	num_box_childs -= 1
 	body.queue_free()
-	print(box_container.get_children().size())
 	if num_box_childs == 0:
 		finished.emit(Result.Win)
