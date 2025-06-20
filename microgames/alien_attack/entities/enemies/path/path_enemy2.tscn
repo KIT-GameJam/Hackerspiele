@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://4wrufk0e6ygb"]
+
+[ext_resource type="PackedScene" uid="uid://un4p7mvt70kv" path="res://microgames/alien_attack/entities/enemies/path/path_enemy.tscn" id="1_fvcm8"]
+
+[sub_resource type="Curve2D" id="Curve2D_fvcm8"]
+_data = {
+"points": PackedVector2Array(-172.13, -183.92, 172.13, 183.92, -149, 357, -127.329, 162.698, 127.329, -162.698, 231, 348, -190.994, -9.43178, 190.994, 9.43178, 459, 84, -167.414, 14.1477, 167.414, -14.1477, 794, 661, -89.6019, 179.204, 89.6019, -179.204, 1020, 374, -54.2327, -132.045, 54.2327, 132.045, 1419, 364)
+}
+point_count = 6
+
+[node name="PathEnemy" instance=ExtResource("1_fvcm8")]
+curve = SubResource("Curve2D_fvcm8")
+speed = 0.1
+
+[node name="PathFollow2D" parent="." index="0"]
+position = Vector2(1194.86, 253.534)
+rotation = -0.10855

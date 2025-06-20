@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://fdu16ilqs3a5"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://fdu16ilqs3a5"]
+
+[ext_resource type="FontFile" uid="uid://cuoy0amwy2mxc" path="res://assets/fonts/VT323/VT323-Regular.ttf" id="1_o7w8q"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gnsgt"]
 bg_color = Color(0.318, 0.53, 0, 0.376471)
@@ -40,8 +42,21 @@ border_color = Color(0.258552, 0.668512, 0.157625, 1)
 border_blend = true
 corner_detail = 1
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o7w8q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ia51v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b1xst"]
+
 [resource]
 Button/styles/focus = SubResource("StyleBoxFlat_gnsgt")
 Button/styles/hover = SubResource("StyleBoxFlat_nkonk")
 Button/styles/normal = SubResource("StyleBoxFlat_2g1ym")
 Button/styles/pressed = SubResource("StyleBoxFlat_1fv3y")
+LineEdit/colors/caret_color = Color(1, 1, 1, 0)
+LineEdit/colors/font_color = Color(0.258824, 0.666667, 0.156863, 1)
+LineEdit/font_sizes/font_size = 32
+LineEdit/fonts/font = ExtResource("1_o7w8q")
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_o7w8q")
+LineEdit/styles/normal = SubResource("StyleBoxEmpty_ia51v")
+LineEdit/styles/read_only = SubResource("StyleBoxEmpty_b1xst")

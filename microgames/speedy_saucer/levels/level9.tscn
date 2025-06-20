@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://be04w81ahektt" path="res://microgames/speedy_saucer/assets/darkPurple.png" id="1_iiyv0"]
 
-[node name="Maze" type="Area2D"]
+[node name="Maze2" type="Area2D"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(11.6001, 158.461)

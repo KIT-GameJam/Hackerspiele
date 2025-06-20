@@ -7,7 +7,7 @@ var correct = false;
 func _ready() -> void:
 	$CanvasLayer/Panel/UserInput.label_settings.font_color = Color("#d75145")
 	var first := randi_range(-10, 10);
-	var second := randi_range(-10, 10);
+	var second := randi_range(-100, 100);
 	var op_index := randi_range(0, 2);
 	var op := "+";
 	

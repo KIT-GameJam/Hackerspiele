@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://cnv54te2qm7hv"]
+
+[ext_resource type="Script" uid="uid://gb3xn07k17gf" path="res://microgames/coin_collector/entities/coin.gd" id="1_derh6"]
+[ext_resource type="Texture2D" uid="uid://cho5f6w4wrqis" path="res://microgames/coin_collector/assets/Coin.png" id="1_u67dn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g2nc0"]
+radius = 2.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oywlj"]
+atlas = ExtResource("1_u67dn")
+region = Rect2(0, 0, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ywfe6"]
+atlas = ExtResource("1_u67dn")
+region = Rect2(5, 0, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hbuu1"]
+atlas = ExtResource("1_u67dn")
+region = Rect2(10, 0, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uq2rm"]
+atlas = ExtResource("1_u67dn")
+region = Rect2(15, 0, 5, 5)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xlkwt"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oywlj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ywfe6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hbuu1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uq2rm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Coin" type="Area2D"]
+collision_layer = 2
+script = ExtResource("1_derh6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_g2nc0")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_xlkwt")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

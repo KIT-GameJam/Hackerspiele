@@ -10,7 +10,9 @@ var current_game: MicroGame = null
 var won_games: int
 var played_games: int
 var lifes: int
+var in_game := false
 var in_switch_state := false
+var game_idx_shuffle: Array[int] = []
 @onready var timer: Timer = $MicrogameSlot/Timer
 @onready var timer_progress: TextureProgressBar = $CanvasLayer/Panel/HBoxContainer/TimerProgress
 @onready var switch_game_timer: Timer = $MicrogameSlot/SwitchGameTimer
@@ -27,8 +29,13 @@ var hearts: Array[TextureRect] = []
 @onready var canvas_layer: CanvasLayer = $CanvasLayer
 @onready var beep_sound: AudioStreamPlayer = $BeepSound
 
+var game_storage: Array[Dictionary] = []
+
 func _ready() -> void:
 	show_title_screen()
+
+	for _i in range(MicroGames.scenes.size()):
+		game_storage.append({})
 
 func _process(_delta: float) -> void:
 	if current_game:
@@ -57,6 +64,7 @@ func pause() -> void:
 	if current_game == null and not in_switch_state:
 		# pausing is only allowed in microgames and switch screen
 		return
+	in_game = false
 	if current_game:
 		microgame_slot.process_mode = Node.PROCESS_MODE_DISABLED
 		microgame_slot.remove_child(current_game)
@@ -75,6 +83,7 @@ func unpause() -> void:
 	hide_title_screen()
 	switch_game_timer.paused = false
 	title_screen.unpause()
+	in_game = true
 
 func start() -> void:
 	lifes = max_lifes
@@ -87,8 +96,12 @@ func start() -> void:
 func load_game() -> void:
 	if current_game:
 		return
-	var scene: PackedScene = MicroGames.scenes.pick_random()
-	current_game = scene.instantiate()
+	if game_idx_shuffle.is_empty():
+		game_idx_shuffle.append_array(range(0, MicroGames.scenes.size()))
+		game_idx_shuffle.shuffle()
+	var idx: int = game_idx_shuffle.pop_front()
+	current_game = MicroGames.scenes[idx].instantiate()
+	current_game.storage = game_storage[idx]
 
 func next_game(was_successfull: bool) -> void:
 	if current_game:
@@ -110,12 +123,14 @@ func start_game() -> void:
 	timer.wait_time = current_game.time * factor
 	timer.timeout.connect(handle_timeout)
 	timer.start()
+	in_game = true
 
 func handle_timeout() -> void:
 	game_finished(current_game.on_timeout())
 
 func game_over() -> void:
 	microgame_slot.remove_child(current_game)
+	current_game.storage.clear()
 	current_game.queue_free()
 	current_game = null
 
@@ -123,9 +138,14 @@ func game_over() -> void:
 	title_screen.show_scoreboard(won_games)
 
 func game_finished(result: MicroGame.Result) -> void:
+	if in_game:
+		in_game = false
+	else:
+		# prevent game_finished from running if paused or after the game already finished
+		return
 	timer.stop()
 	timer.timeout.disconnect(handle_timeout)
-	var was_successfull: bool = false
+	var was_successfull := false
 	played_games += 1
 	match result:
 		MicroGame.Result.Loss:
