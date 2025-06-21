@@ -18,6 +18,7 @@ const AUDIO_CFG_PATH := "user://audio.cfg"
 const VOLUME_SECTION := "volume"
 const BOTTLE_SCATTER := 0.3
 const BOTTLE_OFFSET := 1.0
+const MICROGAME_PAGE_SIZE := 10
 
 @onready var camera: Camera3D = $Camera
 @onready var marker_top_left: Marker3D = $Monitor/MarkerTopLeft
@@ -41,6 +42,7 @@ var is_paused := false
 var bottle_offset_left := 0.0
 var bottle_offset_right := 0.0
 var bottles: Array[MeshInstance3D] = []
+var micro_game_page := 0
 
 var input_buffer := []
 
@@ -370,15 +372,45 @@ func save_audio_settings() -> void:
 # menu
 
 func print_game_title() -> void:
+	game_manager.single_game = -1
 	push_str("\n\n\n")
 	push_str("     +>+>+>+ Häckerspiele +<+<+<+\n")
 	push_str(" >>>>>>>>>>>>============<<<<<<<<<<<<\n\n\n")
-	push_str("            -> ")
+	push_str("        -> ")
 	put_button("Start", _on_start_button_pressed)
-	push_str("\n\n")
-	push_str("            -> ")
+	push_str("\n\n        -> ")
+	put_button("Microgame Select", show_micro_game_select)
+	push_str("\n\n        -> ")
 	put_button("Settings", show_settings)
 	push_str("\n")
+
+func show_micro_game_select() -> void:
+	clear_terminal()
+	push_str("Select a microgame:\n")
+	var game_offset := micro_game_page * MICROGAME_PAGE_SIZE
+	for paged_game_idx in range(MICROGAME_PAGE_SIZE):
+		var game_idx: int = paged_game_idx + game_offset
+		if game_idx >= MicroGames.scenes.size():
+			break
+		var game := MicroGames.scenes[game_idx]
+		var name := game.resource_path.split("/")[3].capitalize()
+		put_button(name, func(): game_manager.start_single_game(game_idx))
+		push_str("\n")
+	if micro_game_page == 0:
+		push_str("      ")
+	else:
+		put_button("Prev", func():
+			micro_game_page -= 1
+			show_micro_game_select()
+		)
+	push_str(" Page: {0} ".format([micro_game_page + 1]))
+	if game_offset + MICROGAME_PAGE_SIZE < MicroGames.scenes.size():
+		put_button("Next", func():
+			micro_game_page += 1
+			show_micro_game_select()
+		)
+	push_str("\n")
+	return_to_title_screen_button()
 
 func show_title_screen() -> void:
 	clear_terminal()

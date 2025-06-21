@@ -30,6 +30,7 @@ var hearts: Array[TextureRect] = []
 @onready var beep_sound: AudioStreamPlayer = $BeepSound
 
 var game_storage: Array[Dictionary] = []
+var single_game: int = -1
 
 func _ready() -> void:
 	show_title_screen()
@@ -96,10 +97,12 @@ func start() -> void:
 func load_game() -> void:
 	if current_game:
 		return
-	if game_idx_shuffle.is_empty():
-		game_idx_shuffle.append_array(range(0, MicroGames.scenes.size()))
-		game_idx_shuffle.shuffle()
-	var idx: int = game_idx_shuffle.pop_front()
+	var idx := single_game
+	if idx == -1:
+		if game_idx_shuffle.is_empty():
+			game_idx_shuffle.append_array(range(0, MicroGames.scenes.size()))
+			game_idx_shuffle.shuffle()
+		idx = game_idx_shuffle.pop_front()
 	current_game = MicroGames.scenes[idx].instantiate()
 	current_game.storage = game_storage[idx]
 
@@ -126,6 +129,8 @@ func start_game() -> void:
 	in_game = true
 
 func handle_timeout() -> void:
+	if current_game == null:
+		return
 	game_finished(current_game.on_timeout())
 
 func game_over(use_scoreboard: bool = true) -> void:
@@ -134,6 +139,9 @@ func game_over(use_scoreboard: bool = true) -> void:
 		current_game.storage.clear()
 		current_game.queue_free()
 		current_game = null
+	timer.stop()
+	timer.timeout.disconnect(handle_timeout)
+	single_game = -1
 
 	show_title_screen()
 	if use_scoreboard:
@@ -176,4 +184,12 @@ func update_life_count() -> void:
 			heart.queue_free()
 
 func _on_switch_game_timer_timeout() -> void:
+	start_game()
+
+func start_single_game(game_idx: int):
+	single_game = game_idx
+	lifes = 1
+	won_games = 0
+	played_games = 0
+	update_life_count()
 	start_game()
