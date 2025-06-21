@@ -11,7 +11,7 @@ default_value = 0.1
 size = Vector2(500, 280)
 expression = "//alpha_out = rgba_bg.z + alpha_fg - rgba_bg.z * alpha_fg;
 rgb_out = rgba_bg.xyz ; //* alpha_fg; // don't multiply alpha to avoid over 
-alpha_out = rgba_bg.z * alpha_fg;
+alpha_out = rgba_bg.w * alpha_fg;
 //alpha_out = 1.;
 //rgb_out = vec3(alpha_fg, 0.,0.);"
 
@@ -80,7 +80,7 @@ void fragment() {
 	{
 		//n_out11p1 = n_out2p0.z + n_out9p0 - n_out2p0.z * n_out9p0;
 		n_out11p0 = n_out2p0.xyz ; //* n_out9p0; // don't multiply alpha to avoid over 
-		n_out11p1 = n_out2p0.z * n_out9p0;
+		n_out11p1 = n_out2p0.w * n_out9p0;
 		//n_out11p1 = 1.;
 		//n_out11p0 = vec3(n_out9p0, 0.,0.);
 	}
@@ -93,7 +93,7 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-334.693, -118.211)
+graph_offset = Vector2(-158.063, -288.557)
 mode = 1
 flags/light_only = false
 nodes/fragment/0/position = Vector2(860, 40)
@@ -126,7 +126,7 @@ nodes/fragment/11/input_ports = "0,5,rgba_bg;1,0,alpha_fg;"
 nodes/fragment/11/output_ports = "0,4,rgb_out;1,0,alpha_out;"
 nodes/fragment/11/expression = "//alpha_out = rgba_bg.z + alpha_fg - rgba_bg.z * alpha_fg;
 rgb_out = rgba_bg.xyz ; //* alpha_fg; // don't multiply alpha to avoid over 
-alpha_out = rgba_bg.z * alpha_fg;
+alpha_out = rgba_bg.w * alpha_fg;
 //alpha_out = 1.;
 //rgb_out = vec3(alpha_fg, 0.,0.);"
 nodes/fragment/connections = PackedInt32Array(3, 0, 4, 0, 3, 1, 4, 1, 3, 2, 4, 2, 2, 0, 3, 0, 8, 0, 9, 0, 10, 0, 9, 1, 9, 0, 11, 1, 11, 1, 0, 1, 2, 0, 11, 0, 11, 0, 0, 0)
