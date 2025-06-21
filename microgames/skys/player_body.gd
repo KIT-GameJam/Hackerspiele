@@ -25,14 +25,14 @@ func register_hit_by_obstacle(obstacle: Node2D):
 func _process(delta: float) -> void:
 	# Built in race condition: see if you can release and repress the jump button befor the next 
 	# physics_process() runs, to reset jump charge.
-	if Input.is_action_just_pressed("up"):
+	if Input.is_action_just_pressed("submit"):
 		print("just press")
 		jump_charge = 0.
-	if Input.is_action_pressed("up"):
+	if Input.is_action_pressed("submit"):
 		print("press")
 		jump_charge += jump_charge_force * delta
 		jump_charge = minf(jump_max_charge, jump_charge)
-	if Input.is_action_just_released("up"):
+	if Input.is_action_just_released("submit"):
 		print("release")
 		jump_now = true
 	print(jump_charge/jump_max_charge);
