@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://buwxe5ix2x55e"]
+
+[ext_resource type="PackedScene" uid="uid://c8iyuvqi8v47c" path="res://microgames/gardening/assets/zaun.gltf" id="1_lbfs7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f5380"]
+albedo_color = Color(0.37, 0.2109, 0.0518, 1)
+
+[node name="zaun" instance=ExtResource("1_lbfs7")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -0.000491142, 0.00765371, 0)
+
+[node name="Cube" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_f5380")

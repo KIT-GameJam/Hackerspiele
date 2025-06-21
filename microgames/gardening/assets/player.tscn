@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://btrs4kvkl7o2q"]
+
+[ext_resource type="Script" uid="uid://bqfgjauxcvgki" path="res://microgames/gardening/player.gd" id="1_v7pio"]
+[ext_resource type="PackedScene" uid="uid://bc0tfq2duophh" path="res://microgames/gardening/assets/hand_open.gltf" id="2_d6gxe"]
+[ext_resource type="Script" uid="uid://lo78vo1kliwr" path="res://microgames/gardening/assets/hand_anchor.gd" id="2_hc02p"]
+[ext_resource type="Script" uid="uid://d012dt6qosnw4" path="res://microgames/gardening/assets/hand_grab.gd" id="4_bkik3"]
+[ext_resource type="PackedScene" uid="uid://cqhyjyd8gp40y" path="res://microgames/gardening/assets/hand_grab.tscn" id="4_fg68n"]
+[ext_resource type="Script" uid="uid://dxmob4qlvndul" path="res://microgames/gardening/assets/hand_open.gd" id="5_h55ev"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fg68n"]
+height = 11.524
+radius = 3.5
+
+[node name="PLAYER" type="Node3D"]
+script = ExtResource("1_v7pio")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766045, 0, -0.766045, 0.642788, 0.371, 30, 15)
+current = true
+fov = 59.9
+far = 374.08
+
+[node name="hand_anchor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6273, 0)
+script = ExtResource("2_hc02p")
+
+[node name="hand_grab" parent="hand_anchor" instance=ExtResource("4_fg68n")]
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, 0, 0.362377, 0)
+script = ExtResource("4_bkik3")
+
+[node name="hand_open" parent="hand_anchor" instance=ExtResource("2_d6gxe")]
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, 0, 2.85607, 0)
+script = ExtResource("5_h55ev")
+
+[node name="area" type="Area3D" parent="hand_anchor"]
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="hand_anchor/area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.18307, -1.59154)
+shape = SubResource("CylinderShape3D_fg68n")
+
+[connection signal="area_entered" from="hand_anchor/area" to="." method="carrot_enter"]
+[connection signal="area_exited" from="hand_anchor/area" to="." method="carrot_leave"]
