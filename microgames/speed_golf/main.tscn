@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=4 uid="uid://cawhev31a536w"]
 
-[ext_resource type="Script" uid="uid://b273yl7tf3q0y" path="res://microgames/!!template/main.gd" id="1_25xvl"]
+[ext_resource type="Script" uid="uid://ddf8buddw7l0f" path="res://microgames/speed_golf/main.gd" id="1_7fdh2"]
 [ext_resource type="Texture2D" uid="uid://00brjrkkoyvc" path="res://microgames/speed_golf/Assets/Erde.png" id="2_6cxmg"]
 [ext_resource type="Texture2D" uid="uid://daj64m1tyw1pc" path="res://microgames/speed_golf/Assets/Grass.png" id="2_h4ll1"]
 [ext_resource type="Texture2D" uid="uid://b84ahyej45h4p" path="res://microgames/speed_golf/Assets/Golfball.png" id="2_swbpa"]
@@ -38,7 +38,7 @@ sources/4 = SubResource("TileSetAtlasSource_0cdvu")
 [node name="Main" type="Node2D"]
 texture_filter = 1
 scale = Vector2(2, 2)
-script = ExtResource("1_25xvl")
+script = ExtResource("1_7fdh2")
 time = 10.0
 
 [node name="Ball" type="RigidBody2D" parent="."]
