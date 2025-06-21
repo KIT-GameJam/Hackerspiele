@@ -155,6 +155,9 @@ func game_finished(result: MicroGame.Result) -> void:
 		return
 	timer.stop()
 	timer.timeout.disconnect(handle_timeout)
+	if single_game != -1:
+		game_over(false)
+		return
 	var was_successfull := false
 	played_games += 1
 	match result:
