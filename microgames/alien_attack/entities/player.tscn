@@ -88,3 +88,9 @@ position = Vector2(-165.183, 0)
 amount = 100
 lifetime = 0.3
 process_material = SubResource("ParticleProcessMaterial_4u74y")
+
+[node name="Shoot_Cooldown" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+
+[connection signal="timeout" from="Shoot_Cooldown" to="." method="_on_shoot_cooldown_timeout"]

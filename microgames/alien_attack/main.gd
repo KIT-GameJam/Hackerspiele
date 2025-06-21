@@ -14,7 +14,7 @@ func _on_enemy_entered_deathzone(_enemy: Area2D):
 func _on_player_took_damage():
 	finished.emit(Result.Loss)
 
-func _on_enemy_died():
+func _on_enemy_died(): 
 	enemy_hit_sound.play()
 
 func _on_enemy_spawned(enemy: AlienAttackEnemy):

@@ -14,3 +14,6 @@ func die():
 
 func _on_screen_exited():
 	die()
+
+func _on_timer_timeout() -> void:
+	die()
