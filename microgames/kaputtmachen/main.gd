@@ -3,7 +3,7 @@ extends MicroGame
 const CANON_POS := Vector2i(8, 75)
 const INITIAL_BALL_SPEED := 360.0
 const ROTATION_SPEED := 2.0
-const GRAVITY := 20.0
+const GRAVITY := 1700.0
 const EXPLOSION_RADIUS := 3
 
 @onready var image: Image = preload("res://microgames/kaputtmachen/assets/viewport.png").get_image()
@@ -48,7 +48,7 @@ func _process(delta: float) -> void:
 		ball_pos += ball_vel * delta
 		walk_line(ball_pos_old, ball_pos)
 		ball_pos_old = ball_pos
-		ball_vel.y += GRAVITY
+		ball_vel.y += GRAVITY * delta
 		ball.position = to_global(ball_pos)
 	if image_updated:
 		var tex: ImageTexture = texture_rect.texture
