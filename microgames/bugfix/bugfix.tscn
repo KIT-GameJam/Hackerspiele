@@ -14,21 +14,6 @@ outline_size = 2
 outline_color = Color(0.393086, 0.393086, 0.393085, 1)
 shadow_color = Color(0.266575, 0.266575, 0.266575, 1)
 
-[sub_resource type="Animation" id="Animation_crn06"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Hammer:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-0.558505]
-}
-
 [sub_resource type="Animation" id="Animation_s28nd"]
 resource_name = "hit"
 length = 0.1
@@ -43,6 +28,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [-0.558505, 0.0, -0.558505]
+}
+
+[sub_resource type="Animation" id="Animation_crn06"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hammer:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.558505]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7pyf6"]
