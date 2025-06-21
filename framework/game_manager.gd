@@ -30,6 +30,7 @@ var hearts: Array[TextureRect] = []
 @onready var beep_sound: AudioStreamPlayer = $BeepSound
 
 var game_storage: Array[Dictionary] = []
+var single_game: int = -1
 
 func _ready() -> void:
 	show_title_screen()
@@ -85,8 +86,12 @@ func unpause() -> void:
 	title_screen.unpause()
 	in_game = true
 
-func start() -> void:
-	lifes = max_lifes
+func start(game_idx: int = -1) -> void:
+	single_game = game_idx
+	if single_game == -1:
+		lifes = max_lifes
+	else:
+		lifes = 1
 	won_games = 0
 	played_games = 0
 	update_life_count()
@@ -96,10 +101,12 @@ func start() -> void:
 func load_game() -> void:
 	if current_game:
 		return
-	if game_idx_shuffle.is_empty():
-		game_idx_shuffle.append_array(range(0, MicroGames.scenes.size()))
-		game_idx_shuffle.shuffle()
-	var idx: int = game_idx_shuffle.pop_front()
+	var idx := single_game
+	if idx == -1:
+		if game_idx_shuffle.is_empty():
+			game_idx_shuffle.append_array(range(0, MicroGames.scenes.size()))
+			game_idx_shuffle.shuffle()
+		idx = game_idx_shuffle.pop_front()
 	current_game = MicroGames.scenes[idx].instantiate()
 	current_game.storage = game_storage[idx]
 
@@ -117,16 +124,18 @@ func start_game() -> void:
 	in_switch_state = false
 	hide_title_screen()
 	load_game() # load next game, if there isn't one already
-	microgame_slot.add_child(current_game)
 	current_game.finished.connect(game_finished)
 	var factor: float = pow(time_falloff_base, -played_games) * (1.0 - time_falloff_converge) + time_falloff_converge
 	timer.wait_time = current_game.time * factor
 	timer.timeout.connect(handle_timeout)
-	timer.start()
 	in_game = true
 
+	microgame_slot.add_child(current_game)
+	timer.start() # start timer only after adding the microgame
+
 func handle_timeout() -> void:
-	game_finished(current_game.on_timeout())
+	if current_game:
+		game_finished(current_game.on_timeout())
 
 func game_over(use_scoreboard: bool = true) -> void:
 	if current_game != null:
@@ -134,6 +143,11 @@ func game_over(use_scoreboard: bool = true) -> void:
 		current_game.storage.clear()
 		current_game.queue_free()
 		current_game = null
+
+	# disable the timer, if it isn't already (needed for return to title screen)
+	timer.stop()
+	if timer.timeout.is_connected(handle_timeout):
+		timer.timeout.disconnect(handle_timeout)
 
 	show_title_screen()
 	if use_scoreboard:
@@ -147,6 +161,9 @@ func game_finished(result: MicroGame.Result) -> void:
 		return
 	timer.stop()
 	timer.timeout.disconnect(handle_timeout)
+	if single_game != -1:
+		game_over(false)
+		return
 	var was_successfull := false
 	played_games += 1
 	match result:

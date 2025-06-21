@@ -5,11 +5,14 @@ extends MicroGame
 
 @onready var tile_map: TileMapLayer = $TileMapLayer
 @onready var camera: Camera2D = $Camera2D
+@onready var move_timer: Timer = $MoveTimer
 var colours: Dictionary[String, Vector2i]
 var player_pos := Vector2i(5, 5)
 var player_colour: Vector2i
 var wall_colour: Vector2i
 var exit_colour: Vector2i
+
+var last_direction := Vector2i.ZERO
 
 func _ready() -> void:
 	# initialize colours
@@ -33,18 +36,29 @@ func _ready() -> void:
 	camera.position = tile_map.map_to_local(maze_bounds.get_center())
 
 func _input(event: InputEvent) -> void:
-	var direction: Vector2i
+	# save last pressed direction to buffer
 	if event.is_action_pressed("up"):
-		direction = Vector2i.UP
+		last_direction = Vector2i.UP
 	elif event.is_action_pressed("down"):
-		direction = Vector2i.DOWN
+		last_direction = Vector2i.DOWN
 	elif event.is_action_pressed("left"):
-		direction = Vector2i.LEFT
+		last_direction = Vector2i.LEFT
 	elif event.is_action_pressed("right"):
-		direction = Vector2i.RIGHT
-	move_player(direction)
-	await get_tree().create_timer(move_time).timeout
-	move_player(direction)
+		last_direction = Vector2i.RIGHT
+
+func _on_move_timer_timeout() -> void:
+	# check if a direction is still pressed
+	if Input.is_action_pressed("up"):
+		last_direction = Vector2i.UP
+	elif Input.is_action_pressed("down"):
+		last_direction = Vector2i.DOWN
+	elif Input.is_action_pressed("left"):
+		last_direction = Vector2i.LEFT
+	elif Input.is_action_pressed("right"):
+		last_direction = Vector2i.RIGHT
+
+	move_player(last_direction)
+	last_direction = Vector2i.ZERO
 
 func move_player(direction: Vector2i) -> void:
 	tile_map.set_cell(player_pos)

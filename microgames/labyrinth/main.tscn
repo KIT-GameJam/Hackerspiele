@@ -67,3 +67,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_olmnv")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(16, 16)
+
+[node name="MoveTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="timeout" from="MoveTimer" to="." method="_on_move_timer_timeout"]

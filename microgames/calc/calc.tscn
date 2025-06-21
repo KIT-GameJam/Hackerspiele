@@ -22,7 +22,7 @@ outline_color = Color(1, 1, 1, 0)
 
 [node name="Calc" type="Node2D"]
 script = ExtResource("1_11tbv")
-time = 15.0
+time = 22.0
 metadata/_edit_horizontal_guides_ = [224.0, 232.0, 200.0]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
