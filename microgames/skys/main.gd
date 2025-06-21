@@ -5,7 +5,7 @@ extends MicroGame
 var obstacles = []
 var n_obstacles = 200
 var obstacleScene =  load("res://microgames/skys/obstacle.tscn")
-var PHYSICS_SCALE = 45 # approx ~ pix/m
+const PHYSICS_SCALE = 45 # approx ~ pix/m
 @onready var player := $PlayerBody
 
 func _ready() -> void:

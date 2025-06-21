@@ -6,12 +6,12 @@
 [sub_resource type="QuadMesh" id="QuadMesh_8egl4"]
 size = Vector2(45, 45)
 
-[sub_resource type="Gradient" id="Gradient_dw3wm"]
-offsets = PackedFloat32Array(0, 0.0421687)
-colors = PackedColorArray(0, 0, 0, 1, 0.125628, 0.497776, 1, 1)
+[sub_resource type="Gradient" id="Gradient_4g2vb"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.12549, 0.498039, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_3ie86"]
-gradient = SubResource("Gradient_dw3wm")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_exg86"]
+gradient = SubResource("Gradient_4g2vb")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4g2vb"]
 size = Vector2(45, 45)
@@ -22,11 +22,13 @@ max_contacts_reported = 10
 script = ExtResource("1_3ie86")
 
 [node name="Mesh" type="MeshInstance2D" parent="."]
+texture_repeat = 2
 position = Vector2(0, -22.5)
 mesh = SubResource("QuadMesh_8egl4")
-texture = SubResource("GradientTexture1D_3ie86")
+texture = SubResource("GradientTexture2D_exg86")
 
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -22.5)
 shape = SubResource("RectangleShape2D_4g2vb")
 
@@ -34,6 +36,7 @@ shape = SubResource("RectangleShape2D_4g2vb")
 script = ExtResource("2_4g2vb")
 
 [node name="CollisionArea" type="CollisionShape2D" parent="Area2D"]
+visible = false
 position = Vector2(0, -22.5)
 scale = Vector2(1.01, 1)
 shape = SubResource("RectangleShape2D_4g2vb")
