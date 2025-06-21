@@ -120,13 +120,14 @@ func start_game() -> void:
 	in_switch_state = false
 	hide_title_screen()
 	load_game() # load next game, if there isn't one already
-	microgame_slot.add_child(current_game)
 	current_game.finished.connect(game_finished)
 	var factor: float = pow(time_falloff_base, -played_games) * (1.0 - time_falloff_converge) + time_falloff_converge
 	timer.wait_time = current_game.time * factor
 	timer.timeout.connect(handle_timeout)
-	timer.start()
 	in_game = true
+
+	microgame_slot.add_child(current_game)
+	timer.start() # start timer only after adding the microgame
 
 func handle_timeout() -> void:
 	if current_game == null:
