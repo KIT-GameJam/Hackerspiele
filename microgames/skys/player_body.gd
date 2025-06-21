@@ -16,7 +16,7 @@ const mass: float = 1. # player mass in kg
 var jump_charge: float = 0. # impulse in N*s
 var jump_now: bool = false # trigger jump
 
-@onready var player_mesh := $PlayerMesh
+@onready var player_mesh := $PlayerMeshTransform/PlayerMesh
 
 func register_hit_by_obstacle(obstacle: Node2D):
 	print_debug("collision in player")
@@ -35,20 +35,25 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_released("submit"):
 		print("release")
 		jump_now = true
-	print(jump_charge/jump_max_charge);
-	player_mesh.material.set("shader_parameter/player_charge", jump_charge/jump_max_charge);
+	var charge_ratio = jump_charge/jump_max_charge;
+	const charged_scale := Vector2(2., 0.5)
+	var current_scale = lerp(Vector2(1., 1.), charged_scale, charge_ratio)
+	$PlayerMeshTransform.scale = current_scale
+	
+	print(jump_charge/jump_max_charge)
+	player_mesh.material.set("shader_parameter/player_charge", charge_ratio);
 	#player_mesh.material.set("shader_parameter/player_charge", 1.);
 	
 	
 func _physics_process(delta: float) -> void:
 	# stuff:
 	var acceleration = Vector2(0, 0)
-	var is_on_ground : bool = position.y < 0
+	var is_airborne : bool = position.y < 0
 	
 	#var updown_dir = Input.get_axis("down", "up")
 	#acceleration += up_direction * updown_dir * jump_acceleration
 	#acceleration += up_direction
-	if is_on_ground:
+	if is_airborne:
 		# in air
 		acceleration += up_direction * -gravity
 	else:
@@ -61,7 +66,7 @@ func _physics_process(delta: float) -> void:
 	# apply jump impulse:
 	if jump_now:
 		print("jump now")
-		if is_on_ground:
+		if is_on_floor():
 			velocity += up_direction * jump_charge / mass
 		jump_now = false
 		jump_charge = 0.

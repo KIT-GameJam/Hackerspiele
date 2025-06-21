@@ -128,7 +128,10 @@ time = 15.0
 position = Vector2(-376, 0)
 script = ExtResource("2_8ly23")
 
-[node name="PlayerMesh" type="MeshInstance2D" parent="PlayerBody" groups=["Player"]]
+[node name="PlayerMeshTransform" type="Node2D" parent="PlayerBody"]
+
+[node name="PlayerMesh" type="MeshInstance2D" parent="PlayerBody/PlayerMeshTransform" groups=["Player"]]
+z_index = -10
 material = SubResource("ShaderMaterial_o85hp")
 position = Vector2(0, -54)
 mesh = SubResource("CapsuleMesh_32utl")
@@ -207,7 +210,7 @@ repeat_times = 100
 
 [node name="NoiseCloudSprite" type="Sprite2D" parent="Clouds"]
 material = SubResource("ShaderMaterial_n7vti")
-position = Vector2(113, -381)
+position = Vector2(113, -371)
 scale = Vector2(3, 1)
 texture = SubResource("NoiseTexture2D_v8wpj")
 

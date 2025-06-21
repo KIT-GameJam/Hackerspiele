@@ -22,6 +22,7 @@ max_contacts_reported = 10
 script = ExtResource("1_3ie86")
 
 [node name="Mesh" type="MeshInstance2D" parent="."]
+z_index = -20
 texture_repeat = 2
 position = Vector2(0, -22.5)
 mesh = SubResource("QuadMesh_8egl4")
