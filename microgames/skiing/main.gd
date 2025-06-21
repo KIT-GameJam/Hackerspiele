@@ -8,7 +8,7 @@ const bush_scene = preload("res://microgames/skiing/entities/obstacle/bush/bush.
 
 func _ready() -> void:
 	for i in range(num_obstacles):
-		var random_pos := Vector3(randf_range(-40.0, 40.0), 0.0, randf_range(-90.0, -15.0))
+		var random_pos := Vector3(randf_range(-30.0, 30.0), 0.0, randf_range(-90.0, -25.0))
 		if num_bushes > 0:
 			_place_obstacle(bush_scene, random_pos)
 			num_bushes -= 1

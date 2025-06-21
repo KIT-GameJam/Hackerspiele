@@ -39,6 +39,12 @@ use_collision = true
 collision_layer = 2
 size = Vector3(200, 0.5, 200)
 
+[node name="Label3D" type="Label3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -12.9898)
+text = "Drive to bold"
+font_size = 256
+outline_size = 48
+
 [node name="Sign" parent="Terrain" instance=ExtResource("5_rux8w")]
 transform = Transform3D(-0.963645, 0, -0.267188, 0, 1, 0, 0.267188, 0, -0.963645, -2.445, 0, -15.245)
 
@@ -48,11 +54,11 @@ collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_hprty")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/WorldBorders"]
-transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 40, 0, 0)
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 30, 0, 0)
 shape = SubResource("WorldBoundaryShape3D_hprty")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Terrain/WorldBorders"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 0)
 shape = SubResource("WorldBoundaryShape3D_rux8w")
 
 [node name="Goal" parent="." instance=ExtResource("4_wagi8")]
