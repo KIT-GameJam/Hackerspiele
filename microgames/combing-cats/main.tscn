@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bclr7x4bssxvd"]
+[gd_scene load_steps=14 format=3 uid="uid://bclr7x4bssxvd"]
 
 [ext_resource type="Script" uid="uid://cpodya6ulveki" path="res://microgames/combing-cats/main.gd" id="1_mfgbp"]
 [ext_resource type="Texture2D" uid="uid://bw4cekcl0b6cp" path="res://microgames/combing-cats/background.png" id="2_ldx1w"]
@@ -8,16 +8,18 @@
 [ext_resource type="Texture2D" uid="uid://dsvip5425p38l" path="res://microgames/combing-cats/knot1.png" id="6_5j027"]
 [ext_resource type="Texture2D" uid="uid://dohro2m6fh6cx" path="res://microgames/combing-cats/knot2.png" id="7_omrus"]
 [ext_resource type="Texture2D" uid="uid://byren4qmv5vu8" path="res://microgames/combing-cats/knot3.png" id="8_3cerx"]
+[ext_resource type="Script" uid="uid://p0q2xw8t4io5" path="res://microgames/combing-cats/angry_animation.gd" id="9_va317"]
+[ext_resource type="Texture2D" uid="uid://c4607udq6y8h7" path="res://microgames/combing-cats/eyebrow.png" id="10_glppb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ldx1w"]
-size = Vector2(234.369, 111.526)
+size = Vector2(1509.28, 159.791)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5j027"]
 rough = true
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t375k"]
-radius = 5.0
-height = 28.0
+radius = 24.0
+height = 82.0
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_mfgbp")
@@ -33,7 +35,12 @@ texture = ExtResource("3_5j027")
 [node name="Area2D" type="Area2D" parent="Cat-combed"]
 
 [node name="killzone" type="CollisionPolygon2D" parent="Cat-combed/Area2D"]
-polygon = PackedVector2Array(93, -199, 114, -148, 98, -92, 116, -44, 180, -20, 262, -21, 309, -55, 306, -127, 327, -181, 283, -176, 129, -187, 118, -195)
+polygon = PackedVector2Array(93, -199, 114, -148, 98, -92, 125, -51, 182, -24, 262, -21, 309, -55, 306, -127, 327, -181, 283, -176, 129, -187, 118, -195)
+
+[node name="catboday" type="Area2D" parent="Cat-combed"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Cat-combed/catboday"]
+polygon = PackedVector2Array(-231, -122, -291, -81, -341, -29, -357, 39, -347, 143, -301, 234, -282, 261, -233, 245, -212, 208, -191, 216, -2, 156, 47, 147, 147, 146, 189, 91, 248, 37, 258, -19, 182, -17, 126, -38, 91, -85, 88, -151, 13, -168, -79, -168, -82, -168, -173, -144, -211, -130, -211, -130)
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 position = Vector2(270, 170)
@@ -45,7 +52,7 @@ rotation = -0.375246
 texture = ExtResource("5_omrus")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(-284.816, 68.2623)
+position = Vector2(11.3262, -22.4541)
 rotation = -0.375246
 scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_ldx1w")
@@ -90,4 +97,25 @@ texture = ExtResource("8_3cerx")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D3"]
 shape = SubResource("CapsuleShape2D_t375k")
 
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(867, 233)
+rotation = 0.463207
+scale = Vector2(0.197275, 0.256098)
+script = ExtResource("9_va317")
+
+[node name="Eyebrow2" type="Sprite2D" parent="Node2D"]
+position = Vector2(426.266, -137.81)
+rotation = -0.662815
+scale = Vector2(0.89106, 1.16068)
+skew = -0.258023
+texture = ExtResource("10_glppb")
+
+[node name="Eyebrow" type="Sprite2D" parent="Node2D"]
+scale = Vector2(1, 1)
+texture = ExtResource("10_glppb")
+
+[connection signal="cat_angry" from="." to="Node2D" method="_on_main_cat_angry"]
+[connection signal="cat_calm" from="." to="Node2D" method="_on_main_cat_calm"]
 [connection signal="body_entered" from="Cat-combed/Area2D" to="." method="_on_killzone_entered"]
+[connection signal="body_entered" from="Cat-combed/catboday" to="." method="_on_catboday_body_entered"]
+[connection signal="body_exited" from="Cat-combed/catboday" to="." method="_on_catboday_body_exited"]
