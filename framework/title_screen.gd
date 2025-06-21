@@ -420,6 +420,7 @@ func show_volume_settings() -> void:
 	await put_volume_slider("Master", "Master")
 	await put_volume_slider("UI", "Ui")
 	await put_volume_slider("Music", "Music")
+	await put_volume_slider("Sfx", "Sfx")
 	return_to_settings_button()
 
 func show_settings() -> void:

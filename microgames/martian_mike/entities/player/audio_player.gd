@@ -16,6 +16,7 @@ func play_sfx(sfx_name: String):
 	var asp = AudioStreamPlayer.new()
 	asp.stream = stream
 	asp.name = "SFX_" + sfx_name
+	asp.bus = "Sfx"
 	add_child(asp)
 	asp.play()
 	await asp.finished

@@ -10,3 +10,4 @@ script = ExtResource("1_of8dd")
 stream = ExtResource("2_df4qy")
 volume_db = -5.0
 autoplay = true
+bus = &"Music"
