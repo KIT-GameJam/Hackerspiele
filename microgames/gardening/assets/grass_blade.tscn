@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://hkkp5kqbrxyq"]
+
+[ext_resource type="PackedScene" uid="uid://bwyq2mf8apoms" path="res://microgames/gardening/assets/grass_blade.gltf" id="1_g34qr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wwate"]
+albedo_color = Color(0.1325, 0.25, 0.142292, 1)
+
+[node name="grass_blade" instance=ExtResource("1_g34qr")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+
+[node name="grass" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_wwate")

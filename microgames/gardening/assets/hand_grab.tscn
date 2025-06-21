@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqhyjyd8gp40y"]
+
+[ext_resource type="PackedScene" uid="uid://dyv2b4k15wnyq" path="res://microgames/gardening/assets/hand_grab.gltf" id="1_yqpp5"]
+
+[node name="hand_grab" instance=ExtResource("1_yqpp5")]
