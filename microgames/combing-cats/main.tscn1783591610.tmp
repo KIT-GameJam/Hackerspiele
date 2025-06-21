@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://bclr7x4bssxvd"]
+
+[ext_resource type="Script" uid="uid://cpodya6ulveki" path="res://microgames/combing-cats/main.gd" id="1_mfgbp"]
+[ext_resource type="Texture2D" uid="uid://bw4cekcl0b6cp" path="res://microgames/combing-cats/background.png" id="2_ldx1w"]
+[ext_resource type="Texture2D" uid="uid://c6ogaedtg1fbh" path="res://microgames/combing-cats/cat-combed.png" id="3_5j027"]
+[ext_resource type="Script" uid="uid://dx1gxcltshhuo" path="res://microgames/combing-cats/comb.gd" id="4_t375k"]
+[ext_resource type="Texture2D" uid="uid://cvxsblu3v8xsn" path="res://microgames/combing-cats/Hair_Comb.svg" id="5_omrus"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_mfgbp")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(642, 359)
+texture = ExtResource("2_ldx1w")
+
+[node name="Cat-combed" type="Sprite2D" parent="."]
+position = Vector2(649, 340)
+texture = ExtResource("3_5j027")
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(624, 342)
+scale = Vector2(0.1, 0.1)
+script = ExtResource("4_t375k")
+
+[node name="HairComb" type="Sprite2D" parent="Node2D"]
+scale = Vector2(1, 1)
+texture = ExtResource("5_omrus")

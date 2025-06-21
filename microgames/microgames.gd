@@ -6,6 +6,7 @@ const scenes: Array[PackedScene] = [
 	preload("res://microgames/ballon_popper/main.tscn"),
 	preload("res://microgames/bugfix/bugfix.tscn"),
 	preload("res://microgames/calc/calc.tscn"),
+	preload("res://microgames/combing-cats/main.tscn"),
 	preload("res://microgames/coin_collector/main.tscn"),
 	preload("res://microgames/crabfight/crabfight.tscn"),
 	preload("res://microgames/etch_a_sketch/main.tscn"),
