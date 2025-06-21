@@ -46,9 +46,11 @@ func _on_click(button: Button) -> void:
 			if int(user_input) == result:
 				user_input_node.label_settings.font_color = Color("#669e5d")
 				correct = true
+				await get_tree().create_timer(0.2).timeout
+				finished.emit(Result.Win)
 			else:
 				user_input_node.label_settings.font_color = Color("#a70233")
-				await get_tree().create_timer(0.1).timeout
+				await get_tree().create_timer(0.3).timeout
 				user_input_node.label_settings.font_color = Color("#d75145")
 
 				#await get_tree().create_timer(0.5).timeout
