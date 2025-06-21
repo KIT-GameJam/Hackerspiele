@@ -30,6 +30,7 @@ const MICROGAME_PAGE_SIZE := 10
 @onready var cursor_rect: Panel = $Monitor/ScreenLayer/Screen/CursorRect
 @onready var logo: Control = $Monitor/ScreenLayer/Screen/Logo
 @onready var poweroff_button: MeshInstance3D = $Monitor/PoweroffButton
+@onready var poweroff_button_ui: Button = $Monitor/ScreenLayer/Screen/PoweroffButton
 @onready var world_environment: WorldEnvironment = $WorldEnvironment
 @onready var blink_timer: Timer = $Monitor/ScreenLayer/Screen/BlinkTimer
 @onready var game_manager: GameManager = get_tree().get_first_node_in_group("game-manager")
@@ -43,12 +44,17 @@ var bottle_offset_left := 0.0
 var bottle_offset_right := 0.0
 var bottles: Array[MeshInstance3D] = []
 var micro_game_page := 0
+var terminal_buttons: Array[TerminalButton] = []
 
 var input_buffer := []
 
 enum Direction { LEFT, RIGHT, UP, DOWN }
 
 enum PrintEventType { CHAR, BUTTON, SYNC }
+
+class TerminalButton:
+	var node: Button
+	var pos: Vector2i
 
 class PrintEvent:
 	var ty: PrintEventType
@@ -125,6 +131,7 @@ func clear_terminal() -> void:
 		var child = label.get_child(0)
 		label.remove_child(child)
 		child.queue_free()
+	terminal_buttons = []
 
 func put_button(text: String, onclick: Callable) -> void:
 	var event := PrintEvent.new(PrintEventType.BUTTON, " " + text + " ")
@@ -152,9 +159,41 @@ func pop_print_queue() -> void:
 			putc(event.val)
 		PrintEventType.BUTTON:
 			var text: String = event.val
+			var button := TerminalButton.new()
+			button.pos = cursor
 			for chr in text.reverse():
 				print_queue.push_front(PrintEvent.new(PrintEventType.CHAR, chr))
-			label.add_child(create_terminal_button(text, event.onclick))
+			button.node = create_terminal_button(text, event.onclick)
+			terminal_buttons.append(button)
+			label.add_child(button.node)
+			for btn_idx in range(terminal_buttons.size()):
+				var btn1 := terminal_buttons[btn_idx]
+				var btn2 := terminal_buttons[(btn_idx + 1) % terminal_buttons.size()]
+				btn1.node.focus_neighbor_right = btn2.node.get_path()
+				btn2.node.focus_neighbor_left = btn1.node.get_path()
+				btn1.node.focus_next = btn2.node.get_path()
+				btn2.node.focus_previous = btn1.node.get_path()
+				var best_top_button = null
+				var best_btm_button = null
+				for idx in range(terminal_buttons.size()):
+					if idx == btn_idx: continue
+					var neigh := terminal_buttons[idx]
+					if neigh.pos.y < btn1.pos.y:
+						if (best_top_button == null
+							or best_top_button.pos.y < neigh.pos.y
+							or (best_top_button.pos.y == neigh.pos.y
+								and abs(best_top_button.pos.x - btn1.pos.x)
+								  > abs(neigh.pos.x - btn1.pos.x))):
+							best_top_button = neigh
+					if neigh.pos.y > btn1.pos.y:
+						if (best_btm_button == null
+							or best_btm_button.pos.y > neigh.pos.y
+							or (best_btm_button.pos.y == neigh.pos.y
+								and abs(best_btm_button.pos.x - btn1.pos.x)
+								  > abs(neigh.pos.x - btn1.pos.x))):
+							best_btm_button = neigh
+				btn1.node.focus_neighbor_top = (poweroff_button_ui if best_top_button == null else best_top_button.node).get_path()
+				btn1.node.focus_neighbor_bottom = (poweroff_button_ui if best_btm_button == null else best_btm_button.node).get_path()
 		PrintEventType.SYNC:
 			event.val.sync.emit()
 
