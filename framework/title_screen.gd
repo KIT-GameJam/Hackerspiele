@@ -278,6 +278,12 @@ func show_pause_screen() -> void:
 	push_str("-----------\n\n")
 	put_settings_button("Settings", show_settings)
 	push_str("\n")
+	put_settings_button("return to title screen", func():
+		game_manager.unpause()
+		game_manager.game_over(false)
+		show_title_screen()
+	)
+	push_str("\n")
 	put_settings_button("Resume", unpause_game_manager)
 
 func unpause_game_manager() -> void:

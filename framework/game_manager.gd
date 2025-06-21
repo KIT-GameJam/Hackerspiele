@@ -128,14 +128,16 @@ func start_game() -> void:
 func handle_timeout() -> void:
 	game_finished(current_game.on_timeout())
 
-func game_over() -> void:
-	microgame_slot.remove_child(current_game)
-	current_game.storage.clear()
-	current_game.queue_free()
-	current_game = null
+func game_over(use_scoreboard: bool = true) -> void:
+	if current_game != null:
+		microgame_slot.remove_child(current_game)
+		current_game.storage.clear()
+		current_game.queue_free()
+		current_game = null
 
 	show_title_screen()
-	title_screen.show_scoreboard(won_games)
+	if use_scoreboard:
+		title_screen.show_scoreboard(won_games)
 
 func game_finished(result: MicroGame.Result) -> void:
 	if in_game:
