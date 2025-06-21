@@ -1,4 +1,9 @@
-[gd_resource type="VisualShader" load_steps=6 format=3 uid="uid://rmul5k7ovqim"]
+[gd_resource type="VisualShader" load_steps=7 format=3 uid="uid://rmul5k7ovqim"]
+
+[sub_resource type="VisualShaderNodeVec2Parameter" id="VisualShaderNodeVec2Parameter_4akra"]
+parameter_name = "scale_uv"
+default_value_enabled = true
+default_value = Vector2(30, 30)
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_sc0rw"]
 input_name = "uv"
@@ -14,11 +19,9 @@ expanded_output_ports = [0]
 op_type = 4
 
 [sub_resource type="VisualShaderNodeExpression" id="VisualShaderNodeExpression_4igad"]
-size = Vector2(480, 220)
-expression = "float scale = 20.;
-float x = mod(scale*uv.x, 1);
-float y = mod(scale*uv.y, 1);
-if (max(x,y) <  0.5 || 0.5 < min(x,y) ) {
+size = Vector2(480, 260)
+expression = "vec2 xy = mod(scale_uv * uv, vec2(1.));
+if (max(xy.x,xy.y) <  0.5 || 0.5 < min(xy.x,xy.y) ) {
   b = 0.0;
 } else {
   b = 1.;
@@ -29,6 +32,7 @@ if (max(x,y) <  0.5 || 0.5 < min(x,y) ) {
 code = "shader_type canvas_item;
 render_mode blend_mix;
 
+uniform vec2 scale_uv = vec2(30.000000, 30.000000);
 
 
 
@@ -45,14 +49,16 @@ void fragment() {
 	vec2 n_out2p0 = UV;
 
 
+// Vector2Parameter:10
+	vec2 n_out10p0 = scale_uv;
+
+
 	float n_out9p0;
 // Expression:9
 	n_out9p0 = 0.0;
 	{
-		float scale = 20.;
-		float x = mod(scale*n_out2p0.x, 1);
-		float y = mod(scale*n_out2p0.y, 1);
-		if (max(x,y) <  0.5 || 0.5 < min(x,y) ) {
+		vec2 xy = mod(n_out10p0 * n_out2p0, vec2(1.));
+		if (max(xy.x,xy.y) <  0.5 || 0.5 < min(xy.x,xy.y) ) {
 		  n_out9p0 = 0.0;
 		} else {
 		  n_out9p0 = 1.;
@@ -84,16 +90,16 @@ nodes/fragment/6/node = SubResource("VisualShaderNodeMix_aopum")
 nodes/fragment/6/position = Vector2(200, 80)
 nodes/fragment/9/node = SubResource("VisualShaderNodeExpression_4igad")
 nodes/fragment/9/position = Vector2(-340, 300)
-nodes/fragment/9/size = Vector2(480, 220)
-nodes/fragment/9/input_ports = "0,3,uv;"
+nodes/fragment/9/size = Vector2(480, 260)
+nodes/fragment/9/input_ports = "0,3,uv;1,3,scale_uv;"
 nodes/fragment/9/output_ports = "0,0,b;"
-nodes/fragment/9/expression = "float scale = 20.;
-float x = mod(scale*uv.x, 1);
-float y = mod(scale*uv.y, 1);
-if (max(x,y) <  0.5 || 0.5 < min(x,y) ) {
+nodes/fragment/9/expression = "vec2 xy = mod(scale_uv * uv, vec2(1.));
+if (max(xy.x,xy.y) <  0.5 || 0.5 < min(xy.x,xy.y) ) {
   b = 0.0;
 } else {
   b = 1.;
 }
 "
-nodes/fragment/connections = PackedInt32Array(5, 0, 6, 0, 4, 0, 6, 1, 9, 0, 6, 2, 6, 0, 0, 0, 2, 0, 9, 0)
+nodes/fragment/10/node = SubResource("VisualShaderNodeVec2Parameter_4akra")
+nodes/fragment/10/position = Vector2(-680, 400)
+nodes/fragment/connections = PackedInt32Array(5, 0, 6, 0, 4, 0, 6, 1, 9, 0, 6, 2, 6, 0, 0, 0, 2, 0, 9, 0, 10, 0, 9, 1)
