@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://2tuaxu07cy0v"]
+[gd_scene load_steps=8 format=3 uid="uid://2tuaxu07cy0v"]
 
 [ext_resource type="Script" uid="uid://cj1ddqjyhctev" path="res://microgames/calc/calc.gd" id="1_11tbv"]
-[ext_resource type="Texture2D" uid="uid://bqukpq7h3jgs0" path="res://microgames/calc/background.svg" id="1_x84b8"]
-[ext_resource type="Texture2D" uid="uid://bcxc16dwsd3t6" path="res://microgames/calc/background.png" id="2_11ntd"]
+[ext_resource type="Texture2D" uid="uid://bfjv5t3ovfvwq" path="res://microgames/calc/background.png" id="2_11ntd"]
 [ext_resource type="FontFile" uid="uid://sa1ml6cgmorr" path="res://assets/fonts/Share Tech Mono/ShareTechMono-Regular.ttf" id="3_vv3no"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_11ntd"]
@@ -26,17 +25,15 @@ script = ExtResource("1_11tbv")
 time = 15.0
 metadata/_edit_horizontal_guides_ = [224.0, 232.0, 200.0]
 
-[node name="Background" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Panel" type="Panel" parent="Background"]
+[node name="Background" type="Panel" parent="CanvasLayer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_11ntd")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer"]
 anchors_preset = 15
@@ -48,18 +45,7 @@ ratio = 1.7778
 
 [node name="Panel" type="Panel" parent="CanvasLayer/AspectRatioContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_snxp4")
-
-[node name="Background" type="TextureRect" parent="CanvasLayer/AspectRatioContainer/Panel"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("1_x84b8")
 
 [node name="1" type="Button" parent="CanvasLayer/AspectRatioContainer/Panel"]
 modulate = Color(0.839216, 0.313726, 0.160784, 0.333333)
