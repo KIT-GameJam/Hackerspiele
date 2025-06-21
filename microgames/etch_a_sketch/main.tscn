@@ -1,0 +1,182 @@
+[gd_scene load_steps=22 format=3 uid="uid://b488bpf5wabif"]
+
+[ext_resource type="Script" uid="uid://cyp7b7y6x2wuj" path="res://microgames/etch_a_sketch/main.gd" id="1_mb8x2"]
+[ext_resource type="Script" uid="uid://bt8y5ttp6p4ja" path="res://microgames/etch_a_sketch/target.gd" id="2_p7lea"]
+[ext_resource type="Texture2D" uid="uid://bgyim4jnxym1m" path="res://microgames/etch_a_sketch/background.png" id="2_wtftk"]
+[ext_resource type="Texture2D" uid="uid://dp8s7itu72o0h" path="res://microgames/etch_a_sketch/sketches/godot.png" id="3_htbq8"]
+[ext_resource type="Texture2D" uid="uid://cnnrxk6orbyc" path="res://microgames/etch_a_sketch/etch_a_sketch.png" id="3_mb8x2"]
+[ext_resource type="Texture2D" uid="uid://ba1a2m77a1eyd" path="res://microgames/etch_a_sketch/postit.png" id="3_p7lea"]
+[ext_resource type="Texture2D" uid="uid://7wxymwx51715" path="res://microgames/etch_a_sketch/sketches/godot_blur.png" id="4_hk4lp"]
+[ext_resource type="Texture2D" uid="uid://xcnjxp8jolcg" path="res://microgames/etch_a_sketch/pinching.png" id="4_p7lea"]
+[ext_resource type="Texture2D" uid="uid://why6gcuy6nq8" path="res://microgames/etch_a_sketch/sketches/controller.png" id="5_4ok5v"]
+[ext_resource type="Texture2D" uid="uid://bmwit1rmxipvc" path="res://microgames/etch_a_sketch/sketches/controller_blur.png" id="6_y3f8y"]
+[ext_resource type="Texture2D" uid="uid://cunk4n4mdrx62" path="res://microgames/etch_a_sketch/sketches/gamejam.png" id="7_5w6c3"]
+[ext_resource type="Texture2D" uid="uid://bku4ooiunm68n" path="res://microgames/etch_a_sketch/sketches/gamejam_blur.png" id="8_yf0an"]
+[ext_resource type="Texture2D" uid="uid://cpixd3qyi6yhg" path="res://microgames/etch_a_sketch/sketches/star.png" id="9_bfmxs"]
+[ext_resource type="Texture2D" uid="uid://dbucxbugry53g" path="res://microgames/etch_a_sketch/sketches/star_blur.png" id="10_bl37c"]
+
+[sub_resource type="Resource" id="Resource_nbxtv"]
+script = ExtResource("2_p7lea")
+target = ExtResource("3_htbq8")
+target_blur = ExtResource("4_hk4lp")
+metadata/_custom_type_script = "uid://bt8y5ttp6p4ja"
+
+[sub_resource type="Resource" id="Resource_5w6c3"]
+script = ExtResource("2_p7lea")
+target = ExtResource("5_4ok5v")
+target_blur = ExtResource("6_y3f8y")
+metadata/_custom_type_script = "uid://bt8y5ttp6p4ja"
+
+[sub_resource type="Resource" id="Resource_bfmxs"]
+script = ExtResource("2_p7lea")
+target = ExtResource("7_5w6c3")
+target_blur = ExtResource("8_yf0an")
+metadata/_custom_type_script = "uid://bt8y5ttp6p4ja"
+
+[sub_resource type="Resource" id="Resource_c8y5c"]
+script = ExtResource("2_p7lea")
+target = ExtResource("9_bfmxs")
+target_blur = ExtResource("10_bl37c")
+metadata/_custom_type_script = "uid://bt8y5ttp6p4ja"
+
+[sub_resource type="LabelSettings" id="LabelSettings_mb8x2"]
+font_size = 56
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_mb8x2"]
+size = Vector2(420, 315)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bfmxs"]
+bg_color = Color(0.243379, 0.576129, 1, 1)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_mb8x2")
+targets = Array[ExtResource("2_p7lea")]([SubResource("Resource_nbxtv"), SubResource("Resource_5w6c3"), SubResource("Resource_bfmxs"), SubResource("Resource_c8y5c")])
+time = 9.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Background" type="TextureRect" parent="CanvasLayer"]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_wtftk")
+
+[node name="PostIt" type="TextureRect" parent="CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = -1
+anchor_left = 0.753
+anchor_top = 0.5
+anchor_right = 0.753
+anchor_bottom = 0.5
+offset_left = -223.84
+offset_top = -230.0
+offset_right = 178.16
+offset_bottom = 189.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(170, 180)
+texture = ExtResource("3_p7lea")
+
+[node name="Label" type="Label" parent="CanvasLayer/PostIt"]
+layout_mode = 1
+offset_left = 51.0
+offset_top = 40.0
+offset_right = 353.0
+offset_bottom = 104.0
+rotation = -0.0174533
+text = "Draw this:"
+label_settings = SubResource("LabelSettings_mb8x2")
+
+[node name="TargetRect" type="TextureRect" parent="CanvasLayer/PostIt"]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = 54.0
+offset_top = 104.0
+offset_right = 335.0
+offset_bottom = 315.0
+rotation = 0.0349066
+texture = SubResource("PlaceholderTexture2D_mb8x2")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="EtchASketch" type="TextureRect" parent="CanvasLayer"]
+unique_name_in_owner = true
+texture_filter = 1
+anchors_preset = -1
+anchor_left = 0.356
+anchor_top = 0.543
+anchor_right = 0.356
+anchor_bottom = 0.543
+offset_left = -392.68
+offset_top = -248.96
+offset_right = 309.32
+offset_bottom = 338.04
+pivot_offset = Vector2(350, 250)
+texture = ExtResource("3_mb8x2")
+
+[node name="HandRight" type="TextureRect" parent="CanvasLayer/EtchASketch"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.888
+anchor_top = 0.86
+anchor_right = 0.888
+anchor_bottom = 0.86
+offset_left = -266.621
+offset_top = -525.087
+offset_right = 680.379
+offset_bottom = 43.913
+grow_horizontal = 0
+grow_vertical = 0
+rotation = 1.5708
+scale = Vector2(1.04, 1.04)
+pivot_offset = Vector2(250, 500)
+texture = ExtResource("4_p7lea")
+
+[node name="HandLeft" type="TextureRect" parent="CanvasLayer/EtchASketch"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.11
+anchor_top = 0.837
+anchor_right = 0.11
+anchor_bottom = 0.837
+offset_left = -259.885
+offset_top = -506.666
+offset_right = 687.115
+offset_bottom = 62.334
+grow_horizontal = 0
+grow_vertical = 0
+rotation = 1.5708
+scale = Vector2(1.04, -1.04)
+pivot_offset = Vector2(250, 500)
+texture = ExtResource("4_p7lea")
+
+[node name="DrawingRect" type="TextureRect" parent="CanvasLayer/EtchASketch"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 132.798
+offset_top = 112.359
+offset_right = 552.798
+offset_bottom = 427.359
+texture = SubResource("PlaceholderTexture2D_mb8x2")
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/EtchASketch"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -194.006
+offset_top = 447.488
+offset_right = 182.994
+offset_bottom = 509.488
+grow_horizontal = 2
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 50
+theme_override_styles/fill = SubResource("StyleBoxFlat_bfmxs")
+value = 50.0

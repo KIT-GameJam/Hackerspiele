@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bhuplhud1lp6l" path="res://microgames/speedy_saucer/entities/maze.tscn" id="1_ckhp0"]
 
-[node name="Maze" instance=ExtResource("1_ckhp0")]
+[node name="Maze2" instance=ExtResource("1_ckhp0")]
 
 [node name="CollisionPolygon2D" parent="Level" index="0"]
 polygon = PackedVector2Array(-210, -103, 282, -113, 242, 85, 66, 234, 556, 401, 580, -459, 1271, -762, 1878, 125, 1467, 378, 1301, 84, 1393, -183, 1159, -422, 840, -193, 870, 644, 5, 487, -216, 169)
@@ -23,14 +23,12 @@ offset_right = -66.0
 offset_bottom = -26.0
 
 [node name="Start" parent="Labels" index="0"]
-layout_mode = 0
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 235.0
 offset_bottom = 137.0
 
 [node name="Win" parent="Labels" index="1"]
-layout_mode = 0
 offset_left = 1601.0
 offset_top = 204.0
 offset_right = 1849.0

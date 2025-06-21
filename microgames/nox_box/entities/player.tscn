@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtmwrdlcx1248"]
+
+[ext_resource type="Script" uid="uid://cfj3i1dqn03rr" path="res://microgames/nox_box/entities/Player.gd" id="1_t6buw"]
+[ext_resource type="Texture2D" uid="uid://bds0hxwksvu3k" path="res://microgames/nox_box/assets/PhysicsCharacter.png" id="2_qmvje"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_btpt1"]
+size = Vector2(18, 18)
+
+[node name="Player" type="RigidBody2D"]
+collision_layer = 3
+collision_mask = 3
+mass = 5.0
+gravity_scale = 0.0
+linear_damp = 1.0
+script = ExtResource("1_t6buw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_btpt1")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_qmvje")

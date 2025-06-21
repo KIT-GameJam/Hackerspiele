@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://1n0xelbrbxba"]
+
+[ext_resource type="Script" uid="uid://u6quqbr0egwc" path="res://microgames/martian_mike/entities/player/audio_player.gd" id="1_of8dd"]
+[ext_resource type="AudioStream" uid="uid://senegp6ybc74" path="res://microgames/martian_mike/assets/audio/music.ogg" id="2_df4qy"]
+
+[node name="AudioPlayer" type="Node"]
+script = ExtResource("1_of8dd")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_df4qy")
+volume_db = -5.0
+autoplay = true
+bus = &"Music"

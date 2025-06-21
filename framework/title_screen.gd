@@ -11,7 +11,6 @@ const SCOREBOARD_PATH := "user://scoreboard.dat"
 
 const POWEROFF_COLOR_INACTIVE := Color("#cd5424")
 const POWEROFF_COLOR_ACTIVE := Color("#ed7444")
-const SCOREBOARD_MAX_NAME_LEN := 20
 const VOLUME_SLIDER_SIZE := 16
 const VOLUME_SLIDER_FULL_CHAR := "#"
 const VOLUME_SLIDER_EMPTY_CHAR := "-"
@@ -19,6 +18,7 @@ const AUDIO_CFG_PATH := "user://audio.cfg"
 const VOLUME_SECTION := "volume"
 const BOTTLE_SCATTER := 0.3
 const BOTTLE_OFFSET := 1.0
+const MICROGAME_PAGE_SIZE := 10
 
 @onready var camera: Camera3D = $Camera
 @onready var marker_top_left: Marker3D = $Monitor/MarkerTopLeft
@@ -30,23 +30,31 @@ const BOTTLE_OFFSET := 1.0
 @onready var cursor_rect: Panel = $Monitor/ScreenLayer/Screen/CursorRect
 @onready var logo: Control = $Monitor/ScreenLayer/Screen/Logo
 @onready var poweroff_button: MeshInstance3D = $Monitor/PoweroffButton
+@onready var poweroff_button_ui: Button = $Monitor/ScreenLayer/Screen/PoweroffButton
 @onready var world_environment: WorldEnvironment = $WorldEnvironment
 @onready var blink_timer: Timer = $Monitor/ScreenLayer/Screen/BlinkTimer
 @onready var game_manager: GameManager = get_tree().get_first_node_in_group("game-manager")
+@onready var line_edit: LineEdit = $Monitor/ScreenLayer/Screen/LineEdit
 var print_time := 0.0
 var cursor := Vector2i(0, 0)
 var print_queue: Array[PrintEvent] = []
 var environment_buffer: Environment = null
-## true if currently waiting for input, false otherwise
-var waiting_for_input := false
 var is_paused := false
 var bottle_offset_left := 0.0
 var bottle_offset_right := 0.0
 var bottles: Array[MeshInstance3D] = []
+var micro_game_page := 0
+var terminal_buttons: Array[TerminalButton] = []
 
-signal key_input(chr: String)
+var input_buffer := []
+
+enum Direction { LEFT, RIGHT, UP, DOWN }
 
 enum PrintEventType { CHAR, BUTTON, SYNC }
+
+class TerminalButton:
+	var node: Button
+	var pos: Vector2i
 
 class PrintEvent:
 	var ty: PrintEventType
@@ -80,16 +88,29 @@ func _process(delta: float) -> void:
 		print_time = 0.0
 	update_screen_pos()
 
-func _unhandled_key_input(event: InputEvent) -> void:
-	if print_queue.is_empty() and waiting_for_input:
-		if event.is_pressed():
-			var key: Key = event.key_label
-			if key == KEY_ENTER:
-				key_input.emit("")
-			elif key == KEY_BACKSPACE:
-				key_input.emit("\b")
-			elif (key >= KEY_A and key <= KEY_Z) or (key >= KEY_0 and key <= KEY_9):
-				key_input.emit(OS.get_keycode_string(key))
+func _input(event: InputEvent) -> void:
+	# easter egg
+	const KONAMI: Array[Direction] = [Direction.UP, Direction.UP, Direction.DOWN, Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.LEFT, Direction.RIGHT]
+
+	if event.is_action_pressed("left"):
+		input_buffer.append(Direction.LEFT)
+	elif event.is_action_pressed("right"):
+		input_buffer.append(Direction.RIGHT)
+	elif event.is_action_pressed("up"):
+		input_buffer.append(Direction.UP)
+	elif event.is_action_pressed("down"):
+		input_buffer.append(Direction.DOWN)
+	else:
+		return
+
+	var buffer_size := input_buffer.size()
+	if buffer_size > KONAMI.size():
+		input_buffer = input_buffer.slice(buffer_size - KONAMI.size(), buffer_size)
+	if input_buffer == KONAMI:
+		if camera.projection != Camera3D.PROJECTION_PERSPECTIVE:
+			camera.projection = Camera3D.PROJECTION_PERSPECTIVE
+		else:
+			camera.projection = Camera3D.PROJECTION_ORTHOGONAL
 
 func _on_blink_timer_timeout() -> void:
 	# toggle cursor visibility
@@ -110,6 +131,7 @@ func clear_terminal() -> void:
 		var child = label.get_child(0)
 		label.remove_child(child)
 		child.queue_free()
+	terminal_buttons = []
 
 func put_button(text: String, onclick: Callable) -> void:
 	var event := PrintEvent.new(PrintEventType.BUTTON, " " + text + " ")
@@ -137,9 +159,41 @@ func pop_print_queue() -> void:
 			putc(event.val)
 		PrintEventType.BUTTON:
 			var text: String = event.val
+			var button := TerminalButton.new()
+			button.pos = cursor
 			for chr in text.reverse():
 				print_queue.push_front(PrintEvent.new(PrintEventType.CHAR, chr))
-			label.add_child(create_terminal_button(text, event.onclick))
+			button.node = create_terminal_button(text, event.onclick)
+			terminal_buttons.append(button)
+			label.add_child(button.node)
+			for btn_idx in range(terminal_buttons.size()):
+				var btn1 := terminal_buttons[btn_idx]
+				var btn2 := terminal_buttons[(btn_idx + 1) % terminal_buttons.size()]
+				btn1.node.focus_neighbor_right = btn2.node.get_path()
+				btn2.node.focus_neighbor_left = btn1.node.get_path()
+				btn1.node.focus_next = btn2.node.get_path()
+				btn2.node.focus_previous = btn1.node.get_path()
+				var best_top_button = null
+				var best_btm_button = null
+				for idx in range(terminal_buttons.size()):
+					if idx == btn_idx: continue
+					var neigh := terminal_buttons[idx]
+					if neigh.pos.y < btn1.pos.y:
+						if (best_top_button == null
+							or best_top_button.pos.y < neigh.pos.y
+							or (best_top_button.pos.y == neigh.pos.y
+								and abs(best_top_button.pos.x - btn1.pos.x)
+								  > abs(neigh.pos.x - btn1.pos.x))):
+							best_top_button = neigh
+					if neigh.pos.y > btn1.pos.y:
+						if (best_btm_button == null
+							or best_btm_button.pos.y > neigh.pos.y
+							or (best_btm_button.pos.y == neigh.pos.y
+								and abs(best_btm_button.pos.x - btn1.pos.x)
+								  > abs(neigh.pos.x - btn1.pos.x))):
+							best_btm_button = neigh
+				btn1.node.focus_neighbor_top = (poweroff_button_ui if best_top_button == null else best_top_button.node).get_path()
+				btn1.node.focus_neighbor_bottom = (poweroff_button_ui if best_btm_button == null else best_btm_button.node).get_path()
 		PrintEventType.SYNC:
 			event.val.sync.emit()
 
@@ -265,6 +319,12 @@ func show_pause_screen() -> void:
 	push_str("-----------\n\n")
 	put_settings_button("Settings", show_settings)
 	push_str("\n")
+	put_settings_button("Return to title screen", func():
+		game_manager.unpause()
+		game_manager.game_over(false)
+		show_title_screen()
+	)
+	push_str("\n")
 	put_settings_button("Resume", unpause_game_manager)
 
 func unpause_game_manager() -> void:
@@ -283,25 +343,13 @@ func show_scoreboard(score: int) -> void:
 	print()
 	if pos < SCOREBOARD_SIZE:
 		push_str("Enter your name:\n")
-		waiting_for_input = true
-		var scoreboard_name := ""
-		DisplayServer.virtual_keyboard_show("")
-		while true:
-			var chr = await key_input
-			if chr.is_empty():
-				push_str("\n")
-				break
-			if chr == "\b":
-				if scoreboard_name:
-					scoreboard_name = scoreboard_name.left(-1)
-					backspace()
-				continue
-			if scoreboard_name.length() >= SCOREBOARD_MAX_NAME_LEN:
-				continue
-			scoreboard_name += chr
-			push_str(chr)
-		DisplayServer.virtual_keyboard_hide()
-		waiting_for_input = false
+		await push_sync()
+		line_edit.clear()
+		line_edit.show()
+		line_edit.grab_focus.call_deferred()
+		line_edit.position = label.position + get_cursor_char_bounds().position
+		var scoreboard_name = await line_edit.text_submitted
+		line_edit.hide()
 		scoreboard.insert(pos, [scoreboard_name, score])
 		scoreboard.resize(min(scoreboard.size(), SCOREBOARD_SIZE))
 		save_scoreboard()
@@ -363,15 +411,45 @@ func save_audio_settings() -> void:
 # menu
 
 func print_game_title() -> void:
+	game_manager.single_game = -1
 	push_str("\n\n\n")
 	push_str("     +>+>+>+ Häckerspiele +<+<+<+\n")
 	push_str(" >>>>>>>>>>>>============<<<<<<<<<<<<\n\n\n")
-	push_str("            -> ")
+	push_str("        -> ")
 	put_button("Start", _on_start_button_pressed)
-	push_str("\n\n")
-	push_str("            -> ")
+	push_str("\n\n        -> ")
+	put_button("Microgame Select", show_micro_game_select)
+	push_str("\n\n        -> ")
 	put_button("Settings", show_settings)
 	push_str("\n")
+
+func show_micro_game_select() -> void:
+	clear_terminal()
+	push_str("Select a microgame:\n")
+	var game_offset := micro_game_page * MICROGAME_PAGE_SIZE
+	for paged_game_idx in range(MICROGAME_PAGE_SIZE):
+		var game_idx: int = paged_game_idx + game_offset
+		if game_idx >= MicroGames.scenes.size():
+			break
+		var game := MicroGames.scenes[game_idx]
+		var name := game.resource_path.split("/")[3].capitalize()
+		put_button(name, game_manager.start.bind(game_idx))
+		push_str("\n")
+	if micro_game_page == 0:
+		push_str("      ")
+	else:
+		put_button("Prev", func():
+			micro_game_page -= 1
+			show_micro_game_select()
+		)
+	push_str(" Page: {0} ".format([micro_game_page + 1]))
+	if game_offset + MICROGAME_PAGE_SIZE < MicroGames.scenes.size():
+		put_button("Next", func():
+			micro_game_page += 1
+			show_micro_game_select()
+		)
+	push_str("\n")
+	return_to_title_screen_button()
 
 func show_title_screen() -> void:
 	clear_terminal()
@@ -419,6 +497,7 @@ func show_volume_settings() -> void:
 	await put_volume_slider("Master", "Master")
 	await put_volume_slider("UI", "Ui")
 	await put_volume_slider("Music", "Music")
+	await put_volume_slider("Sfx", "Sfx")
 	return_to_settings_button()
 
 func show_settings() -> void:
@@ -454,7 +533,7 @@ const POSITIVE_MESSAGES := [
 	"Never Stop!",
 	"Oh yeah!",
 	"Very good!",
-	"You are a superhero!"
+	"You are a superhero!",
 ]
 const NEGATIVE_MESSAGES := [
 	"What a bummer",
@@ -462,7 +541,7 @@ const NEGATIVE_MESSAGES := [
 	"Oops",
 	"Oh no!",
 	"Maybe next time",
-	"|  ||\n|| |_"  # this is an important meme, don't remove!
+	"|  ||\n|| |_",  # this is an important meme, don't remove!
 ]
 
 func switch_game_screen(was_successfull: bool) -> void:
@@ -472,3 +551,7 @@ func switch_game_screen(was_successfull: bool) -> void:
 	push_str("Lifes: " + str(game_manager.lifes))
 	push_str("\n")
 	push_str("Score: " + str(game_manager.won_games) + "\n")
+
+func _on_line_edit_text_changed(new_text: String) -> void:
+	cursor.x = new_text.length()
+	update_cursor_pos()

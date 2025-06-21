@@ -1,0 +1,156 @@
+[gd_scene load_steps=11 format=3 uid="uid://burr64j8a6434"]
+
+[ext_resource type="Script" uid="uid://4sme8ruspkxi" path="res://microgames/bugfix/bugfix.gd" id="1_dolus"]
+[ext_resource type="Texture2D" uid="uid://b2fg3tbljd0mo" path="res://microgames/bugfix/assets/computer.svg" id="2_c7pot"]
+[ext_resource type="Texture2D" uid="uid://bh633bn7mlwc1" path="res://microgames/bugfix/assets/bug.svg" id="2_dwn7c"]
+[ext_resource type="FontFile" uid="uid://sa1ml6cgmorr" path="res://assets/fonts/Share Tech Mono/ShareTechMono-Regular.ttf" id="3_crn06"]
+[ext_resource type="Texture2D" uid="uid://3rb2gwjph8br" path="res://microgames/bugfix/assets/hammer.svg" id="4_s28nd"]
+[ext_resource type="Texture2D" uid="uid://cfmcg0b1nm883" path="res://microgames/bugfix/assets/error.png" id="5_26mif"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7pyf6"]
+font = ExtResource("3_crn06")
+font_size = 81
+outline_size = 2
+outline_color = Color(0.393086, 0.393086, 0.393085, 1)
+shadow_color = Color(0.266575, 0.266575, 0.266575, 1)
+
+[sub_resource type="Animation" id="Animation_s28nd"]
+resource_name = "hit"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hammer:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-0.558505, 0.0, -0.558505]
+}
+
+[sub_resource type="Animation" id="Animation_crn06"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hammer:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.558505]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7pyf6"]
+_data = {
+&"RESET": SubResource("Animation_crn06"),
+&"hit": SubResource("Animation_s28nd")
+}
+
+[node name="Bugfix" type="Node2D"]
+script = ExtResource("1_dolus")
+time = 12.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 20
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("2_c7pot")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel"]
+layout_mode = 0
+offset_left = 302.0
+offset_top = 484.0
+offset_right = 958.0
+offset_bottom = 576.0
+text = "! FIX THE BUG !"
+label_settings = SubResource("LabelSettings_7pyf6")
+
+[node name="Bug" type="Sprite2D" parent="."]
+position = Vector2(125, 140)
+scale = Vector2(0.485, 0.485)
+texture = ExtResource("2_dwn7c")
+
+[node name="Line2D" type="Line2D" parent="Bug"]
+z_index = -1
+position = Vector2(-1, 0)
+points = PackedVector2Array(78, -34, 21, 4)
+default_color = Color(0.207843, 0.145098, 0.0666667, 1)
+
+[node name="Line2D2" type="Line2D" parent="Bug"]
+z_index = -1
+position = Vector2(-2, 0)
+points = PackedVector2Array(97, 21, 31, 31)
+default_color = Color(0.207843, 0.145098, 0.0666667, 1)
+
+[node name="Line2D3" type="Line2D" parent="Bug"]
+z_index = -1
+position = Vector2(-4, 0)
+points = PackedVector2Array(83, 85, 24, 59)
+default_color = Color(0.207843, 0.145098, 0.0666667, 1)
+
+[node name="Line2D4" type="Line2D" parent="Bug"]
+z_index = -1
+position = Vector2(5, 2)
+scale = Vector2(-1, 1)
+points = PackedVector2Array(78, -34, 21, 4)
+default_color = Color(0.207843, 0.145098, 0.0666667, 1)
+
+[node name="Line2D5" type="Line2D" parent="Bug"]
+z_index = -1
+position = Vector2(4, 2)
+scale = Vector2(-1, 1)
+points = PackedVector2Array(97, 21, 31, 31)
+default_color = Color(0.207843, 0.145098, 0.0666667, 1)
+
+[node name="Line2D6" type="Line2D" parent="Bug"]
+z_index = -1
+position = Vector2(2, 2)
+scale = Vector2(-1, 1)
+points = PackedVector2Array(83, 85, 24, 59)
+default_color = Color(0.207843, 0.145098, 0.0666667, 1)
+
+[node name="Hammer" type="Sprite2D" parent="."]
+position = Vector2(621, 372)
+rotation = -0.558505
+scale = Vector2(0.26, 0.26)
+texture = ExtResource("4_s28nd")
+
+[node name="Marker2D" type="Marker2D" parent="Hammer"]
+position = Vector2(234.466, 459.446)
+
+[node name="Hit" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_7pyf6")
+}
+
+[node name="Error" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+texture = ExtResource("5_26mif")

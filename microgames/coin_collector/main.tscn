@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2bj05vvdenuq"]
+
+[ext_resource type="Script" uid="uid://d1711ks4jx6qj" path="res://microgames/coin_collector/main.gd" id="1_gdgrr"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_gdgrr")
+time = 20.0

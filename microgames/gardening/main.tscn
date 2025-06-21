@@ -1,0 +1,122 @@
+[gd_scene load_steps=12 format=3 uid="uid://irtk4polkkru"]
+
+[ext_resource type="Script" uid="uid://dbdny2t3pk0qf" path="res://microgames/gardening/main.gd" id="1_tgf1j"]
+[ext_resource type="Shader" uid="uid://cg8rwj0pr0s6p" path="res://microgames/gardening/grass.gdshader" id="2_m11x1"]
+[ext_resource type="PackedScene" uid="uid://btrs4kvkl7o2q" path="res://microgames/gardening/assets/player.tscn" id="4_kkksr"]
+[ext_resource type="Script" uid="uid://daigwgsgs07kn" path="res://microgames/gardening/grass_manager.gd" id="6_kkksr"]
+[ext_resource type="Script" uid="uid://bmwqqfysi2smq" path="res://microgames/gardening/carrot_manager.gd" id="6_nk4vt"]
+[ext_resource type="PackedScene" uid="uid://buwxe5ix2x55e" path="res://microgames/gardening/assets/zaun.tscn" id="6_tgf1j"]
+[ext_resource type="PackedScene" uid="uid://5p3nccfu5myx" path="res://microgames/gardening/assets/focus.tscn" id="7_tgf1j"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_7l4c7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mtb6u"]
+render_priority = 0
+shader = ExtResource("2_m11x1")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tgf1j"]
+bg_color = Color(0.88, 0.46112, 0.3872, 0.639216)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.802194, 0.817457, 0.653048, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_nk4vt"]
+font_size = 22
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_tgf1j")
+time = 35.0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+offset_left = -18.0
+offset_top = 28.0
+offset_right = 1301.0
+offset_bottom = 777.0
+stretch = true
+stretch_shrink = 4
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(329, 187)
+render_target_update_mode = 4
+
+[node name="Floor" type="Node3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Floor"]
+transform = Transform3D(10, 0, 0, 0, 0.5, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("BoxMesh_7l4c7")
+surface_material_override/0 = SubResource("ShaderMaterial_mtb6u")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(0.919842, -0.117663, -0.374227, 0.392289, 0.275897, 0.877491, 0, -0.953958, 0.29994, -76.9821, 111.758, 15.6769)
+light_energy = 0.5
+shadow_enabled = true
+directional_shadow_mode = 1
+
+[node name="PLAYER" parent="SubViewportContainer/SubViewport" instance=ExtResource("4_kkksr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.37735, 0)
+
+[node name="grass_manager" type="Node3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+script = ExtResource("6_kkksr")
+
+[node name="folder_zaun" type="Node3D" parent="SubViewportContainer/SubViewport"]
+
+[node name="zaun" parent="SubViewportContainer/SubViewport/folder_zaun" instance=ExtResource("6_tgf1j")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -100.189, 0.00765371, 99.2731)
+
+[node name="zaun4" parent="SubViewportContainer/SubViewport/folder_zaun" instance=ExtResource("6_tgf1j")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -100.189, 0.00765371, -99.7923)
+
+[node name="zaun2" parent="SubViewportContainer/SubViewport/folder_zaun" instance=ExtResource("6_tgf1j")]
+transform = Transform3D(-2.18557e-07, 0, 5, 0, 5, 0, -5, 0, -2.18557e-07, 99.7167, 0.00765371, 99.2731)
+
+[node name="zaun3" parent="SubViewportContainer/SubViewport/folder_zaun" instance=ExtResource("6_tgf1j")]
+transform = Transform3D(-2.18557e-07, 0, 5, 0, 5, 0, -5, 0, -2.18557e-07, -100.1, 0.00765371, 99.2731)
+
+[node name="carrot_manager" type="Node3D" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("6_nk4vt")
+
+[node name="Timer" type="Timer" parent="SubViewportContainer/SubViewport/carrot_manager"]
+wait_time = 0.2
+one_shot = true
+autostart = true
+
+[node name="focus" parent="SubViewportContainer/SubViewport" instance=ExtResource("7_tgf1j")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+offset = Vector2(20, 41.34)
+transform = Transform2D(1, 0, 0, 1, 20, 41.34)
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+texture_filter = 1
+offset_left = 2.0
+offset_top = 6.0
+offset_right = 100.0
+offset_bottom = 21.0
+scale = Vector2(3.32422, 2.43746)
+theme_override_styles/panel = SubResource("StyleBoxFlat_tgf1j")
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+texture_filter = 1
+offset_left = 19.0
+offset_top = 12.0
+offset_right = 317.0
+offset_bottom = 47.0
+text = "COLLECT CARROTS ( 0 / 5 )"
+label_settings = SubResource("LabelSettings_nk4vt")
+
+[connection signal="carrot_pulled" from="SubViewportContainer/SubViewport/PLAYER" to="." method="carrot_pulled"]
+[connection signal="hide_focus" from="SubViewportContainer/SubViewport/PLAYER" to="SubViewportContainer/SubViewport/focus" method="hide_effect"]
+[connection signal="show_focus" from="SubViewportContainer/SubViewport/PLAYER" to="SubViewportContainer/SubViewport/focus" method="show_effect"]
+[connection signal="timeout" from="SubViewportContainer/SubViewport/carrot_manager/Timer" to="SubViewportContainer/SubViewport/carrot_manager" method="initial_hide_carrot_focus"]

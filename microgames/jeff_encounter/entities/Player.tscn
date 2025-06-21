@@ -1,0 +1,266 @@
+[gd_scene load_steps=22 format=3 uid="uid://c7xru3o3piygv"]
+
+[ext_resource type="Script" uid="uid://cpxojq12yxlll" path="res://microgames/jeff_encounter/entities/Player.gd" id="1_n0o0d"]
+[ext_resource type="Texture2D" uid="uid://bvraqbkf5ijs1" path="res://microgames/jeff_encounter/assets/textures/Jeff.png" id="2_8uldn"]
+[ext_resource type="AudioStream" uid="uid://csymma4020vmv" path="res://microgames/jeff_encounter/assets/sounds/hit.wav" id="3_ynwqt"]
+[ext_resource type="Texture2D" uid="uid://dr4vy3kdorlx1" path="res://microgames/jeff_encounter/assets/textures/dust-cloud-particle.png" id="4_1pus1"]
+[ext_resource type="AudioStream" uid="uid://d3andh1o1lwh2" path="res://microgames/jeff_encounter/assets/sounds/dash.wav" id="5_xpw1j"]
+[ext_resource type="AudioStream" uid="uid://u3d3xewaw1ex" path="res://microgames/jeff_encounter/assets/sounds/pickup.wav" id="6_begy2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gdro1"]
+size = Vector2(7, 8)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ap1vd"]
+radius = 4.0
+height = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m6hdk"]
+
+[sub_resource type="Animation" id="Animation_kdslx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_j385d"]
+resource_name = "invincibility"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.0392157, 0.584314, 1, 0.384314), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_t5nj7"]
+resource_name = "invincible"
+length = 0.16
+loop_mode = 1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.16),
+"transitions": PackedFloat32Array(1, 0.2255, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2704f"]
+_data = {
+&"RESET": SubResource("Animation_kdslx"),
+&"hit": SubResource("Animation_j385d"),
+&"invincible": SubResource("Animation_t5nj7")
+}
+
+[sub_resource type="Animation" id="Animation_m34xj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_77a41"]
+resource_name = "idle"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_l8ky0"]
+resource_name = "walk"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_57kes"]
+_data = {
+&"RESET": SubResource("Animation_m34xj"),
+&"idle": SubResource("Animation_77a41"),
+&"walk": SubResource("Animation_l8ky0")
+}
+
+[sub_resource type="Animation" id="Animation_nheg1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.709804)]
+}
+
+[sub_resource type="Animation" id="Animation_ob3x0"]
+resource_name = "fade"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.709804), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_blxem"]
+_data = {
+&"RESET": SubResource("Animation_nheg1"),
+&"fade": SubResource("Animation_ob3x0")
+}
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_abkiw"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 15.0
+angle_max = 360.0
+spread = 74.66
+flatness = 0.57
+initial_velocity_min = 8.0
+initial_velocity_max = 16.0
+angular_velocity_min = -12.0
+angular_velocity_max = 12.0
+gravity = Vector3(0, 0, 0)
+damping_min = 1.0
+damping_max = 2.0
+scale_min = 0.2
+
+[node name="Jeff" type="CharacterBody2D"]
+collision_layer = 5
+motion_mode = 1
+script = ExtResource("1_n0o0d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.5, 4)
+shape = SubResource("RectangleShape2D_gdro1")
+
+[node name="Character" type="Sprite2D" parent="."]
+texture = ExtResource("2_8uldn")
+hframes = 4
+vframes = 2
+frame = 1
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 5
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("CapsuleShape2D_ap1vd")
+
+[node name="DestinationDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DestinationDetector"]
+shape = SubResource("CircleShape2D_m6hdk")
+
+[node name="InvincibilityTimer" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
+
+[node name="DashTimer" type="Timer" parent="."]
+wait_time = 0.05
+
+[node name="DashCooldownTimer" type="Timer" parent="."]
+wait_time = 0.85
+one_shot = true
+
+[node name="HitAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_2704f")
+}
+
+[node name="WalkAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_57kes")
+}
+
+[node name="DustFadeAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_blxem")
+}
+
+[node name="HitSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ynwqt")
+volume_db = 5.0
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(1, 1, 1, 0.709804)
+emitting = false
+texture = ExtResource("4_1pus1")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_abkiw")
+
+[node name="DashSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_xpw1j")
+volume_db = -25.0
+
+[node name="PackageDeliveredSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_begy2")
+volume_db = -12.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(5, 5)
+
+[connection signal="area_entered" from="DestinationDetector" to="." method="_on_destination_detector_area_entered"]
+[connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
+[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="DashCooldownTimer" to="." method="_on_dash_cooldown_timer_timeout"]

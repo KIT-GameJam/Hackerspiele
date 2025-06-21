@@ -1,0 +1,40 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://bwttwsp1fetbo"]
+
+[ext_resource type="Texture2D" uid="uid://ch4l54w3xbjiy" path="res://microgames/jeff_encounter/assets/textures/button-box-style.png" id="1_d738b"]
+[ext_resource type="StyleBox" uid="uid://dp0273hhuc3e8" path="res://microgames/jeff_encounter/assets/textures/PanelBoxTexture.tres" id="2_15pcj"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ib5x3"]
+texture = ExtResource("1_d738b")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+region_rect = Rect2(24, 0, 24, 24)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0yg82"]
+texture = ExtResource("1_d738b")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+region_rect = Rect2(0, 0, 24, 24)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6g80c"]
+texture = ExtResource("1_d738b")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+region_rect = Rect2(48, 0, 24, 24)
+
+[resource]
+Button/font_sizes/font_size = 8
+Button/styles/hover = SubResource("StyleBoxTexture_ib5x3")
+Button/styles/normal = SubResource("StyleBoxTexture_0yg82")
+Button/styles/pressed = SubResource("StyleBoxTexture_6g80c")
+MarginContainer/constants/margin_bottom = 8
+MarginContainer/constants/margin_left = 8
+MarginContainer/constants/margin_right = 8
+MarginContainer/constants/margin_top = 8
+Panel/styles/panel = ExtResource("2_15pcj")
+PanelContainer/styles/panel = ExtResource("2_15pcj")

@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://etfu5ouoqq3f"]
+
+[ext_resource type="Texture2D" uid="uid://csgr6r888wcej" path="res://microgames/crabfight/assets/leg.svg" id="1_olryf"]
+[ext_resource type="Script" uid="uid://dsw5x0f3bff0g" path="res://microgames/crabfight/leg.gd" id="1_p46w0"]
+
+[sub_resource type="Animation" id="Animation_olryf"]
+resource_name = "walk"
+length = 0.14
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Leg:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0400529, 0.100132, 0.139763),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.383972, 0.383972, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_p46w0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Leg:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ryjxr"]
+_data = {
+&"RESET": SubResource("Animation_p46w0"),
+&"walk": SubResource("Animation_olryf")
+}
+
+[node name="Leg" type="Node2D"]
+script = ExtResource("1_p46w0")
+
+[node name="Leg" type="Sprite2D" parent="."]
+position = Vector2(-60, -138)
+texture = ExtResource("1_olryf")
+offset = Vector2(60, 138)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ryjxr")
+}
+speed_scale = 0.6

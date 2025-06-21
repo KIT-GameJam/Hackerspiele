@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://528481gmre0a"]
+
+[ext_resource type="Script" uid="uid://bwivxo24kpng4" path="res://microgames/jeff_encounter/entities/aliens/Alien.gd" id="1_cc50j"]
+[ext_resource type="Texture2D" uid="uid://dxxc4ld0u1jpv" path="res://microgames/jeff_encounter/assets/textures/alien.png" id="1_v4t24"]
+[ext_resource type="Script" uid="uid://ds7xe8stfia4n" path="res://microgames/jeff_encounter/entities/aliens/AlienTimer.gd" id="3_n0vsd"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_beyqa"]
+radius = 7.0
+height = 18.0
+
+[node name="Alien" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_cc50j")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_v4t24")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_beyqa")
+
+[node name="Timer" type="Timer" parent="."]
+script = ExtResource("3_n0vsd")

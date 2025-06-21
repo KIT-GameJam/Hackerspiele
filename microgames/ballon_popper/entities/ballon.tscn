@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://yuvlqf8bmj3s"]
+
+[ext_resource type="Script" uid="uid://b5iad5nrk7tv0" path="res://microgames/ballon_popper/entities/ballon.gd" id="1_3f0x4"]
+[ext_resource type="Material" uid="uid://doj0dx7l5y7dj" path="res://microgames/ballon_popper/assets/ballon.tres" id="1_hbpa1"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ftyhk"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_qw474"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_jem7g"]
+radius = 0.6
+
+[node name="Ballon" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 4
+gravity_scale = 0.0
+script = ExtResource("1_3f0x4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_ftyhk")
+
+[node name="Model" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_hbpa1")
+mesh = SubResource("SphereMesh_qw474")
+
+[node name="Label3D" type="Label3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.503426)
+text = "3"
+font_size = 64
+
+[node name="Hitbox" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+shape = SubResource("SphereShape3D_jem7g")
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

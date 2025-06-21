@@ -1,0 +1,256 @@
+[gd_scene load_steps=37 format=3 uid="uid://cpwmk7uxyt838"]
+
+[ext_resource type="Script" uid="uid://dybpuggjfbxof" path="res://microgames/skys/main.gd" id="1_8ly23"]
+[ext_resource type="Script" uid="uid://dnpg2lienvak5" path="res://microgames/skys/player_body.gd" id="2_8ly23"]
+[ext_resource type="Shader" uid="uid://rmul5k7ovqim" path="res://microgames/skys/checkerboard_shader_2.tres" id="3_dw3wm"]
+[ext_resource type="Shader" uid="uid://y0epm2flhv73" path="res://microgames/skys/blend_boundary_individual.tres" id="3_o85hp"]
+[ext_resource type="Script" uid="uid://but265wjjsli1" path="res://microgames/skys/camera.gd" id="5_ns583"]
+[ext_resource type="Shader" uid="uid://bvr20ih1drcn" path="res://microgames/skys/blend_boundary.tres" id="6_o85hp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o85hp"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_32utl"]
+radius = 22.0
+height = 108.0
+rings = 16
+
+[sub_resource type="Gradient" id="Gradient_fgjxe"]
+offsets = PackedFloat32Array(0.162651)
+colors = PackedColorArray(0.971765, 0.421768, 0.629596, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8ly23"]
+gradient = SubResource("Gradient_fgjxe")
+width = 1
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_32utl"]
+radius = 22.0
+height = 108.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8ly23"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_8ly23"]
+size = Vector2(45, 45)
+
+[sub_resource type="Gradient" id="Gradient_dw3wm"]
+offsets = PackedFloat32Array(0, 0.0421687)
+colors = PackedColorArray(0, 0, 0, 1, 0.125628, 0.497776, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ns583"]
+gradient = SubResource("Gradient_dw3wm")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o85hp"]
+size = Vector2(45, 45)
+
+[sub_resource type="Gradient" id="Gradient_8ly23"]
+offsets = PackedFloat32Array(0.00649351, 0.025974, 0.214286, 1)
+colors = PackedColorArray(0.085125, 0.0475712, 0.00321208, 1, 0, 0, 0, 1, 0.285777, 0.159703, 0.0107834, 1, 0.680421, 0.380246, 0.0256748, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dw3wm"]
+noise_type = 0
+frequency = 0.05
+domain_warp_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dw3wm"]
+seamless = true
+color_ramp = SubResource("Gradient_8ly23")
+noise = SubResource("FastNoiseLite_dw3wm")
+
+[sub_resource type="Gradient" id="Gradient_o85hp"]
+offsets = PackedFloat32Array(0.00649351, 0.025974, 0.0519481, 0.571429, 1)
+colors = PackedColorArray(0.085125, 0.0475712, 0.00321208, 1, 0, 0, 0, 1, 0.285777, 0.159703, 0.0107834, 1, 0.390906, 0.515306, 0.190521, 1, 0.404878, 0.663571, 0.190262, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uab8q"]
+noise_type = 0
+frequency = 0.05
+domain_warp_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_y4wkf"]
+height = 30
+seamless = true
+color_ramp = SubResource("Gradient_o85hp")
+noise = SubResource("FastNoiseLite_uab8q")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uab8q"]
+shader = ExtResource("3_o85hp")
+shader_parameter/bordder_v0 = 0.0
+shader_parameter/border_u0 = 0.0
+shader_parameter/border_u1 = 0.0
+shader_parameter/border_v1 = 0.312
+
+[sub_resource type="Gradient" id="Gradient_y4wkf"]
+offsets = PackedFloat32Array(0.00649351, 0.025974, 0.0519481, 0.207792, 0.571429, 1)
+colors = PackedColorArray(0.09, 0.04968, 0.0036, 0, 0, 0, 0, 0, 0.29, 0.16008, 0.0116, 0, 0.349282, 0.368775, 0.116716, 1, 0.390906, 0.515306, 0.190521, 1, 0.404878, 0.663571, 0.190262, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_n7vti"]
+noise_type = 0
+frequency = 0.05
+domain_warp_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n0o2k"]
+height = 40
+seamless = true
+color_ramp = SubResource("Gradient_y4wkf")
+noise = SubResource("FastNoiseLite_n7vti")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ns583"]
+shader = ExtResource("3_dw3wm")
+shader_parameter/scale_uv = Vector2(30, 30)
+
+[sub_resource type="QuadMesh" id="QuadMesh_o85hp"]
+size = Vector2(1280, 1280)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n7vti"]
+shader = ExtResource("6_o85hp")
+shader_parameter/BoundaryWidthV = 0.5
+shader_parameter/smooth_exponent = 0.746
+
+[sub_resource type="Gradient" id="Gradient_n0o2k"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xham4"]
+noise_type = 3
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_v8wpj"]
+width = 2024
+height = 300
+seamless = true
+seamless_blend_skirt = 1.0
+color_ramp = SubResource("Gradient_n0o2k")
+noise = SubResource("FastNoiseLite_xham4")
+
+[sub_resource type="Gradient" id="Gradient_uab8q"]
+offsets = PackedFloat32Array(0.25974, 0.493506, 0.662338, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0.499439, 0.910365, 1, 0, 0.54426, 0.992064, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y4wkf"]
+gradient = SubResource("Gradient_uab8q")
+width = 1024
+height = 700
+fill_to = Vector2(0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y4wkf"]
+shader = ExtResource("3_dw3wm")
+shader_parameter/scale_uv = Vector2(2.5, 2.5)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_n7vti"]
+size = Vector2(4, 40)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_8ly23")
+time = 15.0
+
+[node name="PlayerBody" type="CharacterBody2D" parent="." groups=["Player"]]
+position = Vector2(-376, 0)
+script = ExtResource("2_8ly23")
+
+[node name="PlayerMeshTransform" type="Node2D" parent="PlayerBody"]
+
+[node name="PlayerMesh" type="MeshInstance2D" parent="PlayerBody/PlayerMeshTransform" groups=["Player"]]
+z_index = -10
+material = SubResource("ShaderMaterial_o85hp")
+position = Vector2(0, -54)
+mesh = SubResource("CapsuleMesh_32utl")
+texture = SubResource("GradientTexture1D_8ly23")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody" groups=["Player"]]
+position = Vector2(0, -54)
+shape = SubResource("CapsuleShape2D_32utl")
+
+[node name="FloorBody" type="StaticBody2D" parent="."]
+
+[node name="FloorBoundary" type="CollisionShape2D" parent="FloorBody"]
+shape = SubResource("WorldBoundaryShape2D_8ly23")
+
+[node name="ObstacleBody" type="RigidBody2D" parent="."]
+visible = false
+position = Vector2(-499, -97)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="ObstacleBody"]
+position = Vector2(0, -0.5)
+mesh = SubResource("QuadMesh_8ly23")
+texture = SubResource("GradientTexture1D_ns583")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleBody"]
+shape = SubResource("RectangleShape2D_o85hp")
+
+[node name="ParallaxGround" type="Parallax2D" parent="."]
+z_index = -88
+repeat_size = Vector2(512, 0)
+repeat_times = 1000
+follow_viewport = false
+ignore_camera_scroll = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxGround"]
+z_index = -2
+position = Vector2(0, 256)
+texture = SubResource("NoiseTexture2D_dw3wm")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxGround"]
+z_index = -2
+position = Vector2(0, 15)
+texture = SubResource("NoiseTexture2D_y4wkf")
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxGround"]
+z_index = -2
+material = SubResource("ShaderMaterial_uab8q")
+position = Vector2(0, 20)
+texture = SubResource("NoiseTexture2D_n0o2k")
+
+[node name="ParallaxBackground" type="Parallax2D" parent="."]
+repeat_size = Vector2(1280, 0)
+repeat_times = 10000
+
+[node name="Background" type="MeshInstance2D" parent="ParallaxBackground"]
+z_index = -100
+texture_filter = 1
+material = SubResource("ShaderMaterial_ns583")
+mesh = SubResource("QuadMesh_o85hp")
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(0, -144)
+script = ExtResource("5_ns583")
+
+[node name="ParallaxClouds" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.1, 0.3)
+scroll_offset = Vector2(0, -10)
+repeat_size = Vector2(6072, 0)
+repeat_times = 100
+
+[node name="NoiseCloudSprite" type="Sprite2D" parent="ParallaxClouds"]
+z_index = -15
+material = SubResource("ShaderMaterial_n7vti")
+position = Vector2(1, 0)
+scale = Vector2(3, 0.66)
+texture = SubResource("NoiseTexture2D_v8wpj")
+
+[node name="ParallaxSkyBg" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.1, 0.3)
+scroll_offset = Vector2(0, 20)
+repeat_size = Vector2(1024, 0)
+repeat_times = 100
+
+[node name="SkyBackground" type="Sprite2D" parent="ParallaxSkyBg"]
+z_index = -99
+position = Vector2(0, -54)
+texture = SubResource("GradientTexture2D_y4wkf")
+
+[node name="Tutorial" type="RichTextLabel" parent="."]
+offset_left = 96.0
+offset_top = -199.0
+offset_right = 530.0
+offset_bottom = -103.0
+bbcode_enabled = true
+text = "[font_size=30]1. Press [bgcolor=darkgreen]submit[/bgcolor] to charge
+2. Release to jump[/font_size]"
+fit_content = true
+scroll_active = false
+
+[node name="Goal" type="Node2D" parent="."]
+
+[node name="GoalStrip" type="Sprite2D" parent="Goal"]
+material = SubResource("ShaderMaterial_y4wkf")
+scale = Vector2(10, 10)
+texture = SubResource("PlaceholderTexture2D_n7vti")
+centered = false
+offset = Vector2(-4, 0)

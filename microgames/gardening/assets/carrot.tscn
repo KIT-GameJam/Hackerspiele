@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://b4dik3fjorfdq"]
+
+[ext_resource type="PackedScene" uid="uid://dyss5uvgqy0he" path="res://microgames/gardening/assets/carrot.gltf" id="1_ydno8"]
+[ext_resource type="Script" uid="uid://bywokw1fhsf7g" path="res://microgames/gardening/assets/carrot.gd" id="2_rnqnd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_borse"]
+albedo_color = Color(0.991854, 0.381362, 0.16699, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rnqnd"]
+albedo_color = Color(0.233087, 0.349515, 0.227276, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ydno8"]
+radius = 3.0
+height = 74.78
+
+[node name="carrot" instance=ExtResource("1_ydno8")]
+script = ExtResource("2_rnqnd")
+
+[node name="Node3D" type="Node3D" parent="." index="0"]
+
+[node name="Circle" parent="." index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_borse")
+
+[node name="Circle_001" parent="." index="2"]
+surface_material_override/0 = SubResource("StandardMaterial3D_rnqnd")
+
+[node name="area" type="Area3D" parent="." index="3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="area" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.051, 0)
+shape = SubResource("CapsuleShape3D_ydno8")

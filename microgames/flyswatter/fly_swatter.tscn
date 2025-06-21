@@ -1,0 +1,258 @@
+[gd_scene load_steps=18 format=3 uid="uid://cbeylgyxlpr8q"]
+
+[ext_resource type="Script" uid="uid://cy22nsbebuqnu" path="res://microgames/flyswatter/fly_swatter.gd" id="1_5uwll"]
+[ext_resource type="Texture2D" uid="uid://c8j76786whpy1" path="res://microgames/flyswatter/textures/wood.webp" id="2_w6pb4"]
+[ext_resource type="Texture2D" uid="uid://dbxqgei32sj3u" path="res://microgames/flyswatter/textures/fly.webp" id="3_ijl62"]
+[ext_resource type="Script" uid="uid://ctwcequ2b8t7e" path="res://microgames/flyswatter/swatter_body.gd" id="3_srl28"]
+[ext_resource type="Texture2D" uid="uid://ca305oaj3qyfb" path="res://microgames/flyswatter/textures/swateffect.webp" id="5_srl28"]
+[ext_resource type="Texture2D" uid="uid://cn5qngbt1meii" path="res://microgames/flyswatter/textures/flyswatter1.webp" id="5_w6pb4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ijl62"]
+font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_srl28"]
+font_size = 100
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ftxx0"]
+radius = 31.0161
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w6pb4"]
+size = Vector2(164, 122)
+
+[sub_resource type="Animation" id="Animation_ijl62"]
+resource_name = "swat"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Swateffect:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_fuku0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Swateffect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2cjb1"]
+_data = {
+&"RESET": SubResource("Animation_fuku0"),
+&"swat": SubResource("Animation_ijl62")
+}
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_srl28"]
+normal = Vector2(0.999829, 0.0185153)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ijl62"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fuku0"]
+normal = Vector2(0.0407824, -0.999168)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2cjb1"]
+normal = Vector2(-0.999742, -0.0227214)
+
+[node name="FlySwatterGame" type="Node2D"]
+script = ExtResource("1_5uwll")
+time = 7.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -851.0
+offset_top = -701.0
+offset_right = 2183.0
+offset_bottom = 1584.0
+texture = ExtResource("2_w6pb4")
+stretch_mode = 1
+metadata/Credit = "https://publicdomaintextures.com/elementor-112/wood-02/"
+
+[node name="SwatThatShit" type="Label" parent="."]
+offset_left = 1072.0
+offset_top = 670.0
+offset_right = 1288.0
+offset_bottom = 716.0
+text = "by E-Cathy"
+label_settings = SubResource("LabelSettings_ijl62")
+
+[node name="by E-Cathy" type="Label" parent="."]
+offset_left = 246.0
+offset_top = 284.0
+offset_right = 1002.0
+offset_bottom = 417.0
+text = "Swat that Shit"
+label_settings = SubResource("LabelSettings_srl28")
+
+[node name="Fly" type="Area2D" parent="."]
+position = Vector2(682, 340)
+
+[node name="FlySprite" type="Sprite2D" parent="Fly"]
+position = Vector2(-4.00001, -6.00001)
+scale = Vector2(0.0933862, 0.103968)
+texture = ExtResource("3_ijl62")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fly"]
+position = Vector2(-2, -5)
+shape = SubResource("CircleShape2D_ftxx0")
+
+[node name="SwatterBody" type="RigidBody2D" parent="."]
+position = Vector2(265, 350)
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("3_srl28")
+
+[node name="Swateffect" type="Sprite2D" parent="SwatterBody"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(4, -14)
+scale = Vector2(0.392196, 0.359788)
+texture = ExtResource("5_srl28")
+
+[node name="FlySwatterSprite" type="Sprite2D" parent="SwatterBody"]
+position = Vector2(-4, -13)
+scale = Vector2(0.240726, 0.238965)
+texture = ExtResource("5_w6pb4")
+offset = Vector2(12, 558)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwatterBody"]
+position = Vector2(2, -7)
+shape = SubResource("RectangleShape2D_w6pb4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SwatterBody"]
+libraries = {
+&"": SubResource("AnimationLibrary_2cjb1")
+}
+
+[node name="Flypoints" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="Flypoints"]
+position = Vector2(111, 94)
+
+[node name="Marker2D2" type="Marker2D" parent="Flypoints"]
+position = Vector2(308, 168)
+
+[node name="Marker2D3" type="Marker2D" parent="Flypoints"]
+position = Vector2(414, 65)
+
+[node name="Marker2D4" type="Marker2D" parent="Flypoints"]
+position = Vector2(534, 248)
+
+[node name="Marker2D5" type="Marker2D" parent="Flypoints"]
+position = Vector2(654, 128)
+
+[node name="Marker2D6" type="Marker2D" parent="Flypoints"]
+position = Vector2(837, 68)
+
+[node name="Marker2D7" type="Marker2D" parent="Flypoints"]
+position = Vector2(1002, 68)
+
+[node name="Marker2D8" type="Marker2D" parent="Flypoints"]
+position = Vector2(1145, 79)
+
+[node name="Marker2D9" type="Marker2D" parent="Flypoints"]
+position = Vector2(811, 207)
+
+[node name="Marker2D10" type="Marker2D" parent="Flypoints"]
+position = Vector2(954, 213)
+
+[node name="Marker2D11" type="Marker2D" parent="Flypoints"]
+position = Vector2(1214, 216)
+
+[node name="Marker2D12" type="Marker2D" parent="Flypoints"]
+position = Vector2(1077, 316)
+
+[node name="Marker2D13" type="Marker2D" parent="Flypoints"]
+position = Vector2(1200, 410)
+
+[node name="Marker2D14" type="Marker2D" parent="Flypoints"]
+position = Vector2(1035, 498)
+
+[node name="Marker2D15" type="Marker2D" parent="Flypoints"]
+position = Vector2(718, 355)
+
+[node name="Marker2D16" type="Marker2D" parent="Flypoints"]
+position = Vector2(889, 395)
+
+[node name="Marker2D17" type="Marker2D" parent="Flypoints"]
+position = Vector2(1189, 575)
+
+[node name="Marker2D18" type="Marker2D" parent="Flypoints"]
+position = Vector2(1024, 638)
+
+[node name="Marker2D19" type="Marker2D" parent="Flypoints"]
+position = Vector2(770, 635)
+
+[node name="Marker2D20" type="Marker2D" parent="Flypoints"]
+position = Vector2(858, 541)
+
+[node name="Marker2D21" type="Marker2D" parent="Flypoints"]
+position = Vector2(564, 641)
+
+[node name="Marker2D22" type="Marker2D" parent="Flypoints"]
+position = Vector2(678, 493)
+
+[node name="Marker2D23" type="Marker2D" parent="Flypoints"]
+position = Vector2(530, 442)
+
+[node name="Marker2D24" type="Marker2D" parent="Flypoints"]
+position = Vector2(367, 342)
+
+[node name="Marker2D25" type="Marker2D" parent="Flypoints"]
+position = Vector2(127, 302)
+
+[node name="Marker2D26" type="Marker2D" parent="Flypoints"]
+position = Vector2(238, 450)
+
+[node name="Marker2D27" type="Marker2D" parent="Flypoints"]
+position = Vector2(115, 553)
+
+[node name="Marker2D28" type="Marker2D" parent="Flypoints"]
+position = Vector2(292, 633)
+
+[node name="Marker2D29" type="Marker2D" parent="Flypoints"]
+position = Vector2(406, 533)
+
+[node name="Marker2D30" type="Marker2D" parent="Flypoints"]
+position = Vector2(406, 533)
+
+[node name="WorldBoundary" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="WorldBoundary"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundary/StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_srl28")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="WorldBoundary"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundary/StaticBody2D2"]
+shape = SubResource("WorldBoundaryShape2D_ijl62")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="WorldBoundary"]
+position = Vector2(281, 720)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundary/StaticBody2D3"]
+shape = SubResource("WorldBoundaryShape2D_fuku0")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="WorldBoundary"]
+position = Vector2(281, 720)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundary/StaticBody2D4"]
+position = Vector2(999, -466)
+shape = SubResource("WorldBoundaryShape2D_2cjb1")
+
+[connection signal="body_entered" from="Fly" to="SwatterBody" method="_on_flyswatter_body_entered"]
+[connection signal="body_exited" from="Fly" to="SwatterBody" method="_on_flyswatter_body_exited"]
+[connection signal="fly_swatted" from="SwatterBody" to="." method="_on_swatter_body_fly_swatted"]

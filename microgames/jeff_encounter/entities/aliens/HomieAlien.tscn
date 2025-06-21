@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqfng4uiyrf4o"]
+
+[ext_resource type="PackedScene" uid="uid://528481gmre0a" path="res://microgames/jeff_encounter/entities/aliens/Alien.tscn" id="1_jfuwk"]
+[ext_resource type="Script" uid="uid://d01bxeogmusve" path="res://microgames/jeff_encounter/entities/aliens/HomieAlien.gd" id="2_0vjix"]
+
+[node name="HomieAlien" instance=ExtResource("1_jfuwk")]
+script = ExtResource("2_0vjix")
+
+[node name="Timer" parent="." index="2"]
+wait_time = 3.0
+
+[node name="WalkTimer" type="Timer" parent="." index="3"]
+wait_time = 2.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="WalkTimer" to="." method="_on_walk_timer_timeout"]

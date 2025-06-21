@@ -1,0 +1,231 @@
+[gd_scene load_steps=8 format=3 uid="uid://2tuaxu07cy0v"]
+
+[ext_resource type="Script" uid="uid://cj1ddqjyhctev" path="res://microgames/calc/calc.gd" id="1_11tbv"]
+[ext_resource type="Texture2D" uid="uid://bfjv5t3ovfvwq" path="res://microgames/calc/background.png" id="2_11ntd"]
+[ext_resource type="FontFile" uid="uid://sa1ml6cgmorr" path="res://assets/fonts/Share Tech Mono/ShareTechMono-Regular.ttf" id="3_vv3no"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_11ntd"]
+bg_color = Color(0.0117647, 0.2, 0.054902, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_snxp4"]
+texture = ExtResource("2_11ntd")
+
+[sub_resource type="LabelSettings" id="LabelSettings_11ntd"]
+font = ExtResource("3_vv3no")
+font_size = 30
+font_color = Color(0.844065, 0.319452, 0.270032, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_vv3no"]
+font_size = 42
+font_color = Color(0.843137, 0.317647, 0.270588, 1)
+outline_color = Color(1, 1, 1, 0)
+
+[node name="Calc" type="Node2D"]
+script = ExtResource("1_11tbv")
+time = 22.0
+metadata/_edit_horizontal_guides_ = [224.0, 232.0, 200.0]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Background" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_11ntd")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.7778
+
+[node name="Panel" type="Panel" parent="CanvasLayer/AspectRatioContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_snxp4")
+
+[node name="1" type="Button" parent="CanvasLayer/AspectRatioContainer/Panel"]
+modulate = Color(0.839216, 0.313726, 0.160784, 0.333333)
+layout_mode = 1
+offset_left = 447.0
+offset_top = 488.0
+offset_right = 455.0
+offset_bottom = 496.0
+scale = Vector2(11.1835, 6.46683)
+focus_neighbor_top = NodePath("../4")
+focus_neighbor_right = NodePath("../2")
+focus_neighbor_bottom = NodePath("../0")
+
+[node name="2" type="Button" parent="CanvasLayer/AspectRatioContainer/Panel"]
+modulate = Color(0.839216, 0.313726, 0.160784, 0.333333)
+layout_mode = 0
+offset_left = 549.0
+offset_top = 488.0
+offset_right = 557.0
+offset_bottom = 496.0
+scale = Vector2(11.0565, 6.32625)
+focus_neighbor_left = NodePath("../1")
+focus_neighbor_top = NodePath("../5")
+focus_neighbor_right = NodePath("../3")
+
+[node name="3" type="Button" parent="CanvasLayer/AspectRatioContainer/Panel"]
+modulate = Color(0.839216, 0.313726, 0.160784, 0.333333)
+layout_mode = 0
+offset_left = 648.0
+offset_top = 487.0
+offset_right = 656.0
+offset_bottom = 495.0
+scale = Vector2(11.3136, 6.34003)
+focus_neighbor_left = NodePath("../2")
+focus_neighbor_top = NodePath("../6")
+focus_neighbor_right = NodePath("../=")
+focus_neighbor_bottom = NodePath("../-")
+
+[node name="=" type="Button" parent="CanvasLayer/AspectRatioContainer/Panel"]
+modulate = Color(0.839216, 0.313726, 0.160784, 0.333333)
+layout_mode = 0
+offset_left = 749.0
+offset_top = 487.0
+offset_right = 757.0
+offset_bottom = 495.0
+scale = Vector2(11.185, 6.57434)
+focus_neighbor_left = NodePath("../3")
+focus_neighbor_top = NodePath("../Delete")
+
+[node name="4" type="Button" parent="CanvasLayer/AspectRatioContainer/Panel"]
+modulate = Color(0.839216, 0.313726, 0.160784, 0.333333)
+layout_mode = 0
+offset_left = 446.0
+offset_top = 420.0
+offset_right = 454.0
+offset_bottom = 428.0
+scale = Vector2(11.3049, 6.24946)
+focus_neighbor_top = NodePath("../7")
+focus_neighbor_right = NodePath("../5")
+focus_neighbor_bottom = NodePath("../1")
+
+[node name="5" type="Button" parent="CanvasLayer/AspectRatioContainer/Panel"]
+modulate = Color(0.839216, 0.313726, 0.160784, 0.333333)
+layout_mode = 0
+offset_left = 548.0
+offset_top = 419.0
+offset_right = 556.0
+offset_bottom = 427.0
+scale = Vector2(11.1865, 6.46683)
+focus_neighbor_left = NodePath("../4")
+focus_neighbor_top = NodePath("../8")
+focus_neighbor_right = NodePath("../6")
+focus_neighbor_bottom = NodePath("../2")
+
+[node name="6" type="Button" parent="CanvasLayer/AspectRatioContainer/Panel"]
+modulate = Color(0.839216, 0.313726, 0.160784, 0.333333)
+layout_mode = 0
+offset_left = 648.0
+offset_top = 418.0
+offset_right = 656.0
+offset_bottom = 426.0
+scale = Vector2(11.3166, 6.65703)
+focus_neighbor_left = NodePath("../5")
+focus_neighbor_top = NodePath("../9")
+focus_neighbor_right = NodePath("../Delete")
+focus_neighbor_bottom = NodePath("../3")
+
+[node name="7" type="Button" parent="CanvasLayer/AspectRatioContainer/Panel"]
+modulate = Color(0.839561, 0.313769, 0.161898, 0.333333)
+layout_mode = 0
+offset_left = 446.0
+offset_top = 351.0
+offset_right = 454.0
+offset_bottom = 359.0
+scale = Vector2(11.3106, 6.46683)
+focus_neighbor_right = NodePath("../8")
+focus_neighbor_bottom = NodePath("../4")
+
+[node name="8" type="Button" parent="CanvasLayer/AspectRatioContainer/Panel"]
+modulate = Color(0.839216, 0.313726, 0.160784, 0.333333)
+layout_mode = 0
+offset_left = 548.0
+offset_top = 352.0
+offset_right = 556.0
+offset_bottom = 360.0
+scale = Vector2(11.1865, 6.57434)
+focus_neighbor_left = NodePath("../7")
+focus_neighbor_right = NodePath("../9")
+focus_neighbor_bottom = NodePath("../5")
+
+[node name="9" type="Button" parent="CanvasLayer/AspectRatioContainer/Panel"]
+modulate = Color(0.839216, 0.313726, 0.160784, 0.333333)
+layout_mode = 0
+offset_left = 648.0
+offset_top = 349.0
+offset_right = 656.0
+offset_bottom = 357.0
+scale = Vector2(11.3077, 6.8194)
+focus_neighbor_left = NodePath("../8")
+focus_neighbor_right = NodePath("../AC")
+focus_neighbor_bottom = NodePath("../6")
+
+[node name="AC" type="Button" parent="CanvasLayer/AspectRatioContainer/Panel"]
+modulate = Color(0.839216, 0.313726, 0.160784, 0.333333)
+layout_mode = 0
+offset_left = 748.0
+offset_top = 351.0
+offset_right = 756.0
+offset_bottom = 359.0
+scale = Vector2(11.1881, 6.55586)
+focus_neighbor_left = NodePath("../9")
+focus_neighbor_bottom = NodePath("../Delete")
+
+[node name="Delete" type="Button" parent="CanvasLayer/AspectRatioContainer/Panel"]
+modulate = Color(0.839216, 0.313726, 0.160784, 0.333333)
+layout_mode = 0
+offset_left = 749.0
+offset_top = 417.0
+offset_right = 757.0
+offset_bottom = 425.0
+scale = Vector2(11.1821, 6.74349)
+focus_neighbor_left = NodePath("../6")
+focus_neighbor_top = NodePath("../AC")
+focus_neighbor_bottom = NodePath("../=")
+
+[node name="Task" type="Label" parent="CanvasLayer/AspectRatioContainer/Panel"]
+layout_mode = 0
+offset_left = 488.0
+offset_top = 137.0
+offset_right = 792.0
+offset_bottom = 176.0
+label_settings = SubResource("LabelSettings_11ntd")
+
+[node name="UserInput" type="Label" parent="CanvasLayer/AspectRatioContainer/Panel"]
+layout_mode = 0
+offset_left = 488.0
+offset_top = 188.0
+offset_right = 792.0
+offset_bottom = 237.0
+label_settings = SubResource("LabelSettings_vv3no")
+horizontal_alignment = 2
+
+[node name="0" type="Button" parent="CanvasLayer/AspectRatioContainer/Panel"]
+modulate = Color(0.839216, 0.313726, 0.160784, 0.333333)
+layout_mode = 0
+offset_left = 446.0
+offset_top = 545.0
+offset_right = 454.0
+offset_bottom = 553.0
+scale = Vector2(11.3106, 6.46683)
+focus_neighbor_top = NodePath("../1")
+focus_neighbor_right = NodePath("../-")
+
+[node name="-" type="Button" parent="CanvasLayer/AspectRatioContainer/Panel"]
+modulate = Color(0.839216, 0.313726, 0.160784, 0.333333)
+layout_mode = 0
+offset_left = 649.0
+offset_top = 544.0
+offset_right = 657.0
+offset_bottom = 552.0
+scale = Vector2(11.185, 6.57434)
+focus_neighbor_left = NodePath("../0")
+focus_neighbor_top = NodePath("../3")

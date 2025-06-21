@@ -1,65 +1,68 @@
-[gd_scene load_steps=9 format=3 uid="uid://be4fo7odg3n2b"]
+[gd_scene load_steps=10 format=3 uid="uid://be4fo7odg3n2b"]
 
 [ext_resource type="Script" uid="uid://cbadjf313bs60" path="res://microgames/skiing/main.gd" id="1_3ewjk"]
 [ext_resource type="PackedScene" uid="uid://c0ltgqegshcb8" path="res://microgames/skiing/entities/player/player.tscn" id="2_thrc1"]
 [ext_resource type="Texture2D" uid="uid://cy2ruukqamlnb" path="res://microgames/skiing/textures/snow/snow_02_diff_1k.jpg" id="3_rqse0"]
-[ext_resource type="PackedScene" uid="uid://d20tuopu6rand" path="res://microgames/skiing/entities/obstacle/tree/tree.tscn" id="3_wagi8"]
-[ext_resource type="PackedScene" uid="uid://cxar0n417gjxs" path="res://microgames/skiing/entities/obstacle/bush/bush.tscn" id="4_hprty"]
 [ext_resource type="PackedScene" uid="uid://82na1lysy36p" path="res://microgames/skiing/entities/goal/goal.tscn" id="4_wagi8"]
 [ext_resource type="PackedScene" uid="uid://cvvtcjyc22a1e" path="res://microgames/skiing/entities/sign/sign.tscn" id="5_rux8w"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_thrc1"]
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("3_rqse0")
+albedo_texture_force_srgb = true
+uv1_scale = Vector3(5, 5, 5)
+uv1_world_triplanar = true
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hprty"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_hprty"]
+plane = Plane(1, 0, 0, 0)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_rux8w"]
+plane = Plane(1, 0, 0, 0)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_3ewjk")
-time = 9.0
+time = 15.0
 
 [node name="Player" parent="." instance=ExtResource("2_thrc1")]
 
 [node name="Obstacles" type="Node3D" parent="."]
 
-[node name="Tree" parent="Obstacles" instance=ExtResource("3_wagi8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.60288, 0.38722, -10.9392)
-
-[node name="Tree2" parent="Obstacles" instance=ExtResource("3_wagi8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.164562, 0.38722, -21.115)
-
-[node name="Tree3" parent="Obstacles" instance=ExtResource("3_wagi8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.11245, 0.38722, -15.1001)
-
-[node name="Bush" parent="Obstacles" instance=ExtResource("4_hprty")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.35044, 0.023195, -10.1833)
-
-[node name="Bush2" parent="Obstacles" instance=ExtResource("4_hprty")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.88794, 0.023195, -5.42925)
-
-[node name="Bush3" parent="Obstacles" instance=ExtResource("4_hprty")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.05654, 0.023195, -10.1833)
-collision_layer = 2
-collision_mask = 1
-
-[node name="Bush4" parent="Obstacles" instance=ExtResource("4_hprty")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.51905, 0.023195, -5.42925)
-collision_layer = 2
-collision_mask = 1
-
-[node name="Sign" parent="Obstacles" instance=ExtResource("5_rux8w")]
-transform = Transform3D(-0.861656, 0, -0.507493, 0, 1, 0, 0.507493, 0, -0.861656, -2.44461, 0.000669003, -8.28958)
-
 [node name="Terrain" type="Node3D" parent="."]
 
 [node name="Ground" type="CSGBox3D" parent="Terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, -50)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, -90)
 layers = 2
 material_override = SubResource("StandardMaterial3D_thrc1")
 use_collision = true
 collision_layer = 2
-size = Vector3(100, 0.5, 120)
+size = Vector3(200, 0.5, 200)
+
+[node name="Label3D" type="Label3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -12.9898)
+text = "Drive to bold"
+font_size = 256
+outline_size = 48
+
+[node name="Sign" parent="Terrain" instance=ExtResource("5_rux8w")]
+transform = Transform3D(-0.963645, 0, -0.267188, 0, 1, 0, 0.267188, 0, -0.963645, -2.445, 0, -15.245)
+
+[node name="WorldBorders" type="StaticBody3D" parent="Terrain"]
+collision_layer = 2
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_hprty")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/WorldBorders"]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 30, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_hprty")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Terrain/WorldBorders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_rux8w")
 
 [node name="Goal" parent="." instance=ExtResource("4_wagi8")]
-transform = Transform3D(1, 1.7344e-09, -3.44226e-11, -1.7344e-09, 0.999213, -0.0396784, -3.44226e-11, 0.0396784, 0.999213, 8.31891, 0.12141, -40.6441)
+transform = Transform3D(1, 1.7344e-09, -3.44226e-11, -1.7344e-09, 0.999213, -0.0396784, -3.44226e-11, 0.0396784, 0.999213, 0, 0, -100)
 
 [connection signal="area_entered" from="Goal" to="." method="_on_goal_area_entered"]
 [connection signal="body_entered" from="Goal" to="." method="_on_goal_player_entered"]

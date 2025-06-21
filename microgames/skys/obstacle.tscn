@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://beownl2r0gdvs"]
+
+[ext_resource type="Script" uid="uid://cmgqijb35xmq8" path="res://microgames/skys/obstacle.gd" id="1_3ie86"]
+[ext_resource type="Script" uid="uid://b0d716mup571e" path="res://microgames/skys/obstacle_area_2d.gd" id="2_4g2vb"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_8egl4"]
+size = Vector2(45, 45)
+
+[sub_resource type="Gradient" id="Gradient_4g2vb"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.12549, 0.498039, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_exg86"]
+gradient = SubResource("Gradient_4g2vb")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4g2vb"]
+size = Vector2(45, 45)
+
+[node name="ObstacleBody" type="RigidBody2D"]
+contact_monitor = true
+max_contacts_reported = 10
+script = ExtResource("1_3ie86")
+
+[node name="Mesh" type="MeshInstance2D" parent="."]
+z_index = -20
+texture_repeat = 2
+position = Vector2(0, -22.5)
+mesh = SubResource("QuadMesh_8egl4")
+texture = SubResource("GradientTexture2D_exg86")
+
+[node name="CollisionBox" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -22.5)
+shape = SubResource("RectangleShape2D_4g2vb")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("2_4g2vb")
+
+[node name="CollisionArea" type="CollisionShape2D" parent="Area2D"]
+visible = false
+position = Vector2(0, -22.5)
+scale = Vector2(1.01, 1)
+shape = SubResource("RectangleShape2D_4g2vb")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

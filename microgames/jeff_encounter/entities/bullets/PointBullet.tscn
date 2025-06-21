@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bujiv5avewejc"]
+
+[ext_resource type="PackedScene" uid="uid://b0pfot8ar77fj" path="res://microgames/jeff_encounter/entities/bullets/Bullet.tscn" id="1_n6yom"]
+
+[node name="PointBullet" instance=ExtResource("1_n6yom")]

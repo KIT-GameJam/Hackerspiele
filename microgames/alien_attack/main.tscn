@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://cqrc3r1bij4br"]
+
+[ext_resource type="Script" uid="uid://bc8xbow4uifhy" path="res://microgames/alien_attack/main.gd" id="1_6ofhi"]
+[ext_resource type="Texture2D" uid="uid://d3cawymryc8q5" path="res://microgames/alien_attack/assets/textures/bg.png" id="1_wqpsg"]
+[ext_resource type="PackedScene" uid="uid://kflk33pgif8l" path="res://microgames/alien_attack/entities/player.tscn" id="2_aqcy6"]
+[ext_resource type="PackedScene" uid="uid://c0tn7qebqrmiy" path="res://microgames/alien_attack/entities/enemies/enemy_spawner.tscn" id="4_nn44e"]
+[ext_resource type="AudioStream" uid="uid://dwse46ccn66de" path="res://microgames/alien_attack/assets/audio/hit.wav" id="6_gi4xq"]
+[ext_resource type="AudioStream" uid="uid://qkx0pj0150sv" path="res://microgames/alien_attack/assets/audio/explode.wav" id="7_weypj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2v1cy"]
+size = Vector2(210, 887)
+
+[node name="Game" type="Node"]
+script = ExtResource("1_6ofhi")
+time = 20.0
+
+[node name="Background" type="TextureRect" parent="."]
+offset_right = 1278.0
+offset_bottom = 719.0
+texture = ExtResource("1_wqpsg")
+stretch_mode = 1
+
+[node name="Player" parent="." instance=ExtResource("2_aqcy6")]
+position = Vector2(101, 378)
+
+[node name="Aliens" type="Node2D" parent="."]
+
+[node name="AlienSpawner" parent="." instance=ExtResource("4_nn44e")]
+
+[node name="Deathzone" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Deathzone"]
+position = Vector2(-172, 368)
+shape = SubResource("RectangleShape2D_2v1cy")
+
+[node name="EnemyHitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_gi4xq")
+bus = &"Sfx"
+
+[node name="PlayerTookDamageSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_weypj")
+bus = &"Sfx"
+
+[connection signal="took_damage" from="Player" to="." method="_on_player_took_damage"]
+[connection signal="enemy_spawned" from="AlienSpawner" to="." method="_on_enemy_spawned"]
+[connection signal="path_enemy_spawned" from="AlienSpawner" to="." method="_on_path_enemy_spawned"]
+[connection signal="area_entered" from="Deathzone" to="." method="_on_enemy_entered_deathzone"]

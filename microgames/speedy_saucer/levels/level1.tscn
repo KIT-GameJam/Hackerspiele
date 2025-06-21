@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvqhdhwdytq00"]
+
+[ext_resource type="PackedScene" uid="uid://bhuplhud1lp6l" path="res://microgames/speedy_saucer/entities/maze.tscn" id="1_6lu4c"]
+
+[node name="Maze2" instance=ExtResource("1_6lu4c")]
+
+[node name="CollisionPolygon2D" parent="Level" index="0"]
+polygon = PackedVector2Array(11, -462, 274, -725, 685, -470, 516, 318, -301, 433, -568, -442, -62, -1146, 276, -1117, 307, -1637, -87, -1652, -962, -502, -488, 706, 875, 593, 1252, -718, -24, -1024, -314, -258, -160, 265, 351, 190, 349, -326)
+
+[node name="Polygon2D" parent="Level" index="1"]
+polygon = PackedVector2Array(-312, -256, -160, 266, 351, 186, 344, -321, 9, -459, 274, -726, 689, -467, 519, 314, -300, 435, -571, -446, -66, -1148, 277, -1119, 306, -1637, -87, -1653, -960, -500, -488, 703, 870, 594, 1250, -722, -28, -1027)
+
+[node name="WinZone" parent="." index="1"]
+position = Vector2(179, -1395)
+scale = Vector2(0.55459, 1.34569)
+
+[node name="Start" parent="Labels" index="0"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 235.0
+offset_bottom = 137.0
+
+[node name="Win" parent="Labels" index="1"]
+offset_left = 102.0
+offset_top = -1431.0
+offset_right = 350.0
+offset_bottom = -1294.0
