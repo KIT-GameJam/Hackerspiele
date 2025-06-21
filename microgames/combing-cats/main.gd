@@ -2,14 +2,18 @@ extends MicroGame
 var comb_in_cat = false
 var angery = false
 var combtime = 0
-@export var maxcombtime = 7
+var maxcombtime = 1.2
+var knostoncat=0
 signal cat_angry()
+signal scratch()
 signal cat_calm()
 
 func _ready() -> void:
+	_no_knots_left_on_cat()
 	finished.emit(Result.Win)
 
 func _process(delta: float) -> void:
+	
 	if(comb_in_cat): 
 		combtime += delta
 		
@@ -29,8 +33,7 @@ func _get_angery()->void:
 
 func _die()-> void:
 	print("ded")
-	cat_angry.emit()
-	finished.emit(Result.Loss)
+	scratch.emit()
 	
 func _combing_stopped()-> void:
 	comb_in_cat = false
@@ -43,16 +46,35 @@ func _on_killzone_entered(body: Node2D) -> void:
 	_die()
  # Replace with function body.
 
+func _no_knots_left_on_cat() -> bool:
+	return knostoncat <=0
 
 
 
+func _win_game()->void:
+	print("you win")
+	finished.emit(Result.Win)
 
 func _on_catboday_body_entered(body: Node2D) -> void:
-	comb_in_cat = true
-	print("comb on cat") # Replace with function body.
+	print(body)
+	if (body is CharacterBody2D):
+		comb_in_cat = true
+		print("comb on cat")
+	else:
+		print("knot on cat")
+		knostoncat+=1
+		 # Replace with function body.
 
 
 func _on_catboday_body_exited(body: Node2D) -> void:
-	_combing_stopped()
+	print(body)
+	if (body is CharacterBody2D):
+		_combing_stopped()
+	else:
+		knostoncat-=1
+		
+	if(_no_knots_left_on_cat()):
+		_win_game()	
+	
 	print("comb off cat")
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bclr7x4bssxvd"]
+[gd_scene load_steps=16 format=3 uid="uid://bclr7x4bssxvd"]
 
 [ext_resource type="Script" uid="uid://cpodya6ulveki" path="res://microgames/combing-cats/main.gd" id="1_mfgbp"]
 [ext_resource type="Texture2D" uid="uid://bw4cekcl0b6cp" path="res://microgames/combing-cats/background.png" id="2_ldx1w"]
@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://byren4qmv5vu8" path="res://microgames/combing-cats/knot3.png" id="8_3cerx"]
 [ext_resource type="Script" uid="uid://p0q2xw8t4io5" path="res://microgames/combing-cats/angry_animation.gd" id="9_va317"]
 [ext_resource type="Texture2D" uid="uid://c4607udq6y8h7" path="res://microgames/combing-cats/eyebrow.png" id="10_glppb"]
+[ext_resource type="Script" uid="uid://d1p2ptdvj8htu" path="res://microgames/combing-cats/scratch.gd" id="11_n2sqa"]
+[ext_resource type="Texture2D" uid="uid://bvttt6jjw7f2v" path="res://microgames/combing-cats/scratch.png" id="12_xswhf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ldx1w"]
 size = Vector2(1509.28, 159.791)
@@ -23,99 +25,146 @@ height = 82.0
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_mfgbp")
+time = 10.0
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(642, 359)
+position = Vector2(643, 359)
 texture = ExtResource("2_ldx1w")
 
 [node name="Cat-combed" type="Sprite2D" parent="."]
 position = Vector2(699, 369)
 texture = ExtResource("3_5j027")
 
-[node name="Area2D" type="Area2D" parent="Cat-combed"]
+[node name="hed" type="Area2D" parent="Cat-combed"]
 
-[node name="killzone" type="CollisionPolygon2D" parent="Cat-combed/Area2D"]
+[node name="killzone" type="CollisionPolygon2D" parent="Cat-combed/hed"]
 polygon = PackedVector2Array(93, -199, 114, -148, 98, -92, 125, -51, 182, -24, 262, -21, 309, -55, 306, -127, 327, -181, 283, -176, 129, -187, 118, -195)
 
-[node name="catboday" type="Area2D" parent="Cat-combed"]
+[node name="Area2D" type="Area2D" parent="Cat-combed"]
+collision_layer = 5
+collision_mask = 5
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Cat-combed/catboday"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Cat-combed/Area2D"]
+position = Vector2(0, 3)
 polygon = PackedVector2Array(-231, -122, -291, -81, -341, -29, -357, 39, -347, 143, -301, 234, -282, 261, -233, 245, -212, 208, -191, 216, -2, 156, 47, 147, 147, 146, 189, 91, 248, 37, 258, -19, 182, -17, 126, -38, 91, -85, 88, -151, 13, -168, -79, -168, -82, -168, -173, -144, -211, -130, -211, -130)
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-position = Vector2(270, 170)
-scale = Vector2(0.1, 0.1)
-script = ExtResource("4_t375k")
-
-[node name="HairComb" type="Sprite2D" parent="CharacterBody2D"]
-rotation = -0.375246
-texture = ExtResource("5_omrus")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(11.3262, -22.4541)
-rotation = -0.375246
-scale = Vector2(1, 1)
-shape = SubResource("RectangleShape2D_ldx1w")
-
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
-position = Vector2(611, 286)
-collision_layer = 4
-mass = 45.409
-physics_material_override = SubResource("PhysicsMaterial_5j027")
-gravity_scale = 0.0
-angular_damp = -0.5
-
-[node name="Knot1" type="Sprite2D" parent="RigidBody2D"]
-texture = ExtResource("6_5j027")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
-shape = SubResource("CapsuleShape2D_t375k")
-
-[node name="RigidBody2D2" type="RigidBody2D" parent="."]
-position = Vector2(439, 437)
-collision_layer = 4
-mass = 45.409
-physics_material_override = SubResource("PhysicsMaterial_5j027")
-gravity_scale = 0.0
-
-[node name="Knot1" type="Sprite2D" parent="RigidBody2D2"]
-texture = ExtResource("7_omrus")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D2"]
-shape = SubResource("CapsuleShape2D_t375k")
-
-[node name="RigidBody2D3" type="RigidBody2D" parent="."]
-position = Vector2(692, 507)
-collision_layer = 4
-mass = 45.409
-physics_material_override = SubResource("PhysicsMaterial_5j027")
-gravity_scale = 0.0
-
-[node name="Knot1" type="Sprite2D" parent="RigidBody2D3"]
-texture = ExtResource("8_3cerx")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D3"]
-shape = SubResource("CapsuleShape2D_t375k")
-
-[node name="Node2D" type="Node2D" parent="."]
-position = Vector2(867, 233)
+[node name="eyebrows" type="Node2D" parent="Cat-combed"]
+position = Vector2(168, -136)
 rotation = 0.463207
 scale = Vector2(0.197275, 0.256098)
 script = ExtResource("9_va317")
 
-[node name="Eyebrow2" type="Sprite2D" parent="Node2D"]
+[node name="Eyebrow2" type="Sprite2D" parent="Cat-combed/eyebrows"]
 position = Vector2(426.266, -137.81)
 rotation = -0.662815
 scale = Vector2(0.89106, 1.16068)
 skew = -0.258023
 texture = ExtResource("10_glppb")
 
-[node name="Eyebrow" type="Sprite2D" parent="Node2D"]
+[node name="Eyebrow" type="Sprite2D" parent="Cat-combed/eyebrows"]
 scale = Vector2(1, 1)
 texture = ExtResource("10_glppb")
 
-[connection signal="cat_angry" from="." to="Node2D" method="_on_main_cat_angry"]
+[node name="Comb" type="CharacterBody2D" parent="."]
+position = Vector2(320, 255)
+scale = Vector2(0.1, 0.1)
+script = ExtResource("4_t375k")
+claw_pos = Vector2(800, 600)
+
+[node name="HairComb" type="Sprite2D" parent="Comb"]
+rotation = -0.375246
+texture = ExtResource("5_omrus")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Comb"]
+position = Vector2(11.3262, -22.4541)
+rotation = -0.375246
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_ldx1w")
+
+[node name="knots" type="Node2D" parent="."]
+position = Vector2(643, 359)
+
+[node name="RigidBody2D2" type="RigidBody2D" parent="knots"]
+position = Vector2(-204, 78)
+collision_layer = 4
+physics_material_override = SubResource("PhysicsMaterial_5j027")
+gravity_scale = 0.0
+linear_damp = 12.242
+angular_damp = 30.606
+
+[node name="Knot1" type="Sprite2D" parent="knots/RigidBody2D2"]
+texture = ExtResource("7_omrus")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="knots/RigidBody2D2"]
+shape = SubResource("CapsuleShape2D_t375k")
+
+[node name="RigidBody2D3" type="RigidBody2D" parent="knots"]
+position = Vector2(49, 149)
+collision_layer = 4
+physics_material_override = SubResource("PhysicsMaterial_5j027")
+gravity_scale = 0.0
+linear_damp = 12.242
+angular_damp = 30.606
+
+[node name="Knot1" type="Sprite2D" parent="knots/RigidBody2D3"]
+texture = ExtResource("8_3cerx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="knots/RigidBody2D3"]
+shape = SubResource("CapsuleShape2D_t375k")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="knots"]
+position = Vector2(-32, -73)
+collision_layer = 4
+physics_material_override = SubResource("PhysicsMaterial_5j027")
+gravity_scale = 0.0
+linear_damp = 12.242
+angular_damp = 30.606
+
+[node name="Knot1" type="Sprite2D" parent="knots/RigidBody2D"]
+texture = ExtResource("6_5j027")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="knots/RigidBody2D"]
+shape = SubResource("CapsuleShape2D_t375k")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 59.0
+offset_top = 28.0
+offset_right = 507.0
+offset_bottom = 89.0
+scale = Vector2(1.46221, 1.54237)
+theme_override_font_sizes/normal_font_size = 50
+text = "Comb the cat !!!!"
+fit_content = true
+scroll_active = false
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(809, 599)
+scale = Vector2(0.1, 0.1)
+script = ExtResource("11_n2sqa")
+
+[node name="Scratch" type="Sprite2D" parent="Node2D"]
+position = Vector2(-1880, -2590)
+rotation = -0.460043
+scale = Vector2(10, 10)
+texture = ExtResource("12_xswhf")
+
+[node name="Scratch2" type="Sprite2D" parent="Node2D"]
+position = Vector2(-3190, -2250)
+rotation = -0.460043
+scale = Vector2(10, 10)
+texture = ExtResource("12_xswhf")
+
+[node name="Scratch3" type="Sprite2D" parent="Node2D"]
+position = Vector2(-3950, -1670)
+rotation = -0.460043
+scale = Vector2(10, 10)
+texture = ExtResource("12_xswhf")
+
+[connection signal="cat_angry" from="." to="Cat-combed/eyebrows" method="_on_main_cat_angry"]
+[connection signal="cat_calm" from="." to="Cat-combed/eyebrows" method="_on_main_cat_calm"]
 [connection signal="cat_calm" from="." to="Node2D" method="_on_main_cat_calm"]
-[connection signal="body_entered" from="Cat-combed/Area2D" to="." method="_on_killzone_entered"]
-[connection signal="body_entered" from="Cat-combed/catboday" to="." method="_on_catboday_body_entered"]
-[connection signal="body_exited" from="Cat-combed/catboday" to="." method="_on_catboday_body_exited"]
+[connection signal="scratch" from="." to="Comb" method="_on_main_scratch"]
+[connection signal="scratch" from="." to="Node2D" method="_on_main_scratch"]
+[connection signal="body_entered" from="Cat-combed/hed" to="." method="_on_killzone_entered"]
+[connection signal="body_entered" from="Cat-combed/Area2D" to="." method="_on_catboday_body_entered"]
+[connection signal="body_exited" from="Cat-combed/Area2D" to="." method="_on_catboday_body_exited"]
