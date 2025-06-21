@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c4nehriuxfoby"]
+[gd_scene load_steps=9 format=3 uid="uid://c4nehriuxfoby"]
 
 [ext_resource type="Script" uid="uid://dfnmqui16aovs" path="res://microgames/tilt/main.gd" id="1_j1mdo"]
 [ext_resource type="Script" uid="uid://dpoxxu686sanw" path="res://microgames/tilt/collider.gd" id="2_6milr"]
@@ -6,6 +6,7 @@
 [ext_resource type="Shape2D" uid="uid://fahgmp4rghpl" path="res://microgames/tilt/small_collider.tres" id="4_hgjtv"]
 [ext_resource type="Texture2D" uid="uid://ccte12q7g6pcg" path="res://microgames/tilt/untitled.png" id="4_tirhb"]
 [ext_resource type="Texture2D" uid="uid://cvxga84dpsqm" path="res://microgames/tilt/untitled2.png" id="6_tirhb"]
+[ext_resource type="Shape2D" uid="uid://bpyxgjux3bwrc" path="res://microgames/tilt/pipeshape.tres" id="7_kapg4"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kb3li"]
 friction = 0.5
@@ -63,5 +64,7 @@ offset_bottom = 10.0
 texture = ExtResource("6_tirhb")
 
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2(100, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = ExtResource("7_kapg4")
