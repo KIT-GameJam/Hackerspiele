@@ -86,8 +86,12 @@ func unpause() -> void:
 	title_screen.unpause()
 	in_game = true
 
-func start() -> void:
-	lifes = max_lifes
+func start(game_idx: int = -1) -> void:
+	single_game = game_idx
+	if single_game == -1:
+		lifes = max_lifes
+	else:
+		lifes = 1
 	won_games = 0
 	played_games = 0
 	update_life_count()
@@ -130,9 +134,8 @@ func start_game() -> void:
 	timer.start() # start timer only after adding the microgame
 
 func handle_timeout() -> void:
-	if current_game == null:
-		return
-	game_finished(current_game.on_timeout())
+	if current_game:
+		game_finished(current_game.on_timeout())
 
 func game_over(use_scoreboard: bool = true) -> void:
 	if current_game != null:
@@ -140,9 +143,11 @@ func game_over(use_scoreboard: bool = true) -> void:
 		current_game.storage.clear()
 		current_game.queue_free()
 		current_game = null
+
+	# disable the timer, if it isn't already (needed for return to title screen)
 	timer.stop()
-	timer.timeout.disconnect(handle_timeout)
-	single_game = -1
+	if timer.timeout.is_connected(handle_timeout):
+		timer.timeout.disconnect(handle_timeout)
 
 	show_title_screen()
 	if use_scoreboard:
@@ -188,12 +193,4 @@ func update_life_count() -> void:
 			heart.queue_free()
 
 func _on_switch_game_timer_timeout() -> void:
-	start_game()
-
-func start_single_game(game_idx: int):
-	single_game = game_idx
-	lifes = 1
-	won_games = 0
-	played_games = 0
-	update_life_count()
 	start_game()

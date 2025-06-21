@@ -280,7 +280,7 @@ func show_pause_screen() -> void:
 	push_str("-----------\n\n")
 	put_settings_button("Settings", show_settings)
 	push_str("\n")
-	put_settings_button("return to title screen", func():
+	put_settings_button("Return to title screen", func():
 		game_manager.unpause()
 		game_manager.game_over(false)
 		show_title_screen()
@@ -394,7 +394,7 @@ func show_micro_game_select() -> void:
 			break
 		var game := MicroGames.scenes[game_idx]
 		var name := game.resource_path.split("/")[3].capitalize()
-		put_button(name, func(): game_manager.start_single_game(game_idx))
+		put_button(name, game_manager.start.bind(game_idx))
 		push_str("\n")
 	if micro_game_page == 0:
 		push_str("      ")
