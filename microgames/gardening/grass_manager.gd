@@ -16,4 +16,3 @@ func spawn_grass():
 		grass.set_scale(Vector3(size * 0.7,size,size * 0.7))
 	#grass.position = Vector3(10.0, 1, 11.0)
 		add_child(grass)
-	
