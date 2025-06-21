@@ -37,9 +37,11 @@ shape = SubResource("RectangleShape2D_2v1cy")
 
 [node name="EnemyHitSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_gi4xq")
+bus = &"Sfx"
 
 [node name="PlayerTookDamageSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_weypj")
+bus = &"Sfx"
 
 [connection signal="took_damage" from="Player" to="." method="_on_player_took_damage"]
 [connection signal="enemy_spawned" from="AlienSpawner" to="." method="_on_enemy_spawned"]

@@ -81,6 +81,7 @@ shape = SubResource("CircleShape2D_allxc")
 
 [node name="RocketShotSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ske58")
+bus = &"Sfx"
 
 [node name="FlameParticleEffect" type="GPUParticles2D" parent="."]
 position = Vector2(-165.183, 0)
