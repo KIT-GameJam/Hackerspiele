@@ -20,9 +20,9 @@ const scenes: Array[PackedScene] = [
 	preload("res://microgames/responsibility/responsibility.tscn"),
 	preload("res://microgames/skiing/main.tscn"),
 	preload("res://microgames/skys/main.tscn"),
- 	preload("res://microgames/speed_golf/main.tscn")
 	preload("res://microgames/speedy_saucer/main.tscn"),
+	 	preload("res://microgames/speed_golf/main.tscn")
 	preload("res://microgames/tilt/main.tscn"),
 	preload("res://microgames/toast/main.tscn"),
-
 ]
+
