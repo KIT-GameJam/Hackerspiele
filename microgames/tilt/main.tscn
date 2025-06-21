@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://c4nehriuxfoby"]
+[gd_scene load_steps=8 format=3 uid="uid://c4nehriuxfoby"]
 
 [ext_resource type="Script" uid="uid://dfnmqui16aovs" path="res://microgames/tilt/main.gd" id="1_j1mdo"]
 [ext_resource type="Script" uid="uid://dpoxxu686sanw" path="res://microgames/tilt/collider.gd" id="2_6milr"]
 [ext_resource type="Shape2D" uid="uid://b0x5yvkxwqsg6" path="res://microgames/tilt/big_collider.tres" id="2_j1mdo"]
 [ext_resource type="Shape2D" uid="uid://fahgmp4rghpl" path="res://microgames/tilt/small_collider.tres" id="4_hgjtv"]
+[ext_resource type="Texture2D" uid="uid://ccte12q7g6pcg" path="res://microgames/tilt/untitled.png" id="4_tirhb"]
+[ext_resource type="Texture2D" uid="uid://cvxga84dpsqm" path="res://microgames/tilt/untitled2.png" id="6_tirhb"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kb3li"]
 friction = 0.5
@@ -15,25 +17,51 @@ script = ExtResource("1_j1mdo")
 time = 5000.0
 
 [node name="Main" type="StaticBody2D" parent="."]
+physics_interpolation_mode = 1
+position = Vector2(640, 280)
 physics_material_override = SubResource("PhysicsMaterial_kb3li")
+script = ExtResource("2_6milr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Main"]
-position = Vector2(640, 280)
 shape = ExtResource("2_j1mdo")
-script = ExtResource("2_6milr")
+
+[node name="TextureRect" type="TextureRect" parent="Main"]
+offset_left = -250.0
+offset_top = -10.0
+offset_right = 250.0
+offset_bottom = 10.0
+texture = ExtResource("4_tirhb")
 
 [node name="SecondaryOne" type="StaticBody2D" parent="."]
+position = Vector2(280, 550)
 physics_material_override = SubResource("PhysicsMaterial_kb3li")
+script = ExtResource("2_6milr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SecondaryOne"]
-position = Vector2(280, 550)
 shape = ExtResource("4_hgjtv")
-script = ExtResource("2_6milr")
+
+[node name="TextureRect" type="TextureRect" parent="SecondaryOne"]
+offset_left = -150.0
+offset_top = -10.0
+offset_right = 150.0
+offset_bottom = 10.0
+texture = ExtResource("6_tirhb")
 
 [node name="SecondaryTwo" type="StaticBody2D" parent="."]
+position = Vector2(1000, 550)
 physics_material_override = SubResource("PhysicsMaterial_kb3li")
+script = ExtResource("2_6milr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SecondaryTwo"]
-position = Vector2(1000, 550)
 shape = ExtResource("4_hgjtv")
-script = ExtResource("2_6milr")
+
+[node name="TextureRect2" type="TextureRect" parent="SecondaryTwo"]
+offset_left = -150.0
+offset_top = -10.0
+offset_right = 150.0
+offset_bottom = 10.0
+texture = ExtResource("6_tirhb")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
