@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://du7ubqsdf5vtl"]
+
+[ext_resource type="PackedScene" uid="uid://b0pfot8ar77fj" path="res://microgames/jeff_encounter/entities/bullets/Bullet.tscn" id="1_hdywy"]
+[ext_resource type="Script" uid="uid://citde1euyppm4" path="res://microgames/jeff_encounter/entities/bullets/CircleBullet.gd" id="2_b1nk4"]
+
+[node name="CircleBullet" instance=ExtResource("1_hdywy")]
+script = ExtResource("2_b1nk4")
+speed = 10.0

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://t1td8e6x5eb3"]
+
+[ext_resource type="Script" uid="uid://cv3awt3kc38o5" path="res://microgames/jeff_encounter/entities/Ufo.gd" id="1_5vabe"]
+[ext_resource type="Texture2D" uid="uid://b1tk4xkmbn6vb" path="res://microgames/jeff_encounter/assets/textures/ufo.png" id="1_f2kdl"]
+[ext_resource type="AudioStream" uid="uid://bj0tnb7fdl5lp" path="res://microgames/jeff_encounter/assets/sounds/ufo.wav" id="3_7vull"]
+
+[node name="Ufo" type="Node2D"]
+z_index = 1
+script = ExtResource("1_5vabe")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_f2kdl")
+
+[node name="BulletTimer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_7vull")
+volume_db = -15.0
+autoplay = true
+
+[connection signal="timeout" from="BulletTimer" to="." method="_on_timer_timeout"]

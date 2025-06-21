@@ -1,0 +1,81 @@
+[gd_scene load_steps=8 format=3 uid="uid://h6flkwfkrrt1"]
+
+[ext_resource type="PackedScene" uid="uid://528481gmre0a" path="res://microgames/jeff_encounter/entities/aliens/Alien.tscn" id="1_ks8gv"]
+[ext_resource type="Script" uid="uid://2ki071orr3wf" path="res://microgames/jeff_encounter/entities/aliens/FatAlien.gd" id="2_laduy"]
+[ext_resource type="Texture2D" uid="uid://ekn07a7clbfo" path="res://microgames/jeff_encounter/assets/textures/FatAlien.png" id="3_7pk35"]
+
+[sub_resource type="Animation" id="Animation_swmt6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ahr4d"]
+resource_name = "idle"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_xdcgs"]
+resource_name = "walk"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ji65n"]
+_data = {
+&"RESET": SubResource("Animation_swmt6"),
+&"idle": SubResource("Animation_ahr4d"),
+&"walk": SubResource("Animation_xdcgs")
+}
+
+[node name="FatAlien" instance=ExtResource("1_ks8gv")]
+script = ExtResource("2_laduy")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("3_7pk35")
+hframes = 4
+vframes = 2
+
+[node name="WalkTimer" type="Timer" parent="." index="3"]
+wait_time = 1.5
+autostart = true
+
+[node name="WalkAnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+libraries = {
+&"": SubResource("AnimationLibrary_ji65n")
+}
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="WalkTimer" to="." method="_on_walk_timer_timeout"]
