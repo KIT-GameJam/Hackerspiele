@@ -1,7 +1,6 @@
 class_name MicroGames
 
 const scenes: Array[PackedScene] = [
-
 	# sort alphabetically
 	preload("res://microgames/alien_attack/main.tscn"),
 	preload("res://microgames/bugfix/bugfix.tscn"),
@@ -18,4 +17,4 @@ const scenes: Array[PackedScene] = [
 	preload("res://microgames/skys/main.tscn"),
 	preload("res://microgames/speedy_saucer/main.tscn"),
 	preload("res://microgames/toast/main.tscn"),
-#]
+]

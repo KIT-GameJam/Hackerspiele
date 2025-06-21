@@ -10,7 +10,7 @@ func _ready() -> void:
 	var second := randi_range(-100, 100);
 	var op_index := randi_range(0, 2);
 	var op := "+";
-	
+
 	match op_index:
 		1:
 			op = "-"
@@ -34,7 +34,7 @@ func _ready() -> void:
 		button.pressed.connect(_on_click.bind(button))
 
 func _on_click(button: Button) -> void:
-	
+
 	match button.name:
 		"AC":
 			user_input = ""
@@ -48,7 +48,7 @@ func _on_click(button: Button) -> void:
 				$CanvasLayer/Panel/UserInput.label_settings.font_color = Color("#a70233")
 				await get_tree().create_timer(0.1).timeout
 				$CanvasLayer/Panel/UserInput.label_settings.font_color = Color("#d75145")
-				
+
 				#await get_tree().create_timer(0.5).timeout
 				#$CanvasLayer/Panel/UserInput.label_settings.font_color = Color(215, 81, 69)
 		_:
@@ -57,4 +57,3 @@ func _on_click(button: Button) -> void:
 
 func on_timeout() -> Result:
 	return Result.Win if correct else Result.Loss
-		
