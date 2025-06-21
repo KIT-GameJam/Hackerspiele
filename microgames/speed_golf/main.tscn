@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://cawhev31a536w"]
+[gd_scene load_steps=16 format=4 uid="uid://cawhev31a536w"]
 
 [ext_resource type="Script" uid="uid://b273yl7tf3q0y" path="res://microgames/!!template/main.gd" id="1_25xvl"]
 [ext_resource type="Texture2D" uid="uid://00brjrkkoyvc" path="res://microgames/speed_golf/Assets/Erde.png" id="2_6cxmg"]
@@ -6,9 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://b84ahyej45h4p" path="res://microgames/speed_golf/Assets/Golfball.png" id="2_swbpa"]
 [ext_resource type="Script" uid="uid://uqkbql6smpuy" path="res://microgames/speed_golf/Scripts/Ball.gd" id="3_icc6o"]
 [ext_resource type="Texture2D" uid="uid://bvd834aj4ptf7" path="res://microgames/speed_golf/Assets/OutlineStrenght.png" id="4_0cdvu"]
+[ext_resource type="Script" uid="uid://2d83r83rtj3p" path="res://microgames/speed_golf/Scripts/strenghtBarMove.gd" id="4_7fdh2"]
 [ext_resource type="Texture2D" uid="uid://d0i8pb85i8b6j" path="res://microgames/speed_golf/Assets/StrenghtLine.png" id="5_7fdh2"]
 [ext_resource type="Script" uid="uid://cbgmhrxlxvfga" path="res://microgames/speed_golf/Scripts/strenghtBarVisualizer.gd" id="6_gwqu2"]
 [ext_resource type="Texture2D" uid="uid://853ywuq1dunh" path="res://microgames/speed_golf/Assets/Grass_Loch.png" id="6_nkp71"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7fdh2"]
+radius = 14.4551
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j0dru"]
 texture = ExtResource("2_h4ll1")
@@ -35,25 +39,35 @@ sources/4 = SubResource("TileSetAtlasSource_0cdvu")
 texture_filter = 1
 scale = Vector2(2, 2)
 script = ExtResource("1_25xvl")
+time = 10.0
 
-[node name="Ball" type="Sprite2D" parent="."]
+[node name="Ball" type="RigidBody2D" parent="."]
 z_index = 11
 position = Vector2(48, 79)
-scale = Vector2(0.9, 0.9)
-texture = ExtResource("2_swbpa")
+gravity_scale = 0.0
 script = ExtResource("3_icc6o")
 
-[node name="SchlagAnzeige" type="Node2D" parent="Ball"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_7fdh2")
+
+[node name="DrehObjekt" type="Node2D" parent="Ball"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball/DrehObjekt"]
+texture = ExtResource("2_swbpa")
+
+[node name="SchlagAnzeige" type="Node2D" parent="Ball/DrehObjekt"]
 texture_filter = 1
 position = Vector2(-20, 0)
 rotation = 3.14159
+script = ExtResource("4_7fdh2")
 
-[node name="SchlagStrenghtOutline" type="Sprite2D" parent="Ball/SchlagAnzeige"]
+[node name="SchlagStrenghtOutline" type="Sprite2D" parent="Ball/DrehObjekt/SchlagAnzeige"]
 z_index = 5
 texture = ExtResource("4_0cdvu")
 
-[node name="SchlagStrenghtAnzeige" type="Sprite2D" parent="Ball/SchlagAnzeige"]
-position = Vector2(-1.403, -9.214)
+[node name="SchlagStrenghtAnzeige" type="Sprite2D" parent="Ball/DrehObjekt/SchlagAnzeige"]
+position = Vector2(-1.49, -9.75)
+scale = Vector2(1.03, 1.035)
 texture = ExtResource("5_7fdh2")
 centered = false
 region_enabled = true
@@ -61,5 +75,5 @@ region_rect = Rect2(0, 0.322893, 3.10151, 18.6073)
 script = ExtResource("6_gwqu2")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAAAAAAAwAAAAAAAAABAAAAAwAAAAAAAAACAAAAAwAAAAAAAAADAAAAAwAAAAAAAAAEAAAAAwAAAAAAAAAAAAEAAwAAAAAAAAABAAEAAwAAAAAAAAACAAEAAwAAAAAAAAADAAEAAwAAAAAAAAAEAAEAAwAAAAAAAAAAAAIAAwAAAAAAAAABAAIAAgAAAAAAAAACAAIAAgAAAAAAAAADAAIAAgAAAAAAAAAEAAIAAgAAAAAAAAAAAAMAAwAAAAAAAAABAAMAAgAAAAAAAAACAAMAAgAAAAAAAAADAAMAAgAAAAAAAAAEAAMAAgAAAAAAAAAFAAAAAwAAAAAAAAAFAAEAAwAAAAAAAAAFAAIAAgAAAAAAAAAFAAQAAwAAAAAAAAAFAAMABAAAAAAAAAAEAAQAAwAAAAAAAAADAAQAAwAAAAAAAAACAAQAAwAAAAAAAAABAAQAAwAAAAAAAAAAAAQAAwAAAAAAAAAAAAUAAwAAAAAAAAABAAUAAwAAAAAAAAACAAUAAwAAAAAAAAAEAAUAAwAAAAAAAAADAAUAAwAAAAAAAAAFAAUAAwAAAAAAAAAGAAUAAwAAAAAAAAAGAAQAAwAAAAAAAAAGAAMAAwAAAAAAAAAGAAIAAwAAAAAAAAAGAAEAAwAAAAAAAAAGAAAAAwAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAAAAAwAAAAAAAAABAAAAAwAAAAAAAAACAAAAAwAAAAAAAAADAAAAAwAAAAAAAAAEAAAAAwAAAAAAAAAAAAEAAwAAAAAAAAABAAEAAwAAAAAAAAACAAEAAwAAAAAAAAADAAEAAwAAAAAAAAAEAAEAAwAAAAAAAAAAAAIAAwAAAAAAAAABAAIAAgAAAAAAAAACAAIAAgAAAAAAAAADAAIAAgAAAAAAAAAEAAIAAgAAAAAAAAAAAAMAAwAAAAAAAAABAAMAAgAAAAAAAAACAAMAAgAAAAAAAAADAAMAAgAAAAAAAAAEAAMAAgAAAAAAAAAFAAAAAwAAAAAAAAAFAAEAAwAAAAAAAAAFAAIAAgAAAAAAAAAFAAQAAgAAAAAAAAAFAAMAAgAAAAAAAAAEAAQAAgAAAAAAAAADAAQAAwAAAAAAAAACAAQAAwAAAAAAAAABAAQAAwAAAAAAAAAAAAQAAwAAAAAAAAAAAAUAAwAAAAAAAAABAAUAAwAAAAAAAAACAAUAAwAAAAAAAAAEAAUAAwAAAAAAAAADAAUAAwAAAAAAAAAFAAUAAwAAAAAAAAAGAAUAAgAAAAAAAAAGAAQAAgAAAAAAAAAGAAMAAgAAAAAAAAAGAAIAAwAAAAAAAAAGAAEAAwAAAAAAAAAGAAAAAwAAAAAAAAAHAAAAAwAAAAAAAAAHAAEAAwAAAAAAAAAHAAIAAwAAAAAAAAAHAAMAAwAAAAAAAAAHAAQAAgAAAAAAAAAHAAUABAAAAAAAAAAIAAAAAwAAAAAAAAAJAAAAAwAAAAAAAAAJAAEAAwAAAAAAAAAIAAEAAwAAAAAAAAAIAAIAAwAAAAAAAAAJAAIAAwAAAAAAAAAJAAMAAwAAAAAAAAAIAAMAAwAAAAAAAAAIAAQAAwAAAAAAAAAJAAQAAwAAAAAAAAAJAAUAAwAAAAAAAAAJAAYAAwAAAAAAAAAIAAUAAwAAAAAAAAAIAAYAAwAAAAAAAAAHAAYAAwAAAAAAAAAGAAYAAwAAAAAAAAAFAAYAAwAAAAAAAAAEAAYAAwAAAAAAAAADAAYAAwAAAAAAAAACAAYAAwAAAAAAAAABAAYAAwAAAAAAAAAAAAYAAwAAAAAAAAA=")
 tile_set = SubResource("TileSet_swbpa")
