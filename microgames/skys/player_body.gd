@@ -17,6 +17,7 @@ var jump_charge: float = 0. # impulse in N*s
 var jump_now: bool = false # trigger jump
 
 @onready var player_mesh := $PlayerMeshTransform/PlayerMesh
+@onready var charge_gradient : Gradient = load("res://microgames/skys/charge_gradient.tres")
 
 func register_hit_by_obstacle(obstacle: Node2D):
 	print_debug("collision in player")
@@ -35,13 +36,16 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_released("submit"):
 		print("release")
 		jump_now = true
+
+	# Visualize charge state:
 	var charge_ratio = jump_charge/jump_max_charge;
 	const charged_scale := Vector2(2., 0.5)
 	var current_scale = lerp(Vector2(1., 1.), charged_scale, charge_ratio)
+	# Use dummy transform to apply rescale "after" mesh origin is moved to the
+	# model's "feet"
 	$PlayerMeshTransform.scale = current_scale
-	
-	print(jump_charge/jump_max_charge)
-	player_mesh.material.set("shader_parameter/player_charge", charge_ratio);
+	set_player_color(charge_gradient.sample(charge_ratio))
+	#player_mesh.material.set("shader_parameter/player_charge", charge_ratio);
 	#player_mesh.material.set("shader_parameter/player_charge", 1.);
 	
 	
@@ -78,3 +82,6 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 	#velocity.y = 2
+	
+func set_player_color(color: Color):
+	(player_mesh.texture as GradientTexture1D).gradient.set_color(0, color)

@@ -1,17 +1,13 @@
-[gd_scene load_steps=35 format=3 uid="uid://cpwmk7uxyt838"]
+[gd_scene load_steps=39 format=3 uid="uid://cpwmk7uxyt838"]
 
 [ext_resource type="Script" uid="uid://dybpuggjfbxof" path="res://microgames/skys/main.gd" id="1_8ly23"]
 [ext_resource type="Script" uid="uid://dnpg2lienvak5" path="res://microgames/skys/player_body.gd" id="2_8ly23"]
 [ext_resource type="Shader" uid="uid://rmul5k7ovqim" path="res://microgames/skys/checkerboard_shader_2.tres" id="3_dw3wm"]
-[ext_resource type="Shader" uid="uid://c4ogfhoy30jxi" path="res://microgames/skys/player_shader.gdshader" id="3_ns583"]
+[ext_resource type="Shader" uid="uid://y0epm2flhv73" path="res://microgames/skys/blend_boundary_individual.tres" id="3_o85hp"]
 [ext_resource type="Script" uid="uid://but265wjjsli1" path="res://microgames/skys/camera.gd" id="5_ns583"]
 [ext_resource type="Shader" uid="uid://bvr20ih1drcn" path="res://microgames/skys/blend_boundary.tres" id="6_o85hp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o85hp"]
-shader = ExtResource("3_ns583")
-shader_parameter/player_charge = 0.0
-shader_parameter/color_base = Color(0.12549, 0.768627, 0.309804, 1)
-shader_parameter/color_charged = Color(0.976471, 0.137255, 0.0901961, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_32utl"]
 radius = 22.0
@@ -72,6 +68,28 @@ height = 30
 seamless = true
 color_ramp = SubResource("Gradient_o85hp")
 noise = SubResource("FastNoiseLite_uab8q")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uab8q"]
+shader = ExtResource("3_o85hp")
+shader_parameter/bordder_v0 = 0.0
+shader_parameter/border_u0 = 0.0
+shader_parameter/border_u1 = 0.0
+shader_parameter/border_v1 = 0.312
+
+[sub_resource type="Gradient" id="Gradient_y4wkf"]
+offsets = PackedFloat32Array(0.00649351, 0.025974, 0.0519481, 0.207792, 0.571429, 1)
+colors = PackedColorArray(0.09, 0.04968, 0.0036, 0, 0, 0, 0, 0, 0.29, 0.16008, 0.0116, 0, 0.349282, 0.368775, 0.116716, 1, 0.390906, 0.515306, 0.190521, 1, 0.404878, 0.663571, 0.190262, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_n7vti"]
+noise_type = 0
+frequency = 0.05
+domain_warp_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n0o2k"]
+height = 40
+seamless = true
+color_ramp = SubResource("Gradient_y4wkf")
+noise = SubResource("FastNoiseLite_n7vti")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dw3wm"]
 radius = 0.5
@@ -170,9 +188,16 @@ position = Vector2(0, 252)
 texture = SubResource("NoiseTexture2D_dw3wm")
 
 [node name="Sprite2D2" type="Sprite2D" parent="ParallaxGround"]
+visible = false
 z_index = -2
 position = Vector2(0, 11)
 texture = SubResource("NoiseTexture2D_y4wkf")
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxGround"]
+z_index = -2
+material = SubResource("ShaderMaterial_uab8q")
+position = Vector2(0, 16)
+texture = SubResource("NoiseTexture2D_n0o2k")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
 position = Vector2(-2, -3)
