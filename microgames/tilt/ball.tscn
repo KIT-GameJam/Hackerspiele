@@ -8,7 +8,7 @@
 [node name="Ball" type="Node2D"]
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
-mass = 10.0
+mass = 0.001
 script = ExtResource("1_6xp2d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
