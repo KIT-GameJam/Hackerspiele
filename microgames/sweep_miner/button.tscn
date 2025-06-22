@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://bdvjhdja8xj71"]
+
+[ext_resource type="Script" uid="uid://cb0o3u4mvskbo" path="res://microgames/sweep_miner/button.gd" id="1_4fi4m"]
+[ext_resource type="FontFile" uid="uid://sa1ml6cgmorr" path="res://assets/fonts/Share Tech Mono/ShareTechMono-Regular.ttf" id="2_r5th7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kipgs"]
+resource_local_to_scene = true
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.544974, 0.544974, 0.544974, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_0ldfh"]
+font = ExtResource("2_r5th7")
+font_size = 42
+font_color = Color(0, 0, 0, 1)
+
+[node name="Button" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+flat = true
+script = ExtResource("1_4fi4m")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kipgs")
+
+[node name="Label" type="Label" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "3"
+label_settings = SubResource("LabelSettings_0ldfh")
+horizontal_alignment = 1
+vertical_alignment = 1
