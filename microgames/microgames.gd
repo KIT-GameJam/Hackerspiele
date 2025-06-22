@@ -27,4 +27,3 @@ const scenes: Array[PackedScene] = [
 	preload("res://microgames/tilt/main.tscn"),
 	preload("res://microgames/toast/main.tscn"),
 ]
-

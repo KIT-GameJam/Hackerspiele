@@ -2,7 +2,7 @@ extends MicroGame
 var comb_in_cat = false
 var angery = false
 var combtime = 0
-var maxcombtime = 1.2
+var maxcombtime = 1.7
 var knostoncat=0
 signal cat_angry()
 signal scratch()
@@ -10,7 +10,6 @@ signal cat_calm()
 
 func _ready() -> void:
 	_no_knots_left_on_cat()
-	finished.emit(Result.Win)
 
 func _process(delta: float) -> void:
 	

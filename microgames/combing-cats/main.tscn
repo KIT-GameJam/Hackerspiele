@@ -62,7 +62,6 @@ skew = -0.258023
 texture = ExtResource("10_glppb")
 
 [node name="Eyebrow" type="Sprite2D" parent="Cat-combed/eyebrows"]
-scale = Vector2(1, 1)
 texture = ExtResource("10_glppb")
 
 [node name="Comb" type="CharacterBody2D" parent="."]
@@ -78,7 +77,6 @@ texture = ExtResource("5_omrus")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Comb"]
 position = Vector2(11.3262, -22.4541)
 rotation = -0.375246
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_ldx1w")
 
 [node name="knots" type="Node2D" parent="."]
