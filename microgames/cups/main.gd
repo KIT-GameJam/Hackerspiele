@@ -21,6 +21,8 @@ signal shown
 signal submit
 
 func _ready() -> void:
+	timer.paused = true
+
 	if cups.size() < 2:
 		push_warning("cups: less than two cups")
 
@@ -45,7 +47,9 @@ func _ready() -> void:
 	selected_cup_idx = 0
 	cups[selected_cup_idx].outline(true)
 	mode = Mode.SELECT
+	timer.paused = false
 	await submit
+	timer.paused = true
 	mode = Mode.SHOW
 	await shown
 	finished.emit(Result.Win if selected_cup_idx == ball_idx else Result.Loss)

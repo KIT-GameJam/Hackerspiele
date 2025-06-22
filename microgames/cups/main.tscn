@@ -10,7 +10,6 @@ size = Vector2(100, 100)
 [node name="Main" type="Node3D"]
 script = ExtResource("1_yipcj")
 rotation_speed = 6.0
-time = 30.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
