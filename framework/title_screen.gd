@@ -133,8 +133,8 @@ func clear_terminal() -> void:
 		child.queue_free()
 	terminal_buttons = []
 
-func put_button(text: String, onclick: Callable) -> void:
-	var event := PrintEvent.new(PrintEventType.BUTTON, " " + text + " ")
+func put_button(text: String, onclick: Callable, grab_focus: bool = false) -> void:
+	var event := PrintEvent.new(PrintEventType.BUTTON, {"text": " " + text + " ", "grab_focus": grab_focus})
 	event.onclick = onclick
 	print_queue.append(event)
 
@@ -158,12 +158,14 @@ func pop_print_queue() -> void:
 		PrintEventType.CHAR:
 			putc(event.val)
 		PrintEventType.BUTTON:
-			var text: String = event.val
+			var text: String = event.val.text
 			var button := TerminalButton.new()
 			button.pos = cursor
 			for chr in text.reverse():
 				print_queue.push_front(PrintEvent.new(PrintEventType.CHAR, chr))
 			button.node = create_terminal_button(text, event.onclick)
+			if event.val.grab_focus:
+				button.node.grab_focus.call_deferred()
 			terminal_buttons.append(button)
 			label.add_child(button.node)
 			for btn_idx in range(terminal_buttons.size()):
@@ -423,17 +425,19 @@ func print_game_title() -> void:
 	put_button("Settings", show_settings)
 	push_str("\n")
 
-func show_micro_game_select() -> void:
+func show_micro_game_select(game_idx: int = -1) -> void:
 	clear_terminal()
 	push_str("Select a microgame:\n")
+	if game_idx != -1:
+		micro_game_page = game_idx /  MICROGAME_PAGE_SIZE
 	var game_offset := micro_game_page * MICROGAME_PAGE_SIZE
 	for paged_game_idx in range(MICROGAME_PAGE_SIZE):
-		var game_idx: int = paged_game_idx + game_offset
-		if game_idx >= MicroGames.scenes.size():
+		var current_game_idx: int = paged_game_idx + game_offset
+		if current_game_idx >= MicroGames.scenes.size():
 			break
-		var game := MicroGames.scenes[game_idx]
+		var game := MicroGames.scenes[current_game_idx]
 		var name := game.resource_path.split("/")[3].capitalize()
-		put_button(name, game_manager.start.bind(game_idx))
+		put_button(name, game_manager.start.bind(current_game_idx), current_game_idx == game_idx)
 		push_str("\n")
 	if micro_game_page == 0:
 		push_str("      ")

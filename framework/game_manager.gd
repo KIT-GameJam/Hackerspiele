@@ -163,6 +163,7 @@ func game_finished(result: MicroGame.Result) -> void:
 	timer.timeout.disconnect(handle_timeout)
 	if single_game != -1:
 		game_over(false)
+		title_screen.show_micro_game_select(single_game)
 		return
 	var was_successfull := false
 	played_games += 1
