@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://8ohkrwa0vuhu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_haj7o"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_haj7o"]
+material = SubResource("StandardMaterial3D_haj7o")
+radius = 0.3
+height = 0.6
+
+[node name="Ball" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+mesh = SubResource("SphereMesh_haj7o")
