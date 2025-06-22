@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://culug5ues2d85"]
+
+[ext_resource type="Script" uid="uid://ch2i8mxjiegjg" path="res://microgames/toast/half_pipe.gd" id="1_cakmx"]
+
+[node name="Level1" type="Node2D"]
+
+[node name="Obstacle1" type="Node2D" parent="."]
+position = Vector2(25, -191)
+script = ExtResource("1_cakmx")
+line_node = NodePath("Line2D")
+line_width = 20.0
+outline_width = 16.0
+show_shadow = false
+shadow_offset = Vector2(6.91, 23.38)
+shadow_blur_radius = 19.225
+
+[node name="Line2D" type="Line2D" parent="Obstacle1"]
+points = PackedVector2Array(181, 355, 203, 327, 232, 301, 258, 283, 282, 269, 304, 257, 331, 246, 355, 238, 380, 233, 406, 230, 432, 229, 462, 230, 486, 233, 510, 242, 534, 257, 552, 274, 565, 297, 571, 325, 574, 346, 576, 372, 576, 395, 575, 415, 572, 435)
+width = 21.52
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="Obstacle2" type="Node2D" parent="."]
+position = Vector2(25, -191)
+script = ExtResource("1_cakmx")
+line_node = NodePath("Line2D")
+line_width = 20.0
+outline_width = 16.0
+show_shadow = false
+shadow_blur_radius = 20.0
+
+[node name="Line2D" type="Line2D" parent="Obstacle2"]
+position = Vector2(237, 225)
+points = PackedVector2Array(197, 220, 205, 265, 219, 291, 240, 314, 265, 329, 302, 343, 332, 351, 377, 364, 408, 373, 457, 387, 508, 404, 536, 421, 561, 444, 576, 473)
+width = 21.52
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true

@@ -1,6 +1,7 @@
 extends AnimatableBody2D
 
 @export var toast: RigidBody2D
+@export var camera: Camera2D
 
 const CHARGEUP_SPEED = 1.0
 const ROTATE_TOASTER_SPEED = 2.5
@@ -14,6 +15,7 @@ var time_toasted = 0.0
 
 func _ready() -> void:
 	assert(toast)
+	assert(camera)
 	#reset_toast_to($ToastAnchor.global_transform)
 
 func _physics_process(delta: float) -> void:
@@ -31,7 +33,7 @@ func _physics_process(delta: float) -> void:
 		#rotation -= delta * 10+.
 	if charging_up:
 		chargeup += delta * CHARGEUP_SPEED
-		chargeup = clamp(chargeup, 0.0 , 1.0)
+		chargeup = clamp(chargeup, 0.0, 1.0)
 		time_toasted += delta
 		if time_toasted > 0.75:
 			$AnimationPlayer.play("toaster_blink")
@@ -50,12 +52,10 @@ func _input(event: InputEvent) -> void:
 		#rot_left_pressed = true
 	#if event.is_action_pressed("right"):
 		#rot_right_pressed = true
-	
 	#if event.is_action_released("left"):
 		#rot_left_pressed = false
 	#if event.is_action_released("right"):
 		#rot_right_pressed = false
-	
 	if event.is_action_pressed("up"):
 		pull_in_toast()
 	
@@ -84,9 +84,7 @@ func pull_in_toast():
 	#toast.freeze = true
 	#t1.tween_property(toast, "position", position,1.0).set_ease(Tween.EASE_IN_OUT)
 	#t1.tween_property(toast, "rotation", rotation, 1.0).set_ease(Tween.EASE_IN_OUT)
-	
 	#await t1.finished
-
 	reset_toast_to($ToastAnchor.global_transform)
 	$AnimationPlayer.speed_scale = 1.0
 	$AnimationPlayer.play("RESET")
@@ -99,4 +97,5 @@ func pop_toast():
 	toast.apply_impulse(Vector2.UP.rotated(rotation) * 2000.0 * chargeup)
 	$ToastInsideCheckArea.set_collision_layer_value(1, true)
 	$AnimationPlayer.play("RESET")
+	camera.tremor(1.0 * chargeup)
 	toast_locked = false

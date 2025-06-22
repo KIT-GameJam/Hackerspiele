@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpdkb2hfbnh88"]
+
+[ext_resource type="PackedScene" uid="uid://clenrc5pqv7a6" path="res://bumper.tscn" id="2_n3nd2"]
+
+[node name="Level1" type="Node2D"]
+
+[node name="Bumper" parent="." instance=ExtResource("2_n3nd2")]
+position = Vector2(881, 105)
+
+[node name="Bumper2" parent="." instance=ExtResource("2_n3nd2")]
+position = Vector2(585, 483)
+
+[node name="Bumper3" parent="." instance=ExtResource("2_n3nd2")]
+position = Vector2(238, 131)

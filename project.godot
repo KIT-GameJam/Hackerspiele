@@ -34,6 +34,10 @@ window/stretch/aspect="expand"
 
 import/blender/enabled=false
 
+[global_group]
+
+bumpers=""
+
 [gui]
 
 theme/custom="uid://b2fo7vry15yci"
