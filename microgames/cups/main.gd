@@ -128,6 +128,3 @@ func swap(cup1_idx: int, cup2_idx: int) -> void:
 func swap_stop() -> void:
 	for cup in pivot.get_children():
 		cup.reparent(self)
-
-func on_timeout() -> Result:
-	return Result.Win

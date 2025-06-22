@@ -131,6 +131,7 @@ func start_game() -> void:
 	timer.timeout.connect(handle_timeout)
 	in_game = true
 
+	timer.paused = false # make sure the timer isn't paused
 	microgame_slot.add_child(current_game)
 	timer.start() # start timer only after adding the microgame
 
