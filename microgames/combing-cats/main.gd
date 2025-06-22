@@ -41,7 +41,7 @@ func _combing_stopped()-> void:
 	cat_calm.emit()
 	pass
 
-func _on_killzone_entered(body: Node2D) -> void:
+func _on_killzone_entered(_body: Node2D) -> void:
 	_die()
  # Replace with function body.
 
@@ -76,4 +76,3 @@ func _on_catboday_body_exited(body: Node2D) -> void:
 		_win_game()
 
 	print("comb off cat")
-

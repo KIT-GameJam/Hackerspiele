@@ -54,7 +54,7 @@ func _ready():
 	selected_door = door1
 	button1.grab_focus.call_deferred()
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("left"):
 		if selected_door.id == door2.id:
 			selected_door = door1

@@ -18,7 +18,7 @@ func _ready() -> void:
 	new_text()
 	new_button()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var node: CanvasItem = level_container.get_child(level)
 	player.global_position = node.global_position - Vector2(10.0, player.size.y)
 	for btn in range(4):

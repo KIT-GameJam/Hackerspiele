@@ -43,9 +43,9 @@ func _physics_process(_delta):
 	$WalkAnimationPlayer.play('walk' if has_input and not collided else 'idle')
 
 	var vp := get_viewport()
-	var off := 0.5 * vp.get_visible_rect().size / vp.get_camera_2d().zoom
+	var _off := 0.5 * vp.get_visible_rect().size / vp.get_camera_2d().zoom
 
-func hit_player(direction: Vector2):
+func hit_player(_direction: Vector2):
 	was_hit.emit()
 	$HitSoundPlayer.play()
 	$HitAnimationPlayer.play("hit")

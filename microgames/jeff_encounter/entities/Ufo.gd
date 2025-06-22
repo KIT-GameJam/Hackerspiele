@@ -24,7 +24,7 @@ func _ready():
 	var end_edge = sample(edges)
 	direction = position.direction_to(rand_edge_point(vp, end_edge))
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var region: Rect2 = $Sprite2D.get_rect()
 	region.position += position
 

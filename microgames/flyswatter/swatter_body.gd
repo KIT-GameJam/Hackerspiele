@@ -9,7 +9,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("submit"):
 		_swat()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var direction := Input.get_vector("left","right","up","down")
 	if direction:
 		apply_impulse(direction * SPEED)
@@ -19,8 +19,8 @@ func _swat() -> void:
 	if _has_fly:
 		fly_swatted.emit()
 
-func _on_flyswatter_body_entered(body: Node2D) -> void:
+func _on_flyswatter_body_entered(_body: Node2D) -> void:
 	_has_fly = true
 
-func _on_flyswatter_body_exited(body: Node2D) -> void:
+func _on_flyswatter_body_exited(_body: Node2D) -> void:
 	_has_fly = false

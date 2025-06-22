@@ -19,7 +19,7 @@ var jump_now: bool = false # trigger jump
 @onready var player_mesh := $PlayerMeshTransform/PlayerMesh
 @onready var charge_gradient : Gradient = load("res://microgames/skys/charge_gradient.tres")
 
-func register_hit_by_obstacle(obstacle: Node2D):
+func register_hit_by_obstacle(_obstacle: Node2D):
 	print_debug("collision in player")
 	hit_registered.emit()
 

@@ -32,7 +32,7 @@ func _physics_process(delta: float) -> void:
 		hand_open.visible = true
 		hand_grab.visible = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if current_carrot != null:
 		if Input.is_action_just_pressed("submit"):
 			if current_carrot.pull_out_carrot():

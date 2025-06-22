@@ -45,7 +45,7 @@ func _ready():
 			tile.set_img(tile_sprite)
 			tiles.append(tile)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var input_dir: Vector2i
 	if Input.is_action_just_pressed("left"):
 		input_dir = Vector2i(0, -1)

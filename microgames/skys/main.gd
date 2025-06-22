@@ -41,7 +41,7 @@ func _ready() -> void:
 	#$ObstacleBody.duplicate().set_
 	#var bullet = projectile.instance()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var place_obstacle_ahead_distance = 1280 / 2 * 1.5
 	# while loop, in case we are very fast... i.e. moving faster than mindist/delta
 	while obstacle_offsets[next_obstacle_i] - player.position.x <= place_obstacle_ahead_distance:
