@@ -26,6 +26,9 @@ func _ready() -> void:
 	if cups.size() < 2:
 		push_warning("cups: less than two cups")
 
+	# increase rotation speed by the same factor the time is decreased
+	rotation_speed *= 2.0 - timer.wait_time / time
+
 	# select ball position
 	ball_idx = rand_cup_idx()
 	ball.position = cups[ball_idx].position
