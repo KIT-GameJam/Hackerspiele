@@ -15,7 +15,7 @@ func _physics_process(delta: float) -> void:
 		var tilt_dir = Vector3(tilt_input.y, tilt_input.x, 0.0).normalized()
 		body.rotate(tilt_dir.normalized(), tilt_speed * delta)
 		_keep_rotation_in_bounce()
-	
+
 	if Input.is_action_just_pressed("submit"):
 		shoot()
 

@@ -53,7 +53,7 @@ func _ready():
 	door3.set_answer(quest_ans[selected_question_id].a3)
 	selected_door = door1
 	button1.grab_focus.call_deferred()
-	
+
 func _process(delta):
 	if Input.is_action_just_pressed("left"):
 		if selected_door.id == door2.id:
@@ -80,9 +80,9 @@ func click_action(door: Node, answer: String):
 		$Timer.start(1)
 	else:
 		door.reveal_false()
-		$Timer.start(1)	
+		$Timer.start(1)
 		result = Result.Loss
-	
+
 func _on_door_1_clicked(answer: String):
 	click_action(door1, answer)
 

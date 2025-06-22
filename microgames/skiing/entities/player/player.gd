@@ -42,7 +42,7 @@ func _physics_process(delta: float) -> void:
 		_on_jump_ended()
 	else:
 		momentum = (height_last_frame - global_position.y) * MOMENTUM_SPEED
-	
+
 	_count_flips();
 
 	# Handle jump.
@@ -112,4 +112,4 @@ func _tween_rotate_x(new_rotation: float = .0):
 func _tween_reset(tween: Tween) -> Tween:
 	tween.kill()
 	return get_tree().create_tween()
-	
+

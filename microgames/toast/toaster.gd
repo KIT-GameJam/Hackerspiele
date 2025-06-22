@@ -39,12 +39,12 @@ func _physics_process(delta: float) -> void:
 			$AnimationPlayer.play("toaster_blink")
 		if time_toasted > 1.5:
 			$AnimationPlayer.speed_scale = 4.0
-	
+
 	$SpringHandleAnchor/SpringHandle.position.y = chargeup * 360
-	
+
 	if toast_locked:
 		reset_toast_to($ToastAnchor.global_transform)
-	
+
 	toast.set_toastedness(time_toasted)
 
 func _input(event: InputEvent) -> void:
@@ -58,7 +58,7 @@ func _input(event: InputEvent) -> void:
 		#rot_right_pressed = false
 	if event.is_action_pressed("up"):
 		pull_in_toast()
-	
+
 	if event.is_action_pressed("submit"):
 		pull_in_toast()
 		chargeup = 0

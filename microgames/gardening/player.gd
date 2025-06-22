@@ -1,8 +1,8 @@
 extends Node3D
 
-const ROTATION_SPEED := 2.5    
-const MOVEMENT_SPEED := 60.0  
-const ACCELERATION := 200.0        
+const ROTATION_SPEED := 2.5
+const MOVEMENT_SPEED := 60.0
+const ACCELERATION := 200.0
 
 var current_speed := 0.0
 
@@ -31,7 +31,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		hand_open.visible = true
 		hand_grab.visible = false
-		
+
 func _process(delta: float) -> void:
 	if current_carrot != null:
 		if Input.is_action_just_pressed("submit"):

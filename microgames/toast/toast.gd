@@ -31,15 +31,15 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		# Check if the body is a bumper
 		if collider is StaticBody2D and collider.is_in_group("bumpers"):
 			print("bump")
-			
+
 			# Get the normal vector of the collision point
 			var normal = state.get_contact_local_normal(i)
-			
+
 			# Calculate the reflection using the built-in bounce function
 			# We can also add a "bounciness" factor here. 1.0 is a perfect reflection.
 			var bounciness = 1.0
 			state.linear_velocity = state.linear_velocity.bounce(normal) * bounciness
-			
+
 			# Optional: Apply a fixed impulse boost on each bounce
 			state.apply_central_impulse(normal * 600.0)
 

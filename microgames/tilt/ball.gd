@@ -21,6 +21,6 @@ func _ready() -> void:
 		3:
 			color = Color(1, 0, 1)
 	self.modulate = color
-	
+
 func unparent() -> void:
 	get_parent().remove_child(self)

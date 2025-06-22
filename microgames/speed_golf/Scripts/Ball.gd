@@ -11,7 +11,7 @@ func _process(delta: float) -> void:
 		$DrehObjekt.rotate(rotationSpeed * delta)
 	elif Input.is_action_pressed("left"):
 		$DrehObjekt.rotate(-1 * rotationSpeed * delta)
-		
+
 	if pressedDown && Input.is_action_pressed("submit"):
 		strokeStrength = min(strokeStrength + strenghtGrow *delta, 1)
 	elif Input.is_action_pressed("submit"):
@@ -21,7 +21,7 @@ func _process(delta: float) -> void:
 			lastStrokeStrength = strokeStrength
 		pressedDown = false
 		strokeStrength = 0
-		
+
 	if Input.is_action_just_released("submit"):
 		var impulseVector = Vector2(cos($DrehObjekt.rotation), sin($DrehObjekt.rotation))
 		if get_parent().cellId == 2:

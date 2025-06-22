@@ -26,4 +26,4 @@ func _load_level(idx: int):
 
 func _on_win():
 	finished.emit(Result.Win)
- 
+

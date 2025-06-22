@@ -22,9 +22,9 @@ var jump_now: bool = false # trigger jump
 func register_hit_by_obstacle(obstacle: Node2D):
 	print_debug("collision in player")
 	hit_registered.emit()
-	
+
 func _process(delta: float) -> void:
-	# Built in race condition: see if you can release and repress the jump button befor the next 
+	# Built in race condition: see if you can release and repress the jump button befor the next
 	# physics_process() runs, to reset jump charge.
 	if Input.is_action_just_pressed("submit"):
 		print("just press")
@@ -47,13 +47,13 @@ func _process(delta: float) -> void:
 	set_player_color(charge_gradient.sample(charge_ratio))
 	#player_mesh.material.set("shader_parameter/player_charge", charge_ratio);
 	#player_mesh.material.set("shader_parameter/player_charge", 1.);
-	
-	
+
+
 func _physics_process(delta: float) -> void:
 	# stuff:
 	var acceleration = Vector2(0, 0)
 	var is_airborne : bool = position.y < 0
-	
+
 	#var updown_dir = Input.get_axis("down", "up")
 	#acceleration += up_direction * updown_dir * jump_acceleration
 	#acceleration += up_direction
@@ -66,7 +66,7 @@ func _physics_process(delta: float) -> void:
 		velocity -= up_direction * velocity.dot(up_direction)
 		#velocity.y = 0
 		pass
-	
+
 	# apply jump impulse:
 	if jump_now:
 		print("jump now")
@@ -74,14 +74,14 @@ func _physics_process(delta: float) -> void:
 			velocity += up_direction * jump_charge / mass
 		jump_now = false
 		jump_charge = 0.
-		
-	
+
+
 	velocity.x = physics_scale * base_speed
 	velocity += physics_scale * acceleration * delta # integrate accelarations
 	#velocity.x = base_speed * lr_dir
-	
+
 	move_and_slide()
 	#velocity.y = 2
-	
+
 func set_player_color(color: Color):
 	(player_mesh.texture as GradientTexture1D).gradient.set_color(0, color)

@@ -3,14 +3,14 @@ extends Node3D
 var scene_carrot = preload("res://microgames/gardening/assets/carrot.tscn")
 var LEVEL_SIZE := 90
 
-func _ready() -> void:	
+func _ready() -> void:
 	for n in 5:
 		var carrot : Node3D = scene_carrot.instantiate()
 		carrot.set_name("carrot#" + str(n))
 		carrot.max_pulls = randi_range(5,10)
 		var dir1 = -1.0 if randf() > 0.5 else 1.0
 		var dir2 = -1.0 if randf() > 0.5 else 1.0
-		var posx = remap(randf(), 0.0, 1.0, 0.2, 1.0) * dir1		
+		var posx = remap(randf(), 0.0, 1.0, 0.2, 1.0) * dir1
 		var posy = remap(randf(), 0.0, 1.0, 0.2, 1.0) * dir2
 		carrot.set_position(Vector3(posx * LEVEL_SIZE, -5, posy * LEVEL_SIZE))
 		carrot.set_rotation(Vector3(0.0, randf() * 2 * PI, 0.0))

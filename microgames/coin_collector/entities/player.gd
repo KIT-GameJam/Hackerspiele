@@ -6,7 +6,7 @@ extends CharacterBody2D
 
 func _physics_process(delta: float):
 	var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
-	if (Input.is_action_pressed("right") && sprite.scale.x >= 0): sprite.scale.x *= -1 
+	if (Input.is_action_pressed("right") && sprite.scale.x >= 0): sprite.scale.x *= -1
 	elif (Input.is_action_pressed("left")  && sprite.scale.x <= 0): sprite.scale.x *= -1
 	velocity = direction * SPEED * delta
 	move_and_slide()

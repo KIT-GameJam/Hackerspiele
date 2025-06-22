@@ -35,19 +35,19 @@ func _ready() -> void:
 	base = randi_range(2, 5)
 	var wins = storage.get("2048_Wins", 0)
 	max_exponent += wins
-	
+
 	for x in range(grid_size.x):
 		for y in range(grid_size.y):
 			all_grid_positions.append(Vector2(x, y))
-	
+
 	all_grid_positions.shuffle()
-	
+
 	var digit: Game2048_Digit
 	for i in range(0, start_digits):
 		digit = _spawn_digit(all_grid_positions[i])
-	
+
 	goal_label.text = "Reach " + str(digit.base ** max_exponent)
-	
+
 
 func _process(_delta):
 	_currentDelta += _delta
@@ -55,12 +55,12 @@ func _process(_delta):
 		_has_spawned_next = false
 		_apply_velocity(current_direction)
 		return
-	
+
 	var direction = Input.get_vector("left", "right", "up", "down")
 	if (direction.is_zero_approx()):
 		_apply_velocity(current_direction)
 		return
-	
+
 	if (not direction.is_zero_approx()):
 		if (abs(direction.x) > abs(direction.y)):
 			if (direction.x > 0):
@@ -72,18 +72,18 @@ func _process(_delta):
 				current_direction = Vector2(0, 1)
 			elif (direction.y < 0):
 				current_direction = Vector2(0, -1)
-	
+
 	if (last_direction == current_direction):
 		_apply_velocity(current_direction)
 		return
-	
+
 	last_direction = current_direction
 	_currentDelta = 0
-	
+
 	if (not _has_spawned_next):
 		_has_spawned_next = true
 		_new_round()
-	
+
 	_apply_velocity(current_direction)
 
 func _new_round():
@@ -96,15 +96,15 @@ func _new_round():
 
 func _get_free_slot() -> Vector2:
 	all_grid_positions.shuffle()
-	
+
 	for pos in all_grid_positions:
 		ray_cast.target_position = _grid_pos_to_area_pos(pos)
 		ray_cast.force_raycast_update()
 		if not ray_cast.is_colliding():
 			return pos
-	
+
 	return Vector2(-1, -1)
-	
+
 func _apply_velocity(dir: Vector2):
 	for digit in digit_container.get_children():
 		if latest_digit != digit:
@@ -130,15 +130,15 @@ func _grid_pos_to_area_pos(grid_pos: Vector2):
 func _area_pos_to_grid_pos(area_pos: Vector2):
 	var pos = (area_pos + area_size / 2.0 - Vector2.ONE * digit_size / 2.0) / area_size / grid_size
 	return pos
-	
-	
+
+
 func _on_digit_collision(digit_a: Game2048_Digit, digit_b: Game2048_Digit) -> void:
 	if (digit_a.get_number() != digit_b.get_number()):
 		return
-	
+
 	digit_a.increase(max_exponent)
 	digit_b.queue_free()
-	
+
 	if (digit_a.exponent == max_exponent):
 		print("YOU WON!")
 		var wins = storage.get("2048_Wins", 0)

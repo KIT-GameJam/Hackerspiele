@@ -19,7 +19,7 @@ func _process(_delta):
 	var direction = Input.get_vector("left", "right", "up", "down")
 	if (direction.is_zero_approx()):
 		return
-	
+
 	var rotation = 0
 	if (abs(direction.x) > abs(direction.y)):
 		if (direction.x > 0):
@@ -31,15 +31,15 @@ func _process(_delta):
 			rotation = 180
 		elif (direction.y < 0):
 			rotation = 0
-	
+
 	tester.global_rotation_degrees = rotation
-	
-	
+
+
 func get_number() -> int:
 	return base ** exponent
 
 func increase(max_exponent: int):
-	exponent += 1 
+	exponent += 1
 	var weight = float(exponent) / max_exponent
 	colorRect.color = start_color.lerp(end_color, weight)
 	label.text = str(get_number())

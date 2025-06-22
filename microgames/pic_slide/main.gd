@@ -32,7 +32,7 @@ func _ready():
 			var tile_pos = tile_positions[idx]
 			if idx == skip_random:
 				free_tile_slot = tile_positions[idx].idx
-				
+
 				print(free_tile_slot)
 				continue
 			var tile: PicSlideTile = tile_scene.instantiate()
@@ -60,12 +60,12 @@ func _process(delta: float) -> void:
 	var tile_pos_to_move = get_pos_tile_to_move(input_dir)
 	if not is_in_bounce(tile_pos_to_move):
 		return
-	
+
 	var tile_to_move = get_tile_from_pos(tile_pos_to_move)
 	tile_to_move.curr_position = free_tile_slot
 	tile_to_move.position = get_global_pos_from_idx_pos(free_tile_slot)
 	free_tile_slot = tile_pos_to_move
-	
+
 	if are_tiles_pos_correct():
 		finished.emit(Result.Win)
 

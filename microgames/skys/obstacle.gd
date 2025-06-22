@@ -15,7 +15,7 @@ func set_height(height_: float):
 	$Area2D/CollisionArea.scale.y = height
 
 	#$Mesh.material.set("shader_parameter/scale", height);
-	
+
 func _on_body_entered(body: Node) -> void:
 	# Does not work for character bodys :(
 	if body is not PlayerBody:

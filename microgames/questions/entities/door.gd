@@ -10,7 +10,7 @@ func set_answer(text: String):
 
 func _on_button_pressed():
 	clicked.emit(answer.text)
-	
+
 func reveal_correct():
 	$DoorSprite.hide()
 	$False.hide()
@@ -18,5 +18,5 @@ func reveal_correct():
 
 func reveal_false():
 	$DoorSprite.hide()
-	$Correct.hide()	
+	$Correct.hide()
 	$Answer.hide()

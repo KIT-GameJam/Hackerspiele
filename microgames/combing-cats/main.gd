@@ -12,18 +12,18 @@ func _ready() -> void:
 	_no_knots_left_on_cat()
 
 func _process(delta: float) -> void:
-	
-	if(comb_in_cat): 
+
+	if(comb_in_cat):
 		combtime += delta
-		
-		
+
+
 	if (combtime > maxcombtime/2 and not angery):
 		_get_angery()
-		
-	
+
+
 	if(combtime > maxcombtime):
 		_die()
-		
+
 
 func _get_angery()->void:
 	print("walk away buster")
@@ -33,7 +33,7 @@ func _get_angery()->void:
 func _die()-> void:
 	print("ded")
 	scratch.emit()
-	
+
 func _combing_stopped()-> void:
 	comb_in_cat = false
 	angery = false
@@ -71,9 +71,9 @@ func _on_catboday_body_exited(body: Node2D) -> void:
 		_combing_stopped()
 	else:
 		knostoncat-=1
-		
+
 	if(_no_knots_left_on_cat()):
-		_win_game()	
-	
+		_win_game()
+
 	print("comb off cat")
-	
+

@@ -1,6 +1,6 @@
 extends MicroGame
 
-@export var W: int 
+@export var W: int
 @export var H: int
 @export var bomb_count: int
 

@@ -12,7 +12,7 @@ func _physics_process(delta):
 	position += previous_direction * current_speed * delta
 	# Get input from WASD keys
 	var direction = Vector2.ZERO
-	
+
 	if Input.is_action_pressed("ui_right") or Input.is_key_pressed(KEY_D):
 		direction.x += 1
 	if Input.is_action_pressed("ui_left") or Input.is_key_pressed(KEY_A):
@@ -21,11 +21,11 @@ func _physics_process(delta):
 		direction.y += 1
 	if Input.is_action_pressed("ui_up") or Input.is_key_pressed(KEY_W):
 		direction.y -= 1
-	
+
 	# Normalize direction vector
 	if direction.length() > 0:
 		direction = direction.normalized()
-	
+
 	# Handle velocity changes
 	if direction != Vector2.ZERO:
 		if direction == previous_direction:
@@ -37,10 +37,10 @@ func _physics_process(delta):
 	else:
 		# Gradually decrease speed when no input
 		current_speed = max(0, current_speed - deceleration_rate)
-	
+
 	# Store current direction for next frame comparison
 	previous_direction = direction
-	
+
 	# Apply movement
-	
-	
+
+

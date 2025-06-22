@@ -9,11 +9,11 @@ var flow_factor: float = 1
 
 func _ready() -> void:
 	match obstacle_type:
-		OBSTACLE_TYPE.TREE: 
+		OBSTACLE_TYPE.TREE:
 			flow_factor = 0.5
-		OBSTACLE_TYPE.BUSH: 
+		OBSTACLE_TYPE.BUSH:
 			flow_factor = 0.7
-		OBSTACLE_TYPE.BOOST: 
+		OBSTACLE_TYPE.BOOST:
 			flow_factor = 1.5
 
 func _on_body_entered(body: Node3D) -> void:

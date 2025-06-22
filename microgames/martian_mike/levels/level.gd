@@ -35,4 +35,4 @@ func _on_trap_touched_player(_player: MartianMikePlayer):
 
 func _on_exit_player_entered(_player: MartianMikePlayer):
 	win.emit()
-	
+

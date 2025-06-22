@@ -8,7 +8,7 @@ func _physics_process(_delta: float) -> void:
 	if reset_vel:
 		reset()
 		reset_vel = false
-	
+
 	if Input.is_action_pressed("right"):
 		apply_force(Vector2(force, 0))
 	if Input.is_action_pressed("left"):
