@@ -33,7 +33,6 @@ var latest_digit: Game2048_Digit;
 
 func _ready() -> void:
 	base = randi_range(2, 5)
-	time = 30
 	var wins = storage.get("2048_Wins", 0)
 	max_exponent += wins
 	

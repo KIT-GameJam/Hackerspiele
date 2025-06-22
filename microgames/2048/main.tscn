@@ -10,6 +10,7 @@ font_size = 61
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_68k56")
+time = 30.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
