@@ -125,6 +125,7 @@ func start_game() -> void:
 	hide_title_screen()
 	load_game() # load next game, if there isn't one already
 	current_game.finished.connect(game_finished)
+	current_game.timer = timer
 	var factor: float = pow(time_falloff_base, -played_games) * (1.0 - time_falloff_converge) + time_falloff_converge
 	timer.wait_time = current_game.time * ((2.0 - factor) if current_game.survival else factor)
 	timer.timeout.connect(handle_timeout)

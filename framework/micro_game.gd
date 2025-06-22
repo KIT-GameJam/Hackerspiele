@@ -11,6 +11,9 @@ enum Result { Loss, Win }
 ## Local storage that is persistent per run.
 var storage: Dictionary
 
+## The timer for this microgame. This can be used to pause the timer for e.g. animations.
+var timer: Timer
+
 ## The signal to send when the microgame is won or lost.
 ## Only the first emitted signal will be considered.
 @warning_ignore("unused_signal")
