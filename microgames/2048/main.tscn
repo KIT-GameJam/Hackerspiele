@@ -1,0 +1,77 @@
+[gd_scene load_steps=4 format=3 uid="uid://cia1y1g13u45m"]
+
+[ext_resource type="Script" uid="uid://xvvdhnjy0yns" path="res://microgames/2048/main.gd" id="1_68k56"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_68k56"]
+normal = Vector2(0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_68k56"]
+font_size = 61
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_68k56")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Border" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="Border" type="CollisionShape2D" parent="Border"]
+position = Vector2(0, -250)
+shape = SubResource("WorldBoundaryShape2D_68k56")
+
+[node name="Border2" type="CollisionShape2D" parent="Border"]
+position = Vector2(0, 250)
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_68k56")
+
+[node name="Border3" type="CollisionShape2D" parent="Border"]
+position = Vector2(250, 0)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_68k56")
+
+[node name="Border4" type="CollisionShape2D" parent="Border"]
+position = Vector2(-250, 0)
+rotation = 4.71239
+shape = SubResource("WorldBoundaryShape2D_68k56")
+
+[node name="Digits" type="Node2D" parent="."]
+
+[node name="Goal" type="Label" parent="."]
+offset_left = -149.0
+offset_top = -360.0
+offset_right = 148.0
+offset_bottom = -291.0
+text = "Reach 512"
+label_settings = SubResource("LabelSettings_68k56")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
+[node name="VisualBorder" type="Node2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="VisualBorder"]
+offset_left = -292.0
+offset_top = -256.0
+offset_right = -252.0
+offset_bottom = 256.0
+
+[node name="ColorRect2" type="ColorRect" parent="VisualBorder"]
+offset_left = 292.0
+offset_top = -292.0
+offset_right = 332.0
+offset_bottom = 292.0
+rotation = 1.57079
+
+[node name="ColorRect3" type="ColorRect" parent="VisualBorder"]
+offset_left = 292.0
+offset_top = 252.0
+offset_right = 332.0
+offset_bottom = 836.0
+rotation = 1.57079
+
+[node name="ColorRect4" type="ColorRect" parent="VisualBorder"]
+offset_left = 252.0
+offset_top = -256.0
+offset_right = 292.0
+offset_bottom = 256.0

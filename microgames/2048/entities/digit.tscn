@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8if7w0a36kb2"]
+
+[ext_resource type="Script" uid="uid://deyi6qd0orehw" path="res://microgames/2048/entities/digit.gd" id="1_i3jx4"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_c257f"]
+absorbent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oex33"]
+size = Vector2(100, 100)
+
+[sub_resource type="LabelSettings" id="LabelSettings_c257f"]
+font_size = 60
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c257f"]
+size = Vector2(50, 1)
+
+[node name="Digit" type="RigidBody2D"]
+collision_layer = 3
+collision_mask = 2
+mass = 100.0
+physics_material_override = SubResource("PhysicsMaterial_c257f")
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("1_i3jx4")
+colors = Array[Color]([Color(1, 1, 1, 1), Color(1, 1, 0.4, 1), Color(1, 0.8, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1)])
+start_color = Color(1, 1, 1, 1)
+end_color = Color(1, 0, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_oex33")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="."]
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+text = "1"
+label_settings = SubResource("LabelSettings_c257f")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tester" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tester"]
+position = Vector2(0, -55)
+shape = SubResource("RectangleShape2D_c257f")
+
+[connection signal="body_entered" from="Tester" to="." method="_on_tester_body_entered"]
