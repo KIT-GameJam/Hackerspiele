@@ -2,9 +2,10 @@ extends MicroGame
 
 const CANON_POS := Vector2i(8, 75)
 const INITIAL_BALL_SPEED := 360.0
-const ROTATION_SPEED := 2.0
-const GRAVITY := 1700.0
+const ROTATION_SPEED := 1.5
+const GRAVITY := 1200.0
 const EXPLOSION_RADIUS := 3
+const SHOOT_TIMEOUT := 0.32
 
 @onready var image: Image = preload("res://microgames/kaputtmachen/assets/viewport.png").get_image()
 @onready var dim := Vector2i(image.get_size())
@@ -16,6 +17,7 @@ var ball_pos_old: Vector2
 var ball_pos: Vector2
 var ball_vel: Vector2
 var image_updated := false
+var shoot_timer := 0.0
 
 func _ready() -> void:
 	texture_rect.texture = ImageTexture.create_from_image(image)
@@ -27,10 +29,12 @@ func to_global(pos: Vector2) -> Vector2:
 	return texture_rect.global_position + pos * get_ratio()
 
 func _process(delta: float) -> void:
+	shoot_timer -= delta
 	canon.scale = get_ratio()
 	ball.scale = get_ratio()
 	canon.position = to_global(CANON_POS)
-	if not ball.visible and Input.is_action_just_pressed("submit"):
+	if not ball.visible and shoot_timer <= 0.0 and Input.is_action_just_pressed("submit"):
+		shoot_timer = SHOOT_TIMEOUT
 		ball.visible = true
 		ball_pos = CANON_POS
 		ball_pos_old = ball_pos
