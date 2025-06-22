@@ -1,0 +1,151 @@
+[gd_scene load_steps=4 format=3 uid="uid://eqpfwmcj3yl4"]
+
+[ext_resource type="Script" uid="uid://d3pfi1jhmaw0l" path="res://microgames/pic_slide/main.gd" id="1_0sg5y"]
+[ext_resource type="StyleBox" uid="uid://vr7jdrso683o" path="res://microgames/pic_slide/assets/panel_style.tres" id="2_0pow5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0sg5y"]
+bg_color = Color(0.338741, 0.322774, 0.201527, 1)
+border_width_left = 20
+border_width_top = 20
+border_width_right = 20
+border_width_bottom = 20
+border_color = Color(0.317647, 0.180392, 0.105882, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_0sg5y")
+time = 60.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Background" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Frame" type="Panel" parent="Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -264.0
+offset_top = -264.0
+offset_right = 264.0
+offset_bottom = 264.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0sg5y")
+
+[node name="00" type="Panel" parent="Background/Frame"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 180.0
+offset_bottom = 180.0
+theme_override_styles/panel = ExtResource("2_0pow5")
+
+[node name="Marker" type="Marker2D" parent="Background/Frame/00"]
+position = Vector2(80, 80)
+
+[node name="01" type="Panel" parent="Background/Frame"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+offset_left = 184.0
+offset_top = 20.0
+offset_right = 344.0
+offset_bottom = 180.0
+theme_override_styles/panel = ExtResource("2_0pow5")
+
+[node name="Marker" type="Marker2D" parent="Background/Frame/01"]
+position = Vector2(80, 80)
+
+[node name="02" type="Panel" parent="Background/Frame"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+offset_left = 348.0
+offset_top = 20.0
+offset_right = 508.0
+offset_bottom = 180.0
+theme_override_styles/panel = ExtResource("2_0pow5")
+
+[node name="Marker" type="Marker2D" parent="Background/Frame/02"]
+position = Vector2(80, 80)
+
+[node name="10" type="Panel" parent="Background/Frame"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+offset_left = 20.0
+offset_top = 184.0
+offset_right = 180.0
+offset_bottom = 344.0
+theme_override_styles/panel = ExtResource("2_0pow5")
+
+[node name="Marker" type="Marker2D" parent="Background/Frame/10"]
+position = Vector2(80, 80)
+
+[node name="11" type="Panel" parent="Background/Frame"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+offset_left = 184.0
+offset_top = 184.0
+offset_right = 344.0
+offset_bottom = 344.0
+theme_override_styles/panel = ExtResource("2_0pow5")
+
+[node name="Marker" type="Marker2D" parent="Background/Frame/11"]
+position = Vector2(80, 80)
+
+[node name="12" type="Panel" parent="Background/Frame"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+offset_left = 348.0
+offset_top = 184.0
+offset_right = 508.0
+offset_bottom = 344.0
+theme_override_styles/panel = ExtResource("2_0pow5")
+
+[node name="Marker" type="Marker2D" parent="Background/Frame/12"]
+position = Vector2(80, 80)
+
+[node name="20" type="Panel" parent="Background/Frame"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+offset_left = 20.0
+offset_top = 348.0
+offset_right = 180.0
+offset_bottom = 508.0
+theme_override_styles/panel = ExtResource("2_0pow5")
+
+[node name="Marker" type="Marker2D" parent="Background/Frame/20"]
+position = Vector2(80, 80)
+
+[node name="21" type="Panel" parent="Background/Frame"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+offset_left = 184.0
+offset_top = 348.0
+offset_right = 344.0
+offset_bottom = 508.0
+theme_override_styles/panel = ExtResource("2_0pow5")
+
+[node name="Marker" type="Marker2D" parent="Background/Frame/21"]
+position = Vector2(80, 80)
+
+[node name="22" type="Panel" parent="Background/Frame"]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+offset_left = 348.0
+offset_top = 348.0
+offset_right = 508.0
+offset_bottom = 508.0
+theme_override_styles/panel = ExtResource("2_0pow5")
+
+[node name="Marker" type="Marker2D" parent="Background/Frame/22"]
+position = Vector2(80, 80)
+
+[node name="Tiles" type="Node2D" parent="."]

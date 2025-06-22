@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c508durklovrb"]
+
+[ext_resource type="Script" uid="uid://c3v5y60gwcifq" path="res://microgames/pic_slide/entities/tile.gd" id="1_c4y7j"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tarel"]
+radius = 160.0
+
+[node name="Tile" type="Node2D"]
+script = ExtResource("1_c4y7j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_tarel")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
