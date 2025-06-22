@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://db1i7vju5bg68"]
+
+[ext_resource type="Script" uid="uid://be0bwhoa0g7g8" path="res://microgames/questions/entities/door.gd" id="1_0dpev"]
+[ext_resource type="Texture2D" uid="uid://esuw27dlhoxa" path="res://assets/logos/kit_gamejam.png" id="2_car8a"]
+[ext_resource type="Texture2D" uid="uid://dtrq8ai38mwek" path="res://microgames/questions/assets/Spiked Ball.png" id="3_cdaxf"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_2q8u5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0dpev"]
+bg_color = Color(0.929412, 0.415686, 0.388235, 0.231373)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.796078, 0, 0, 1)
+border_blend = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_0dpev"]
+font_size = 25
+
+[node name="Door" type="Area2D"]
+z_index = 1
+script = ExtResource("1_0dpev")
+
+[node name="Correct" type="Sprite2D" parent="."]
+scale = Vector2(0.085, 0.085)
+texture = ExtResource("2_car8a")
+
+[node name="False" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("3_cdaxf")
+
+[node name="DoorSprite" type="Sprite2D" parent="."]
+modulate = Color(0.506292, 0.266202, 0.151854, 1)
+scale = Vector2(140, 146.591)
+texture = SubResource("CanvasTexture_2q8u5")
+
+[node name="Button" type="Button" parent="."]
+offset_left = -49.0
+offset_top = -73.0
+offset_right = 51.0
+offset_bottom = 77.0
+theme_override_styles/focus = SubResource("StyleBoxFlat_0dpev")
+flat = true
+
+[node name="Answer" type="Label" parent="."]
+offset_left = -66.0
+offset_top = -18.0
+offset_right = 64.0
+offset_bottom = 17.0
+size_flags_horizontal = 4
+text = "Hallo"
+label_settings = SubResource("LabelSettings_0dpev")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
