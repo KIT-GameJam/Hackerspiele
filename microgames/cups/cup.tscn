@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://d0naasmjtc8nu"]
+
+[ext_resource type="Script" uid="uid://u62mwlfj5jng" path="res://microgames/cups/cup.gd" id="1_71knf"]
+[ext_resource type="Shader" uid="uid://lnf4wfrouox0" path="res://microgames/cups/cup.gdshader" id="2_mfp1s"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ptyuy"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_mfp1s")
+shader_parameter/color = Color(0, 1, 1, 1)
+shader_parameter/thickness = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_71knf"]
+resource_local_to_scene = true
+next_pass = SubResource("ShaderMaterial_ptyuy")
+albedo_color = Color(0.545098, 0.270588, 0.0745098, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ikl7a"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_71knf")
+top_radius = 0.6
+bottom_radius = 1.0
+height = 2.5
+
+[node name="Cup" type="Node3D"]
+script = ExtResource("1_71knf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+mesh = SubResource("CylinderMesh_ikl7a")
