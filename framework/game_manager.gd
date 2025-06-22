@@ -5,7 +5,7 @@ class_name GameManager
 ## A value >= 1.0 that is used as the base of a power that calculates the time reduction for micro games.
 @export var time_falloff_base := 1.1
 ## The strongest time reduce factor that could be reached (in infinity)
-@export var time_falloff_converge = 0.4
+@export var time_falloff_converge = 0.5
 var current_game: MicroGame = null
 var won_games: int
 var played_games: int
@@ -126,7 +126,7 @@ func start_game() -> void:
 	load_game() # load next game, if there isn't one already
 	current_game.finished.connect(game_finished)
 	var factor: float = pow(time_falloff_base, -played_games) * (1.0 - time_falloff_converge) + time_falloff_converge
-	timer.wait_time = current_game.time * factor
+	timer.wait_time = current_game.time * ((2.0 - factor) if current_game.survival else factor)
 	timer.timeout.connect(handle_timeout)
 	in_game = true
 

@@ -17,6 +17,7 @@ absorbent = true
 [node name="Main" type="Node2D"]
 script = ExtResource("1_j1mdo")
 time = 25.0
+survival = true
 
 [node name="Main" type="StaticBody2D" parent="."]
 physics_interpolation_mode = 1

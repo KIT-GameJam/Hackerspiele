@@ -13,6 +13,7 @@ size = Vector2(210, 887)
 [node name="Game" type="Node"]
 script = ExtResource("1_6ofhi")
 time = 20.0
+survival = true
 
 [node name="Background" type="TextureRect" parent="."]
 offset_right = 1278.0

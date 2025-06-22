@@ -139,6 +139,7 @@ size = Vector2(4, 40)
 [node name="Main" type="Node2D"]
 script = ExtResource("1_8ly23")
 time = 15.0
+survival = true
 
 [node name="PlayerBody" type="CharacterBody2D" parent="." groups=["Player"]]
 position = Vector2(-376, 0)

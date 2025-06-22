@@ -5,6 +5,8 @@ enum Result { Loss, Win }
 
 ## The default time for this microgame.
 @export var time := 5.0
+## If this is enabled, the time gets longer instead of shorter.
+@export var survival := false
 
 ## Local storage that is persistent per run.
 var storage: Dictionary

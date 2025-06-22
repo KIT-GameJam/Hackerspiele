@@ -221,6 +221,7 @@ sources/9 = SubResource("TileSetAtlasSource_ioc8r")
 [node name="Main" type="Node"]
 script = ExtResource("1_oh1tc")
 time = 12.0
+survival = true
 
 [node name="GroundTileMap" type="TileMapLayer" parent="."]
 y_sort_enabled = true
