@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://d0naasmjtc8nu"]
 
 [ext_resource type="Script" uid="uid://u62mwlfj5jng" path="res://microgames/cups/cup.gd" id="1_71knf"]
-[ext_resource type="Shader" uid="uid://lnf4wfrouox0" path="res://microgames/cups/cup.gdshader" id="2_mfp1s"]
+[ext_resource type="Shader" uid="uid://lnf4wfrouox0" path="res://microgames/cups/outline.gdshader" id="2_mfp1s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ptyuy"]
 resource_local_to_scene = true
