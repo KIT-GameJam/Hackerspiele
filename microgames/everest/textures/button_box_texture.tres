@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" format=3 uid="uid://bhfo8mgjpceo0"]
+
+[ext_resource type="Texture2D" uid="uid://l4ky76p2a0p6" path="res://microgames/everest/textures/button_borders.png" id="1_7koiv"]
+
+[resource]
+texture = ExtResource("1_7koiv")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
