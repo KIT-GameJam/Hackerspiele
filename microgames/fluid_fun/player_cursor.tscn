@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://77l8lhwly6le"]
+
+[ext_resource type="Texture2D" uid="uid://ql2ihqswthek" path="res://microgames/fluid_fun/assets/tilesheet_complete.png" id="1_18irn"]
+[ext_resource type="Script" uid="uid://ckonqlu1j4ynx" path="res://microgames/fluid_fun/player_cursor.gd" id="1_vjktn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjktn"]
+atlas = ExtResource("1_18irn")
+region = Rect2(1024, 256, 64, 64)
+
+[node name="PlayerCursor" type="Node2D" unique_id=1930711669]
+script = ExtResource("1_vjktn")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=50426230]
+position = Vector2(32, 32)
+texture = SubResource("AtlasTexture_vjktn")
