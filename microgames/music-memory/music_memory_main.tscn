@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://cb1chy0o6tc5w"]
+
+[ext_resource type="Script" uid="uid://bicv6oqcgdhm4" path="res://microgames/music-memory/music_memory.gd" id="1_uq3vo"]
+[ext_resource type="Texture2D" uid="uid://cbclnqffjy7e6" path="res://microgames/music-memory/dark_blue.png" id="2_2m8vb"]
+[ext_resource type="PackedScene" uid="uid://cc3eyvv0wjd7n" path="res://microgames/music-memory/memory-tile.tscn" id="2_uq3vo"]
+[ext_resource type="Texture2D" uid="uid://cevor1t65qunr" path="res://microgames/music-memory/light_turqoise.png" id="3_2m8vb"]
+[ext_resource type="Texture2D" uid="uid://cgdbf251rfwjj" path="res://microgames/music-memory/dark_turqoise.png" id="5_a51el"]
+[ext_resource type="Texture2D" uid="uid://xx0v154iijrq" path="res://microgames/music-memory/light_green.png" id="6_fnl7r"]
+[ext_resource type="Texture2D" uid="uid://b2ssohqwd25ey" path="res://microgames/music-memory/dark_purple.png" id="7_qativ"]
+[ext_resource type="Texture2D" uid="uid://cj7f0glgnc2d4" path="res://microgames/music-memory/yellow.png" id="8_l1iad"]
+[ext_resource type="Texture2D" uid="uid://cieu7n8nttb3g" path="res://microgames/music-memory/light_purple.png" id="9_5thob"]
+[ext_resource type="Texture2D" uid="uid://eufpeyctikd3" path="res://microgames/music-memory/red.png" id="10_l0ce2"]
+
+[node name="Main_memory" type="Node2D" unique_id=532031378]
+position = Vector2(150, 30)
+script = ExtResource("1_uq3vo")
+time = 8.9
+
+[node name="MemoryTile" parent="." unique_id=2054255893 instance=ExtResource("2_uq3vo")]
+position = Vector2(300, 150)
+scale = Vector2(5, 5)
+texture = ExtResource("2_2m8vb")
+
+[node name="MemoryTile2" parent="." unique_id=80161251 instance=ExtResource("2_uq3vo")]
+position = Vector2(500, 150)
+scale = Vector2(5, 5)
+texture = ExtResource("3_2m8vb")
+
+[node name="MemoryTile3" parent="." unique_id=1020207707 instance=ExtResource("2_uq3vo")]
+position = Vector2(700, 150)
+scale = Vector2(5, 5)
+texture = ExtResource("5_a51el")
+
+[node name="MemoryTile4" parent="." unique_id=121979875 instance=ExtResource("2_uq3vo")]
+position = Vector2(300, 350)
+scale = Vector2(5, 5)
+texture = ExtResource("6_fnl7r")
+
+[node name="MemoryTile5" parent="." unique_id=1622787238 instance=ExtResource("2_uq3vo")]
+position = Vector2(500, 350)
+scale = Vector2(5, 5)
+texture = ExtResource("7_qativ")
+
+[node name="MemoryTile6" parent="." unique_id=2000787365 instance=ExtResource("2_uq3vo")]
+position = Vector2(700, 350)
+scale = Vector2(5, 5)
+texture = ExtResource("8_l1iad")
+
+[node name="MemoryTile7" parent="." unique_id=933425497 instance=ExtResource("2_uq3vo")]
+position = Vector2(300, 550)
+scale = Vector2(5, 5)
+texture = ExtResource("9_5thob")
+
+[node name="MemoryTile8" parent="." unique_id=1193458426 instance=ExtResource("2_uq3vo")]
+position = Vector2(500, 550)
+scale = Vector2(5, 5)
+
+[node name="MemoryTile9" parent="." unique_id=1061114855 instance=ExtResource("2_uq3vo")]
+position = Vector2(700, 550)
+scale = Vector2(5, 5)
+texture = ExtResource("10_l0ce2")

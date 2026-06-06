@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cc3eyvv0wjd7n"]
+
+[ext_resource type="Texture2D" uid="uid://cuqdwpvq6sldk" path="res://microgames/music-memory/pink.png" id="1_77168"]
+[ext_resource type="Texture2D" uid="uid://csukcls64il24" path="res://microgames/music-memory/GridBase.png" id="2_jrsba"]
+[ext_resource type="Script" uid="uid://dd0uhb6dex1qd" path="res://microgames/music-memory/memory_tile.gd" id="2_kosxo"]
+[ext_resource type="Texture2D" uid="uid://dsi24qryt0jfg" path="res://microgames/music-memory/border_outline.png" id="4_d5h3u"]
+
+[node name="MemoryTile" type="Sprite2D" unique_id=1020207707]
+texture = ExtResource("1_77168")
+script = ExtResource("2_kosxo")
+
+[node name="BaseGrid" type="Sprite2D" parent="." unique_id=76231080]
+visible = false
+texture = ExtResource("2_jrsba")
+
+[node name="Border" type="Sprite2D" parent="." unique_id=269985066]
+visible = false
+texture = ExtResource("4_d5h3u")

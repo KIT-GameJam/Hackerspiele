@@ -4,6 +4,7 @@ class_name MicroGames
 
 const scenes: Dictionary[GpnVersion, Array] = {
 	GpnVersion.Gpn24: [
+		preload("res://microgames/music-memory/music_memory_main.tscn")
 	],
 	GpnVersion.Gpn23: [
 		preload("res://microgames/2048/main.tscn"),
